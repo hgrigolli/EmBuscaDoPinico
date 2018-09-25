@@ -4,7 +4,6 @@
 ##
 ##GRUPO: Henrique Nóbrega Grigolli     - 41621661
 ##       Salomon Asher Motoryn         - 41825128
-##       Larissa Teixeira dos Santos   - 31802486
 ##
 
 
@@ -80,7 +79,7 @@ def prox_frame_part(frame):
     else:
         Label(frame, text="O Prefeito da sua cidade é filiado ao PSDB e ele gostou de você e quer que você se junte a campanha dele.").pack()
 
-    Label(frame, text="Qual partido você gostaria de se filiar?")
+    Label(frame, text="Qual partido você gostaria de se filiar?").pack()
 
     Radiobutton(frame, text="Partido dos Trabalhadores - PT", padx=20, variable=partEsc, value="PT").pack()
     Radiobutton(frame, text="Partido Verde - PV", padx=20, variable=partEsc, value="PV").pack()
@@ -330,7 +329,7 @@ def elei_sen(frame):
         Label(frame, text="Surge a oportunidade de ser candidato a Senador pelo %s.\nVocê está tendo um bom mandato e é popular.\nSão boas as chances de se tornar Senador." % (partEsc.get())).pack()
         Label(frame, text="Você aceita a ser candidato a Senador?").pack()
     elif(ehProcurado.get() > 2):
-        Label(frame, text="Apesar de não ser tão popular, o %s quer que você se candidate a Senador devido a suas influências políticas.").pack()
+        Label(frame, text="Apesar de não ser tão popular, o %s quer que você se candidate a Senador devido a suas influências políticas." % (partEsc.get()) ).pack()
         Label(frame, text="Você aceita a ser candidato a Senador?").pack()
     else:
         Label(frame, text="Você não é popular e nem influente. Ainda assim há a oportunidade de se candidatar a Senador.").pack()
@@ -366,10 +365,10 @@ def resul_sen(frame):
     if(votos.get() >= 110):
         Label(frame, text="Parabénss!!! Você foi eleito Senador!!! Com %d votos!!" % (votos.get()*100) ).pack()
         Button(frame, text="Avançar", command=lambda:fun_sen(funSen)).pack()
-    elif(popularidade >= 10):
+    elif(popularidade.get() >= 10):
         Label(frame, text="Mesmo sendo popular você não conseguiu a quantidade de votos suficiente.").pack()
         Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
-    elif(ehProcurado > 2):
+    elif(ehProcurado.get() > 2):
         Label(frame, text="Mesmo sendo influente você não conseguiu a quantidade de votos suficiente.").pack()
         Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
     else:
@@ -491,7 +490,7 @@ for frame in frames:
 
 ##### MENU #####
 Label(menu, text="Jogo Politicagem").pack()
-Label(menu, text="Grupo:\nHenrique Nóbrega Grigolli - 41621661\nSalomon Asher Motoryn - 41825128\nLarissa Teixeira dos Santos - 31802486\n").pack()
+Label(menu, text="Grupo:\nHenrique Nóbrega Grigolli - 41621661\nSalomon Asher Motoryn - 41825128\n").pack()
 Button(menu, text="Iniciar", command=lambda:comecar(start)).pack()
 Button(menu, text="Manual", command=create_manual).pack()
 Button(menu, text="Sair", fg="red", command=lambda:endgame(menu)).pack()
