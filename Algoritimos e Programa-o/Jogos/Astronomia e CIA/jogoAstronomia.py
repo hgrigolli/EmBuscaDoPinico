@@ -36,6 +36,8 @@ def mostrarLua():
     turtle.bye()
     turtle.TurtleScreen._RUNNING = True
 
+
+	
 def movimentoTerra():
 
     sol = turtle.Turtle()
@@ -224,6 +226,7 @@ def eclipseSolar():
     turtle.bye()
     turtle.TurtleScreen._RUNNING = True
 
+	
 def eclipseLunar():
 
     screen = tela()
@@ -248,6 +251,38 @@ def eclipseLunar():
 
     sol.setpos(-200, 0)
     lua.setpos(-200, 0)
+    terra.setpos(0, 0)
+
+    time.sleep(10)
+    
+    
+    turtle.bye()
+    turtle.TurtleScreen._RUNNING = True
+
+def luaCrescente():
+
+    screen = tela()
+    
+    sol = turtle.Turtle()
+    lua = turtle.Turtle()
+    terra = turtle.Turtle()
+
+    
+
+    astros = [sol, terra, lua]
+    for astro in astros:
+        astro.penup()
+
+    screen.addshape("images/Sol.gif")
+    screen.addshape("images/Lua.gif")
+    screen.addshape("images/Terra.gif")
+    
+    sol.shape("images/Sol.gif")
+    lua.shape("images/Lua.gif")
+    terra.shape("images/Terra.gif")
+
+    sol.setpos(-200, 0)
+    lua.setpos(0, 150)
     terra.setpos(0, 0)
 
     time.sleep(10)
@@ -331,7 +366,20 @@ def mostraVenus():
 
 def mensagem():
     print("BEM VINDO AO JOGO ASTRONOMIA & CIA!")
+	
+def acertos(pontos):
 
+	if(pontos == 300):
+        print("Parabéns! Você acertou todas as perguntas!")
+    elif(pontos == 200):
+        print("Bom! Você acertou duas perguntas de três.")
+    elif(pontos == 100):
+        print("Razoavel. Você acertou uma perguntas de três.")
+    else:
+        print("Que pena! Você não acertou nenhuma pergunta :( ")
+	
+	print("Pontos: ", pontos)
+	
 def verificacao(pergunta):
     item = [1,2,3]
     print(pergunta)
@@ -406,16 +454,7 @@ def dificuldadeFacil():
         print("Errou! Netuno está a 4.5 bilhões de km do Sol!U Urano está a 2.8 bilhões de km do Sol")
 
 
-    if(pontos == 300):
-        print("Parabéns! Você acertou todas as perguntas!")
-    elif(pontos == 200):
-        print("Bom! Você acertou duas perguntas de três.")
-    elif(pontos == 100):
-        print("Razoavel. Você acertou uma perguntas de três.")
-    else:
-        print("Que pena! Você não acertou nenhuma pergunta :( ")
-        
-    print("Pontos: ", pontos)
+    acertos(pontos)
     
 def dificuldadeMedia():
     pontos = 0
@@ -469,16 +508,7 @@ def dificuldadeMedia():
 	print("A rotação é o movimento que a Terra realiza em torno de seu próprio eixo, é como se ela estivesse “rodando” em volta de si mesma.")
 	print("A translação é o movimento que a Terra realiza em torno do Sol, sendo que ela demora 365 dias, 4 horas e alguns minutos para completá-lo.")
 	
-	if(pontos == 300):
-        print("Parabéns! Você acertou todas as perguntas!")
-    elif(pontos == 200):
-        print("Bom! Você acertou duas perguntas de três.")
-    elif(pontos == 100):
-        print("Razoavel. Você acertou uma perguntas de três.")
-    else:
-        print("Que pena! Você não acertou nenhuma pergunta :( ")
-	
-	print("Pontos: ", pontos)
+	acertos(pontos)
 	
 def dificuldadeDificil():
 	pontos = 0
@@ -520,7 +550,23 @@ def dificuldadeDificil():
 	
 	espacos()
 	
+	print("As fases da Lua são: Nova, Crescente, Cheia, Minguante")
+	print("As fases depende da posição da Lua e, devido a isto, a forma como o Sol ilumina ela.")
+	print("Veja a figura a seguir:")
+	input("\nPressione Enter para continuar...\n")
+	luaCrescente()
+	print("Em que fase estava a Lua?")
+	p1 = verificacao("1 - Cheia\n2 - Crescente\n3 - Minguante")
+    
+	if(p2 == 2):
+		pontos += 100
+		print("Isso mesmo! Muito bem!")
+	else:
+		print("Errou!!")
+		
+	print("A Lua está em fase Crescente, pois, a luz do Sol está atingindo a Lua parcialmente e, a próxima fase é a Cheia, quando a luz atingia a Lua em toda sua face. ")
 	
+	acertos(pontos)
 	
 	
 def main():
