@@ -1,5 +1,5 @@
 
-##JOGO POLITICAGEM
+##JOGO POLITICO
 ##
 ##
 ##GRUPO: Henrique Nóbrega Grigolli     - 41621661
@@ -18,7 +18,7 @@ from random import *
 ### FIM DOS IMPORTS ###
 
 root = Tk()
-root.title("Jogo Politicagem")
+root.title("Jogo Politico")
 
 ### INICIALIZAR VARIAVEIS ###
 
