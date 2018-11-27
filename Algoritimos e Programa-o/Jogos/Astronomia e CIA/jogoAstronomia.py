@@ -53,10 +53,9 @@ def movimentoTerra():
     terra.shape("images/Terra.gif")
     dt = 0
     for i in range (500):
-        x = 200*cos(dt)
-        y = 350*sin(dt)
+        x = 175*cos(dt)
+        y = 185*sin(dt)
         terra.setpos( x, y )
-		terra.tilt(dt)
         dt += 0.025
         screen.listen()
 
@@ -250,7 +249,7 @@ def eclipseLunar():
     terra.shape("images/Terra.gif")
 
     sol.setpos(-200, 0)
-    lua.setpos(-200, 0)
+    lua.setpos(200, 0)
     terra.setpos(0, 0)
 
     time.sleep(10)
@@ -318,18 +317,19 @@ def mostraGasosos():
     netuno.shape("images/Netuno.gif")
 
 
-    jupiter.setpos(-150, 300)
-	saturno.setpos(150, 300)
-	urano.setpos(-150, -300)
-	netuno.setpos(150, -300)
+    jupiter.setpos(-150, 150)
+    saturno.setpos(150, 150)
+    urano.setpos(-150, -150)
+    netuno.setpos(150, -150)
 	
     screen.listen()
         
-	time.sleep(10)
+    time.sleep(10)
     
     
     turtle.bye()
     turtle.TurtleScreen._RUNNING = True
+
 
 def mostraVenus():
 
@@ -352,7 +352,7 @@ def mostraVenus():
     dt = 0
     amp = 85
 	
-    for i in range (150):
+    for i in range (500):
         x = amp*cos(dt)
         y = amp*sin(dt)
 		
@@ -366,10 +366,11 @@ def mostraVenus():
 
 def mensagem():
     print("BEM VINDO AO JOGO ASTRONOMIA & CIA!")
+    print("Jogo desenvolvido por Henrique Grigolli e Salomon Asher")
 	
 def acertos(pontos):
 
-	if(pontos == 300):
+    if(pontos == 300):
         print("Parabéns! Você acertou todas as perguntas!")
     elif(pontos == 200):
         print("Bom! Você acertou duas perguntas de três.")
@@ -378,7 +379,7 @@ def acertos(pontos):
     else:
         print("Que pena! Você não acertou nenhuma pergunta :( ")
 	
-	print("Pontos: ", pontos)
+    print("Pontos: ", pontos)
 	
 def verificacao(pergunta):
     item = [1,2,3]
@@ -444,6 +445,7 @@ def dificuldadeFacil():
 
     p3 = verificacao("1 - Plutão\n2 - Urano\n3 - Netuno")
 
+
     if(p3 == 1):
         print("Errou! O Plutão deixou de ser um planeta em 2006. Hoje ele é um planeta-anão")
     elif(p3 == 3):
@@ -459,56 +461,57 @@ def dificuldadeFacil():
 def dificuldadeMedia():
     pontos = 0
 	
-	print("Cada planeta possui sua atmosfera e elas são muito diferentes de um planeta para outro.")
-	print("A temperatura média do planeta Terra é de 14°C")
-	print("Você saberia dizer qual o planeta mais quente do Sistema Solar? ")
-	p1 = verificacao("1 - Vênus\n2 - Mercúrio\n3 - Júpiter")
+    print("Cada planeta possui sua atmosfera e elas são muito diferentes de um planeta para outro.")
+    print("A temperatura média do planeta Terra é de 14°C")
+    print("Você saberia dizer qual o planeta mais quente do Sistema Solar? ")
+    p1 = verificacao("1 - Vênus\n2 - Mercúrio\n3 - Júpiter")
 	
-	if(p1 == 1):
+    if(p1 == 1):
         pontos += 100
         print("Isso mesmo! O planeta mais quente é Vênus, o segundo mais próximo do Sol. A razão é que Vênus possui uma atmosfera muito densa, que retém o calor e faz com que a temperatura média no planeta seja aproximadamende 450°C.")
     else:
         print("Putss! Está errado. O planeta mais quente é Vênus, o segundo mais próximo do Sol. A razão é que Vênus possui uma atmosfera muito densa, que retém o calor e faz com que a temperatura média no planeta seja aproximadamende 450°C.")
 	
-	input("\nPressione Enter para continuar...\n")
-	mostraVenus()
+    input("\nPressione Enter para continuar...\n")
+    mostraVenus()
 	
-	espacos()
+    espacos()
 	
-	print("Os planetas são classificados em dois tipos: Planetas Telúricos e Planetas Gasosos.")
-	print("Você saberia dizer quais sãos os planetas gasosos do Sistema Solar?")
-	p2 = verificacao("1 - Júpiter, Saturno, Urano, Netuno\n2 - Júpiter, Saturno, Netuno, Vênus\n3 - Mercúrio, Vênus, Júpiter, Saturno")
+    print("Os planetas são classificados em dois tipos: Planetas Telúricos e Planetas Gasosos.")
+    print("Você saberia dizer quais sãos os planetas gasosos do Sistema Solar?")
+    p2 = verificacao("1 - Júpiter, Saturno, Urano, Netuno\n2 - Júpiter, Saturno, Netuno, Vênus\n3 - Mercúrio, Vênus, Júpiter, Saturno")
 	
-	if(p2 == 1):
-		pontos += 100
-		print("Isso mesmo! Muito bem!")
-	else:
-		print("Errou!! Os planetas gasosos são: Júpiter, Saturno, Urano e Netuno")
+    if(p2 == 1):
+        pontos += 100
+        print("Isso mesmo! Muito bem!")
+    else:
+        print("Errou!! Os planetas gasosos são: Júpiter, Saturno, Urano e Netuno")
 		
-	input("\nPressione Enter para continuar...\n")
-	mostraGasosos()
+    input("\nPressione Enter para continuar...\n")
+    mostraGasosos()
 	
-	espacos()
+    espacos()
 	
-	print("Observe a animação a seguir:")
-	input("\nPressione Enter para continuar...\n")
+    print("Observe a animação a seguir:")
+    input("\nPressione Enter para continuar...\n")
 	
-	movimentoTerra()
+    movimentoTerra()
 	
-	print("Baseado no movimento da Terra que você observou, responda:")
-	print("Qual o nome do movimento feito pela Terra?")
-	p3 = verificacao("1 - Translação e Reflexão\n2 - Precessão e Revolução\n3 - Translação e Rotação")
+    print("Baseado no movimento da Terra que você observou, responda:")
+    print("Qual o nome do movimento feito pela Terra?")
+            
+    p3 = verificacao("1 - Rotaçãoão\n2 - Precessão\n3 - Translação")
 
     if(p3 == 3):
-		pontos += 100
-		print("Isso mesmo! Muito bem!")
-	else:
-		print("Errou!!")
+        pontos += 100
+        print("Isso mesmo! Muito bem!")
+    else:
+        print("Errou!!")
 		
-	print("A rotação é o movimento que a Terra realiza em torno de seu próprio eixo, é como se ela estivesse “rodando” em volta de si mesma.")
-	print("A translação é o movimento que a Terra realiza em torno do Sol, sendo que ela demora 365 dias, 4 horas e alguns minutos para completá-lo.")
+    print("A rotação é o movimento que a Terra realiza em torno de seu próprio eixo, é como se ela estivesse “rodando” em volta de si mesma.")
+    print("A translação é o movimento que a Terra realiza em torno do Sol, sendo que ela demora 365 dias, 4 horas e alguns minutos para completá-lo.")
 	
-	acertos(pontos)
+    acertos(pontos)
 	
 def dificuldadeDificil():
 	pontos = 0
@@ -516,7 +519,7 @@ def dificuldadeDificil():
 	print("Na Antiguidade, o eclipse era visto como um sinal do fim do mundo.\nHoje sabemos que trata de um fenômeno natural.")
 	print("O eclipse nada mais é que um fenômeno em que um astro deixa de ser visto parcial ou totalmente devido a presença de outro astro.")
 	print("Esse fenômeno é comumente conhecido aqui na Terra por ocorrer entra o Sol e a Lua.")
-	print("Quando a luz do astro que estamos observando é interrompida, dizemos que ocorreu um eclipse deste astro."")
+	print("Quando a luz do astro que estamos observando é interrompida, dizemos que ocorreu um eclipse deste astro.")
 	print("Veja a figura a seguir:")
 	input("\nPressione Enter para continuar...\n")
 
@@ -525,10 +528,10 @@ def dificuldadeDificil():
 	p1 = verificacao("1 - Eclipse Solar\n2 - Eclipse Lunar\n3 - Eclipse Terrestre")
     
 	if(p1 == 1):
-		pontos += 100
-		print("Isso mesmo! Muito bem!")
+	    pontos += 100
+	    print("Isso mesmo! Muito bem!")
 	else:
-		print("Errou!!")
+	    print("Errou!!")
 		
 	print("Nesse caso, o astro que estamos observado é o Sol e a Lua tampou a luz dele.")
 	
@@ -538,13 +541,13 @@ def dificuldadeDificil():
 	input("\nPressione Enter para continuar...\n")
 	eclipseLunar()
 	print("Qual foi o eclipse observado?")
-	p1 = verificacao("1 - Eclipse Solar\n2 - Eclipse Lunar\n3 - Eclipse Terrestre")
+	p2 = verificacao("1 - Eclipse Solar\n2 - Eclipse Lunar\n3 - Eclipse Terrestre")
     
 	if(p2 == 2):
-		pontos += 100
-		print("Isso mesmo! Muito bem!")
+	    pontos += 100
+	    print("Isso mesmo! Muito bem!")
 	else:
-		print("Errou!!")
+	    print("Errou!!")
 		
 	print("Nesse caso, o astro que estamos observado é a Lua e a Terra tampou a luz dela.")
 	
@@ -556,13 +559,14 @@ def dificuldadeDificil():
 	input("\nPressione Enter para continuar...\n")
 	luaCrescente()
 	print("Em que fase estava a Lua?")
-	p1 = verificacao("1 - Cheia\n2 - Crescente\n3 - Minguante")
+            
+	p3 = verificacao("1 - Cheia\n2 - Crescente\n3 - Minguante")
     
-	if(p2 == 2):
-		pontos += 100
-		print("Isso mesmo! Muito bem!")
+	if(p3 == 2):
+	    pontos += 100
+	    print("Isso mesmo! Muito bem!")
 	else:
-		print("Errou!!")
+	    print("Errou!!")
 		
 	print("A Lua está em fase Crescente, pois, a luz do Sol está atingindo a Lua parcialmente e, a próxima fase é a Cheia, quando a luz atingia a Lua em toda sua face. ")
 	
@@ -572,11 +576,14 @@ def dificuldadeDificil():
 def main():
     mensagem()
     dificuldade = escolheDificuldade()
+    
     if(dificuldade == 1):
         dificuldadeFacil()
     elif(dificuldade == 2):
         dificuldadeMedia()
-    else(dificuldade == 3):
+    else:
         dificuldadeDificil()
+
+    print("Obrigado por jogar o nosso jogo!")
     
 main()
