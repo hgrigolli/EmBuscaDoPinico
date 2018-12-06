@@ -404,6 +404,8 @@ def acc_sen1(frame):
         votos.set(votos.get() + 10)
         Button(frame, text="Avançar", command=lambda:elei_pres(funSen)).pack()
 
+    frame.tkraise()
+
 def rej_sen1(frame):
     
     bordao.set("")
@@ -412,7 +414,7 @@ def rej_sen1(frame):
     r12.config(state = DISABLED)
 
     if(popularidade.get() >= 10):
-        Label(frame, text="Você foi justo. O seu partido está querendo te por para fora mas a pressão popular que5r te manter no poder").pack()
+        Label(frame, text="Você foi justo. O seu partido está querendo te por para fora mas a pressão popular quer te manter no poder").pack()
         votos.set(votos.get() + 15)
         Button(frame, text="Avançar", command=lambda:elei_pres(funSen)).pack()
     elif(ehProcurado.get() < 2):
@@ -422,12 +424,16 @@ def rej_sen1(frame):
         Label(frame, text="Você foi justo. Porém, isso não foi bom pra você. As próximas eleições estão chegando e nenhum partido nem o povo te quer.").pack()
         Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
 
+    frame.tkraise()
+
 def elei_pres(frame):
     Label(frame, text="ATENÇÃO ATENÇÃO - ELEIÇÕES PRESIDENCIAIS CHEGANDO!!!").pack()
     Label(frame, text="Neste ponto automaticamente você é candidato a Presidência pelo %s . " % (partEsc.get())  ).pack()
     Label(frame, text="Você deve se esforçar bastante agora em sua campanha para conseguir a maior quantidade de votos. Escreva sua campanha: ").pack()
     Entry(frame, textvariable=bordao).pack()
     Button(frame, text="Resultado das eleições Presidenciais", command=lambda:res_pres(resPres)).pack()
+
+    frame.tkraise()
 
 def res_pres(frame):
     if(len(bordao.get()) <= 40):
@@ -440,16 +446,17 @@ def res_pres(frame):
         popularidade.set(popularidade.get() + 5)
 
     if(votos.get() >= 150 and popularidade.get() >= 15):
-         Label(frame, text="PARABÉNS!!! VOCÊ FOI ELEITO PRESIDENTE!!!!")
-         Label(frame, text="Você obteve: %d" % (votos.get()*100) )
+         Label(frame, text="PARABÉNS!!! VOCÊ FOI ELEITO PRESIDENTE!!!!").pack()
+         Label(frame, text="Você obteve: %d" % (votos.get()*100) ).pack()
          Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
     elif(votos.get() >= 150):
-         Label(frame, text="QUASEEE!! Você não foi eleito Presidente por muito pouco. O povo não te considerou popular.")
+         Label(frame, text="QUASEEE!! Você não foi eleito Presidente por muito pouco. O povo não te considerou popular.").pack()
          Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
     else:
-         Label(frame, text="Você não foi eleito Presidente. Faltaram votos e popularidade")
+         Label(frame, text="Você não foi eleito Presidente. Faltaram votos e popularidade").pack()
          Button(frame, text="FIM", fg="red", command=lambda:endgame(menu)).pack()
-         
+
+    frame.tkraise()
     
     
     
