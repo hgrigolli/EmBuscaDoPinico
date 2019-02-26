@@ -6,7 +6,7 @@ class Embarcacao:
            self.nome = nome
            self.tamanho = tamanho
 
-PORTA_AVIOES = Embarcacao("PORTA AVIÃO",5)
+PORTA_AVIOES = Embarcacao("PORTA AVIÕES",5)
 ENCOURACADO = Embarcacao("ENCOURAÇADO",4)
 CRUZADOR = Embarcacao("CRUZADOR",3)
 SUBMARINO = Embarcacao("SUBMARINO",2)
@@ -17,6 +17,7 @@ def initJogo():
     matrizJogo = matrizInicial()
     imprimeMatriz(matrizJogo)
     insereNavio(matrizJogo, PORTA_AVIOES, [1,10], True)
+    insereNavio(matrizJogo, ENCOURACADO, [2,7], False)
     imprimeMatriz(matrizJogo)
 
 
@@ -47,13 +48,13 @@ def imprimeMatriz(matriz):
 def insereNavio(matriz, navio, posicao, isVertical):
     if(isVertical):
         if(verificaPosicao(matriz, navio, posicao, isVertical)):
-            print("Posição Inválida")
+            print("Posição Inválida para o ", navio.nome)
         else:
             for i in range(navio.tamanho):
                 matriz[posicao[0] + i][posicao[1]] = " " + navio.nome[0] + " "
     else:
         if(verificaPosicao(matriz, navio, posicao, isVertical)):
-            print("Posição Inválida")
+            print("Posição Inválida para o ", navio.nome)
         else:
             for j in range(navio.tamanho):
                 matriz[posicao[0]][posicao[1] + j] = " " + navio.nome[0] + " "
@@ -62,18 +63,18 @@ def verificaPosicao(matriz, navio, posicao, isVertical):
     
     if(isVertical):
         if(posicao[0] + navio.tamanho > 10):
-            return False
+            return True
         else:
             for i in range(navio.tamanho):
                 if(matriz[posicao[0] + i][posicao[1]] != " . "):
-                    return False
+                    return True
     else:
         if(posicao[1] + navio.tamanho > 10):
-            return False
+            return True
         else:
             for j in range(navio.tamanho):
                    if(matriz[posicao[0]][posicao[1] + j] != " . "):
-                       return False
-    return True
+                       return True
+    return False
 
 initJogo()
