@@ -2,6 +2,8 @@ from random import randint
 from string import ascii_lowercase as al
 
 class Embarcacao:
+       atingido = 0
+       
        def __init__(self, nome, tamanho):
            self.nome = nome
            self.tamanho = tamanho
@@ -11,14 +13,15 @@ ENCOURACADO = Embarcacao("ENCOURAÇADO",4)
 CRUZADOR = Embarcacao("CRUZADOR",3)
 SUBMARINO = Embarcacao("SUBMARINO",2)
 
+navios = [PORTA_AVIOES, ENCOURACADO, CRUZADOR, SUBMARINO]
+
+
 def initJogo():
     print("Henrique Nóbrega Grigolli - 41821661 - 02N11")
     print("\n\tBatalha Naval!")
     matrizJogo = matrizInicial()
     imprimeMatriz(matrizJogo)
-    insereNavio(matrizJogo, PORTA_AVIOES, [1,10], True)
-    insereNavio(matrizJogo, ENCOURACADO, [2,7], False)
-    imprimeMatriz(matrizJogo)
+    posicionarNavios(matrizJogo)
 
 
 def matrizInicial():
@@ -62,19 +65,92 @@ def insereNavio(matriz, navio, posicao, isVertical):
 def verificaPosicao(matriz, navio, posicao, isVertical):
     
     if(isVertical):
-        if(posicao[0] + navio.tamanho > 10):
+        if(posicao[0] + navio.tamanho > 11):
             return True
         else:
             for i in range(navio.tamanho):
                 if(matriz[posicao[0] + i][posicao[1]] != " . "):
                     return True
     else:
-        if(posicao[1] + navio.tamanho > 10):
+        if(posicao[1] + navio.tamanho > 11):
             return True
         else:
             for j in range(navio.tamanho):
                    if(matriz[posicao[0]][posicao[1] + j] != " . "):
                        return True
     return False
+
+
+def atirar(matriz, posicao):
+       if(not verificaPosicaoComTiro(matriz,posicao)):
+              if(verificaPosicaoComAgua(matriz,posicao)):
+                     matriz[posicao[0]][posicao[1]] = " x "
+              else:
+                     for navio in navios:
+                            if(matriz[posicao[0]][posicao[1]] == " " + navio.nome[0] + " "):
+                                   navio.atingido += 1         
+                            if(navio.atingido == navio.tamanho):
+                                   print("{} afundou!".format(navio.nome))   
+                     matriz[posicao[0]][posicao[1]] = " X "
+              return True
+       else:
+              print("Posição de tiro {} já escolhida".format(posicao))
+              return False
+
+def verificaPosicaoComTiro(matriz,posicao):
+       #Retorna True se posicao já foi escolhida
+       if( matriz[posicao[0]][posicao[1]] == " x " or matriz[posicao[0]][posicao[1]] == " X "):
+              return True
+       else:
+              return False
+
+def verificaPosicaoComAgua(matriz,posicao):
+       #Retorna True se posição tem água
+       if( matriz[posicao[0]][posicao[1]] == " . "):
+              return True
+       else:
+              return False
+
+
+def posicionarNavios(matriz):
+
+       for navio in navios:
+              posicao = [1,1]
+              isVertical = False
+              i = 0
+              #Arrumar aqui \/
+              while(verificaPosicao(matriz, navio, posicao, isVertical)):
+                     print("Posicionando a Embarcação: {}".format(navio.nome))
+                     posicao[0] = input("Digite a linha (a - j): ")
+                     while(posicao[0] not in al[0:11]):
+                            print("Posição inválida")
+                            posicao[0] = input("Digite a linha (a - j): ")
+                     for c in al:
+                            i += 1
+                            if(c == posicao[0]):
+                                   posicao[0] = i
+                                   
+                     posicao[1] = int(input("Digite a coluna (1-10): "))
+                     while(posicao[1] < 1 or posicao[1] > 10):
+                            print("Posição inválida")
+                            posicao[1] = int(input("Digite a coluna (1-10): "))
+
+                            
+                     isVertical = input("Digite V para posição Vertical ou H para Horizontal: ")
+                     while(isVertical.upper() != "V" and isVertical.upper() != "H"):
+                            print("Direção inválida")
+                            print(isVertical.upper() != "V" and isVertical.upper() != "H")
+                            isVertical = input("Digite V para posição Vertical ou H para Horizontal: ")
+
+                     if(isVertical.upper() == "V"):
+                            isVertical = True
+                            insereNavio(matriz, navio, posicao, isVertical)
+                     else:
+                            isVertical = False
+                            insereNavio(matriz, navio, posicao, isVertical)
+
+                     imprimeMatriz(matriz)
+
+
 
 initJogo()
