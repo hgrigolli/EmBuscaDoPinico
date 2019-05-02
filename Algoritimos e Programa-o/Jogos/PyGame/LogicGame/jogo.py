@@ -7,37 +7,42 @@ COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
 COLOR_GREEN = pg.Color('green')
 BLOCK_LEFT = "Move left"
-BLOCK_RIGHT = "Moveright"
+BLOCK_RIGHT = "Move right"
 BLOCK_UP = "Move up"
 BLOCK_DOWN = "Move down"
-FONT = pg.font.Font(None, 32)
+FONT = pg.font.Font(None, 16)
 pg.display.set_caption("jogo maneiro")
 
 
 class ActionBox:
 
-    def __init__(self, x, y, w, h, player, text=''):
+    def __init__(self, x, y, w, h, player, lista_action, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.player = player
         self.color = COLOR_INACTIVE
+        self.player = player
+        self.lista_action = lista_action
         self.text = text
         self.txt_surface = FONT.render(text, True, self.color)
         self.active = False
 
     def handle_event(self, event):
+        clock = pg.time.Clock()
         if event.type == pg.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
                 # Toggle the active variable.
                 self.active = not self.active
-                if(self.text == BLOCK_UP):
-                    andarCima(self.player)
-                elif(self.text == BLOCK_DOWN):
-                    andarBaixo(self.player)
-                elif(self.text == BLOCK_LEFT):
-                    andarFrente(self.player)
-                else:
-                    andarTras(self.player)
+                for action in self.lista_action:
+                    if(action == BLOCK_LEFT):
+                        andarFrente(self.player)
+                    elif(action == BLOCK_RIGHT):
+                        andarTras(self.player)
+                    elif(action == BLOCK_DOWN):
+                        andarBaixo(self.player)
+                    else:
+                        andarCima(self.player)
+                pg.display.flip()
             else:
                 self.active = False
             # Change the current color of the input box.
@@ -45,7 +50,7 @@ class ActionBox:
 
     def update(self):
         # Resize the box if the text is too long.
-        width = max(200, self.txt_surface.get_width()+10)
+        width = min(200, self.txt_surface.get_width()+10)
         self.rect.w = width
 
     def draw(self, screen):
@@ -60,11 +65,25 @@ class ActionBox:
 def main():
     clock = pg.time.Clock()
     player = pg.Rect(20,20,30,30)
-    action_box1 = ActionBox(100, 100, 140, 32, player, BLOCK_UP)
-    action_box2 = ActionBox(100, 200, 140, 32, player, BLOCK_DOWN)
-    action_box3 = ActionBox(100, 300, 140, 32, player, BLOCK_RIGHT)
-    action_box4 = ActionBox(100, 400, 140, 32, player, BLOCK_LEFT)
-    action_boxes = [action_box1, action_box2, action_box3, action_box4]
+    lista_action = []
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_DOWN)
+    lista_action.append(BLOCK_DOWN)
+    lista_action.append(BLOCK_DOWN)
+    lista_action.append(BLOCK_DOWN)
+    lista_action.append(BLOCK_DOWN)
+    lista_action.append(BLOCK_LEFT)
+    lista_action.append(BLOCK_UP)
+    lista_action.append(BLOCK_LEFT)
+    action_box1 = ActionBox(100, 50, 140, 32, player, lista_action, "Start")
+    action_boxes = [action_box1]
     done = False
 
     while not done:
@@ -73,11 +92,11 @@ def main():
                 done = True
             for box in action_boxes:
                 box.handle_event(event)
-
+                
+        screen.fill((30, 30, 30))
         for box in action_boxes:
             box.update()
 
-        screen.fill((30, 30, 30))
         for box in action_boxes:
             box.draw(screen)
 
@@ -87,16 +106,20 @@ def main():
 
 def andarFrente(rect):
     rect.move_ip(-20,0)
+    pg.display.flip()
 
 def andarCima(rect):
     rect.move_ip(0,-20)
-
+    pg.display.flip()
+    
 def andarBaixo(rect):
     rect.move_ip(0,20)
-
+    pg.display.flip()
+    
 def andarTras(rect):
     rect.move_ip(20,0)
-
+    pg.display.flip()
+    
 if __name__ == '__main__':
     main()
     pg.quit()
