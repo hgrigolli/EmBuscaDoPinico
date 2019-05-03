@@ -12,9 +12,10 @@ BLOCK_UP = "Move up"
 BLOCK_DOWN = "Move down"
 FONT = pg.font.Font(None, 16)
 pg.display.set_caption("jogo maneiro")
+lista_action = []
 
 
-class ActionBox:
+class StartBox:
 
     def __init__(self, x, y, w, h, player, lista_action, text=''):
         self.rect = pg.Rect(x, y, w, h)
@@ -35,24 +36,19 @@ class ActionBox:
                     if(action == BLOCK_LEFT):
                         andarFrente(self.player)
                         pg.draw.rect(screen, COLOR_GREEN, self.player, 2)
-                        pg.draw.rect(screen, self.color, self.rect, 2)
-                        pg.time.wait(100)
+                        pg.time.wait(80)
                     elif(action == BLOCK_RIGHT):
                         andarTras(self.player)
-
                         pg.draw.rect(screen, COLOR_GREEN, self.player, 2)
-                        pg.draw.rect(screen, self.color, self.rect, 2)
-                        pg.time.wait(100)
+                        pg.time.wait(80)
                     elif(action == BLOCK_DOWN):
                         andarBaixo(self.player)
                         pg.draw.rect(screen, COLOR_GREEN, self.player, 2)
-                        pg.draw.rect(screen, self.color, self.rect, 2)
-                        pg.time.wait(100)
+                        pg.time.wait(80)
                     else:
                         andarCima(self.player)
                         pg.draw.rect(screen, COLOR_GREEN, self.player, 2)
-                        pg.draw.rect(screen, self.color, self.rect, 2)
-                        pg.time.wait(100)
+                        pg.time.wait(80)
                         
                     pg.display.flip()
             else:
@@ -77,42 +73,31 @@ class ActionBox:
 def main():
     clock = pg.time.Clock()
     player = pg.Rect(20,20,30,30)
-    lista_action = []
     lista_action.append(BLOCK_RIGHT)
     lista_action.append(BLOCK_RIGHT)
     lista_action.append(BLOCK_RIGHT)
     lista_action.append(BLOCK_RIGHT)
-    lista_action.append(BLOCK_DOWN)
-    lista_action.append(BLOCK_DOWN)
-    lista_action.append(BLOCK_DOWN)
-    lista_action.append(BLOCK_DOWN)
-    lista_action.append(BLOCK_LEFT)
-    lista_action.append(BLOCK_LEFT)
-    lista_action.append(BLOCK_LEFT)
-    lista_action.append(BLOCK_LEFT)
-    lista_action.append(BLOCK_UP)
-    lista_action.append(BLOCK_UP)
-    lista_action.append(BLOCK_UP)
-    lista_action.append(BLOCK_UP)
-    
-    action_box1 = ActionBox(100, 50, 140, 32, player, lista_action, "Start")
-    action_boxes = [action_box1]
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    lista_action.append(BLOCK_RIGHT)
+    startBox = StartBox(100, 50, 140, 32, player, lista_action, "Start")
     done = False
 
     while not done:
+        
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 done = True
-            for box in action_boxes:
-                box.handle_event(event)
-                
-                
+            startBox.handle_event(event)
+            
         screen.fill((30, 30, 30))
-        for box in action_boxes:
-            box.update()
-
-        for box in action_boxes:
-            box.draw(screen)
+        startBox.update()
+        startBox.draw(screen)
 
         pg.display.flip()
         clock.tick(30)
