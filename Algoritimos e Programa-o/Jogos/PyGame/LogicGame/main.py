@@ -17,10 +17,12 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'imagens')
+        char_folder = path.join(image_folder, 'char')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
+        self.player_img = pg.image.load(path.join(char_folder, PLAYER_IMG)).convert_alpha()
 
 
     def new(self):
@@ -28,8 +30,6 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.player = Player(self, 10, 10)
-        for x in range(10, 20):
-            Wall(self, x, 5)
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -56,10 +56,10 @@ class Game:
 
     def draw(self):
         pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
+        self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (424,84))
-        # self.screen.fill(BGCOLOR)
-        # self.draw_grid()
-        # self.all_sprites.draw(self.screen)
+        #self.draw_grid()
+        self.all_sprites.draw(self.screen)
         pg.display.flip()
 
     def events(self):
