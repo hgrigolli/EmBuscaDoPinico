@@ -13,18 +13,21 @@ class Player(pg.sprite.Sprite):
 
     def move(self, dx=0, dy=0):
         if not self.collide_with_walls(dx,dy):
-            self.x += dx
-            self.y += dy
+            self.x += dx * TILESIZE
+            self.y += dy * TILESIZE
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            if wall.x == self.x + dx and wall.y == self.y + dy:
+            if wall.x == self.x + dx and wall.y == self.y + dy :
+                print("colision!")
                 return True
+        print("no colision!")
         return False
+        
 
     def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
+        self.rect.x = self.x
+        self.rect.y = self.y
 
 class PlayerActions(pg.sprite.Sprite):
     def __init__(self, game):
@@ -45,3 +48,12 @@ class Wall(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
+class Obstacle(pg.sprite.Sprite):
+    def __init__(self, game, x, y, w, h):
+        self.groups = game.walls
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y

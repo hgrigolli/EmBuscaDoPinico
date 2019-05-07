@@ -29,7 +29,11 @@ class Game:
         # initialize all variables and do all the setup for a new game
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
-        self.player = Player(self, 10, 10)
+        for tile_object in self.map.tmxdata.objects:
+            if tile_object.name == 'player':
+                self.player = Player(self, tile_object.x + 0, tile_object.y + 0)
+            else:
+                Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -55,9 +59,9 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw(self):
-        pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
+        pg.display.set_caption("Em busca do pinico - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
-        self.screen.blit(self.map_img, (424,84))
+        self.screen.blit(self.map_img, (0, 0))
         #self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
