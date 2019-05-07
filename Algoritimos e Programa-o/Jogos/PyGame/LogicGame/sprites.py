@@ -8,8 +8,8 @@ class Player(pg.sprite.Sprite):
         self.game = game
         self.image = game.player_img
         self.rect = self.image.get_rect()
-        self.image = pg.Surface((self.rect.width, self.rect.height))
-        self.image.fill(YELLOW)
+        # self.image = pg.Surface((self.rect.width, self.rect.height))
+        # self.image.fill(YELLOW)
         self.x = x
         self.y = y
 
