@@ -59,7 +59,7 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw(self):
-        pg.display.set_caption("Em busca do pinico - FPS: "+"{:.2f}".format(self.clock.get_fps()))
+        pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (0, 0))
         #self.draw_grid()

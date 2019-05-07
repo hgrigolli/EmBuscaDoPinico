@@ -11,14 +11,14 @@ YELLOW = (255, 255, 0)
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
 HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
-TITLE = "Tilemap Demo"
+TITLE = "Em busca do pinico"
 BGCOLOR = DARKGREY
 
 TILESIZE = 24
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
-PLAYER_IMG = 'npc_03 (1).png'
+PLAYER_IMG = 'char_01 (3).png'
 
 MAP_SHIFT_X = 424
 MAP_SHIFT_Y = 84
