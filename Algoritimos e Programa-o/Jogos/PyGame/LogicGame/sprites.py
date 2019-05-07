@@ -18,7 +18,7 @@ class Player(pg.sprite.Sprite):
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            if wall.x == self.x + dx and wall.y == self.y + dy :
+            if self.rect.colliderect(wall) :
                 print("colision!")
                 return True
         print("no colision!")
