@@ -31,7 +31,7 @@ class Game:
         self.walls = pg.sprite.Group()
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
-                self.player = Player(self, tile_object.x + 0, tile_object.y + 0)
+                self.player = Player(self, tile_object.x, tile_object.y)
             else:
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
 
@@ -62,7 +62,7 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (0, 0))
-        #self.draw_grid()
+        self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
