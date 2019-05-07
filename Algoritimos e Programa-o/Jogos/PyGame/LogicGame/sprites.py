@@ -17,17 +17,14 @@ class Player(pg.sprite.Sprite):
         if not self.collide_with_walls(dx,dy):
             self.x += dx * TILESIZE
             self.y += dy * TILESIZE
-            print("pos: (", self.x, ",", self.y,")")
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            col_rect = pg.Rect(self.rect)
-            col_rect.x += dx * TILESIZE
-            col_rect.y += dy * TILESIZE
-            if col_rect.colliderect(wall):
-                print("colision!")
+            collide_rect = pg.Rect(self.rect)
+            collide_rect.x += dx * TILESIZE
+            collide_rect.y += dy * TILESIZE
+            if collide_rect.colliderect(wall):
                 return True
-        print("no colision!")
         return False
         
 
