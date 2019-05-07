@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.3" name="Wall" tilewidth="24" tileheight="24" tilecount="15" columns="0">
- <grid orientation="orthogonal" width="1" height="1"/>
+ <grid orientation="orthogonal" width="24" height="24"/>
  <tile id="0">
   <image width="24" height="24" source="../imagens/walls/wall_01.png"/>
  </tile>

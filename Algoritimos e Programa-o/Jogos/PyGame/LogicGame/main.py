@@ -62,7 +62,7 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (0, 0))
-        self.draw_grid()
+        #self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
