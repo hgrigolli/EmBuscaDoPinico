@@ -33,6 +33,9 @@ class Player(pg.sprite.Sprite):
         else:
             self.image = self.game.player_imgs[index]
 
+    def rotate(self, index):
+        self.image = self.game.player_imgs[index]
+
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
             collide_rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
@@ -46,7 +49,7 @@ class Player(pg.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-class PlayerActions(pg.sprite.Sprite):
+class PlayerAction(pg.sprite.Sprite):
     def __init__(self, game):
         self.groups = game.all_sprites, game.player_actions
         pg.sprite.Sprite.__init__(self, self.groups)
@@ -66,3 +69,23 @@ class Obstacle(pg.sprite.Sprite):
         self.y = y
         self.width = w
         self.height = h
+
+class ActionObstacle(pg.sprite.Sprite):
+    def __init__(self, game, x, y, w, h, action):
+        self.groups = game.all_sprites, game.walls, game.actions
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.action = action
+        self.image = pg.Surface((w, h))
+        self.image.fill(RED)
+        self.image.set_alpha(100)
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.width = w
+        self.height = h
+
+    # def do_action(self, action):
+    #     if(action == 'towel'):
+
+
