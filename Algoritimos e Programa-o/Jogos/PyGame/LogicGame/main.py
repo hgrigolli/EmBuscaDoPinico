@@ -22,7 +22,19 @@ class Game:
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.player_img = pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP)).convert_alpha()
+        self.player_imgs = []
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN3)).convert_alpha())
 
 
     def new(self):
@@ -75,13 +87,13 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT)).convert_alpha())
+                    self.player.move(dx=-1,index=6)
                 if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT)).convert_alpha())
+                    self.player.move(dx=1,index=3)
                 if event.key == pg.K_UP:
-                    self.player.move(dy=-1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP)).convert_alpha())
+                    self.player.move(dy=-1,index=0)
                 if event.key == pg.K_DOWN:
-                    self.player.move(dy=1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN)).convert_alpha())
+                    self.player.move(dy=1,index=9)
 
     def show_start_screen(self):
         pass

@@ -6,19 +6,16 @@ class Player(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.player_img
+        self.image = game.player_imgs[1]
         self.rect = self.image.get_rect()
-        
-        # self.image = pg.Surface((self.collide_rect.width, self.collide_rect.height))
-        # self.image.fill(YELLOW)
         self.x = x
         self.y = y
 
-    def move(self, dx=0, dy=0, IMAGE=''):
+    def move(self, dx=0, dy=0, index=0):
         if not self.collide_with_walls(dx,dy):
             self.x += dx * TILESIZE
             self.y += dy * TILESIZE
-            self.image = IMAGE
+            self.image = self.game.player_imgs[index]
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
@@ -26,8 +23,6 @@ class Player(pg.sprite.Sprite):
             collide_rect.x += dx * TILESIZE
             collide_rect.y += dy * TILESIZE
             if collide_rect.colliderect(wall):
-                print("collide!")
-                print(collide_rect.x)
                 return True
         return False
         
