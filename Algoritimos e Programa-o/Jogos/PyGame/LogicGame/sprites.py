@@ -14,14 +14,15 @@ class Player(pg.sprite.Sprite):
         self.x = x
         self.y = y
 
-    def move(self, dx=0, dy=0):
+    def move(self, dx=0, dy=0, IMAGE=''):
         if not self.collide_with_walls(dx,dy):
             self.x += dx * TILESIZE
             self.y += dy * TILESIZE
+            self.image = IMAGE
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            collide_rect = pg.Rect(self.rect.x, self.rect.y/2, self.rect.width, self.rect.height/2)
+            collide_rect = pg.Rect(self.rect.x, self.rect.y + self.rect.height/2, self.rect.width, self.rect.height/2)
             collide_rect.x += dx * TILESIZE
             collide_rect.y += dy * TILESIZE
             if collide_rect.colliderect(wall):

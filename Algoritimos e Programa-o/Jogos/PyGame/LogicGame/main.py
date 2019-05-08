@@ -17,12 +17,12 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'imagens')
-        char_folder = path.join(image_folder, 'char')
+        self.char_folder = path.join(image_folder, 'char')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.player_img = pg.image.load(path.join(char_folder, PLAYER_IMG)).convert_alpha()
+        self.player_img = pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP)).convert_alpha()
 
 
     def new(self):
@@ -75,13 +75,13 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1)
+                    self.player.move(dx=-1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT)).convert_alpha())
                 if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1)
+                    self.player.move(dx=1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT)).convert_alpha())
                 if event.key == pg.K_UP:
-                    self.player.move(dy=-1)
+                    self.player.move(dy=-1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP)).convert_alpha())
                 if event.key == pg.K_DOWN:
-                    self.player.move(dy=1)
+                    self.player.move(dy=1,IMAGE=pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN)).convert_alpha())
 
     def show_start_screen(self):
         pass
