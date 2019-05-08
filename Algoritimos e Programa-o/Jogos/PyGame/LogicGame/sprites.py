@@ -8,7 +8,7 @@ class Player(pg.sprite.Sprite):
         self.game = game
         self.image = game.player_img
         self.rect = self.image.get_rect()
-        
+        # self.collide_rect = pg.Rect(self.rect.x, self.rect.height/2 + self.rect.y, self.rect.width, self.rect.height/2)
         # self.image = pg.Surface((self.collide_rect.width, self.collide_rect.height))
         # self.image.fill(YELLOW)
         self.x = x
@@ -21,13 +21,17 @@ class Player(pg.sprite.Sprite):
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            collide_rect = pg.Rect(self.rect.x, self.rect.y/2, self.rect.width, self.rect.height/2)
+            collide_rect = pg.Rect(self.rect.x, self.rect.height/2 + self.rect.y, self.rect.width, self.rect.height/2)
             collide_rect.x += dx * TILESIZE
             collide_rect.y += dy * TILESIZE
             if collide_rect.colliderect(wall):
                 print("collide!")
                 print(collide_rect.x)
+                print(self.rect.x)
                 return True
+        print("no collide!")
+        print(collide_rect.x)
+        print(self.rect.x)
         return False
         
 
@@ -62,7 +66,7 @@ class Obstacle(pg.sprite.Sprite):
         self.game = game
         self.image = pg.Surface((w, h))
         self.image.fill(GREEN)
-        self.image.set_alpha(100)
+        self.image.set_alpha(0)
         self.rect = pg.Rect(x,y,w,h)
         self.x = x
         self.y = y
