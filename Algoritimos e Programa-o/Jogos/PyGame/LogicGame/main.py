@@ -43,9 +43,9 @@ class Game:
         self.walls = pg.sprite.Group()
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
-                self.player = Player(self, tile_object.x, tile_object.y)
+                self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
             else:
-                Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+                Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -66,15 +66,15 @@ class Game:
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
-        for y in range(0, HEIGHT, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+            pg.draw.line(self.screen, DARKGREY, (x , 0), (x, HEIGHT))
+        for y in range(0, HEIGHT, TILESIZE//2):
+            pg.draw.line(self.screen, DARKGREY, (0, y), (WIDTH, y))
 
     def draw(self):
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
-        self.screen.blit(self.map_img, (0, 0))
-        #self.draw_grid()
+        self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
+        self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 

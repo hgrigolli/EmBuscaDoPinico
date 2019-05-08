@@ -32,5 +32,5 @@ PLAYER_IMG_DOWN1 = 'char_01 (3).png'
 PLAYER_IMG_DOWN2 = 'char_01 (2).png'
 PLAYER_IMG_DOWN3 = 'char_01 (4).png'
 
-MAP_SHIFT_X = 424
+MAP_SHIFT_X = 408
 MAP_SHIFT_Y = 84
