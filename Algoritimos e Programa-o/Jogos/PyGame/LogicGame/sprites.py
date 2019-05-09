@@ -49,13 +49,6 @@ class Player(pg.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-class PlayerAction(pg.sprite.Sprite):
-    def __init__(self, game):
-        self.groups = game.all_sprites, game.player_actions
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.image = game.action_img
-        self.rect = self.image.get_rect()
-
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
         self.groups = game.all_sprites,game.walls
