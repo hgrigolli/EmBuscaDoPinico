@@ -85,7 +85,16 @@ class ActionObstacle(pg.sprite.Sprite):
         self.width = w
         self.height = h
 
-    # def do_action(self, action):
-    #     if(action == 'towel'):
+    def do_action(self):
+        keys = pg.key.get_pressed()
+        if(keys[pg.K_SPACE]):
+            if(self.rect.colliderect(self.game.player.rect)):
+                if(self.action == "sink_action"):
+                    for i in range(3):
+                        print("Esfregando as mãos....")
+                    print("Limpo!")
+    
+    def update(self):
+        self.do_action()
 
 
