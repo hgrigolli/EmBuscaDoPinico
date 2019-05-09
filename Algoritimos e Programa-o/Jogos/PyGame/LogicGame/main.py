@@ -45,9 +45,9 @@ class Game:
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
-            elif(tile_object.name == 'towel' or tile_object.name == 'desentupidor' 
-                    or tile_object.name == 'vaso' or tile_object.name == 'papel' 
-                    or tile_object.name == 'sink' or tile_object.name == 'shower'):
+            elif(tile_object.name == 'towel_action' or tile_object.name == 'desentupidor' 
+                    or tile_object.name == 'vaso_action' or tile_object.name == 'papel' 
+                    or tile_object.name == 'sink_action' or tile_object.name == 'shower_action'):
                 ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
@@ -92,17 +92,17 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
-                    # self.player.move(dx=-1,index=6)
-                    self.player.rotate(index=6)
+                    self.player.move(dx=-1,index=6)
+                    #self.player.rotate(index=6)
                 if event.key == pg.K_RIGHT:
-                    # self.player.move(dx=1,index=3)
-                    self.player.rotate(index=3)
+                    self.player.move(dx=1,index=3)
+                    #self.player.rotate(index=3)
                 if event.key == pg.K_UP:
-                    # self.player.move(dy=-1,index=0)
-                    self.player.rotate(index=0)
+                    self.player.move(dy=-1,index=0)
+                   # self.player.rotate(index=0)
                 if event.key == pg.K_DOWN:
-                    # self.player.move(dy=1,index=9)
-                    self.player.rotate(index=9)
+                    self.player.move(dy=1,index=9)
+                   # self.player.rotate(index=9)
 
     def show_start_screen(self):
         pass
