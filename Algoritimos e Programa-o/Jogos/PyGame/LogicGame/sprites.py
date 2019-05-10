@@ -51,7 +51,7 @@ class Player(pg.sprite.Sprite):
 
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
-        self.groups = game.all_sprites,game.walls
+        self.groups = game.walls
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((w, h))
@@ -65,7 +65,7 @@ class Obstacle(pg.sprite.Sprite):
 
 class ActionObstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h, action):
-        self.groups = game.all_sprites, game.actions
+        self.groups = game.actions
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.action = action

@@ -70,16 +70,16 @@ class Game:
         self.all_sprites.update()
 
     def draw_grid(self):
-        for x in range(0, WIDTH, TILESIZE):
-            pg.draw.line(self.screen, DARKGREY, (x , 0), (x, HEIGHT))
-        for y in range(0, HEIGHT, TILESIZE//2):
-            pg.draw.line(self.screen, DARKGREY, (0, y), (WIDTH, y))
+        for x in range(0, self.map_rect.width , TILESIZE//2):
+            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X+x+6 , 0), (MAP_SHIFT_X+x+6, self.map_rect.height))
+        for y in range(0, self.map_rect.height, TILESIZE//2):
+            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
 
     def draw(self):
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
-        self.draw_grid()
+        #self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
