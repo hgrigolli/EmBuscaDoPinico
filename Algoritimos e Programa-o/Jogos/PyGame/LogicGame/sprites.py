@@ -38,7 +38,7 @@ class Player(pg.sprite.Sprite):
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
-            collide_rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
+            collide_rect = pg.Rect(self.rect.x + 12, (self.rect.y + 36) , 24, 12)
             collide_rect.x += dx * TILESIZE//2
             collide_rect.y += dy * TILESIZE//2
             if collide_rect.colliderect(wall):
@@ -51,7 +51,7 @@ class Player(pg.sprite.Sprite):
 
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
-        self.groups = game.walls
+        self.groups =  game.all_sprites, game.walls
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((w, h))
@@ -65,7 +65,7 @@ class Obstacle(pg.sprite.Sprite):
 
 class ActionObstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h, action):
-        self.groups = game.actions
+        self.groups =  game.all_sprites, game.actions
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.action = action
@@ -82,11 +82,30 @@ class ActionObstacle(pg.sprite.Sprite):
         keys = pg.key.get_pressed()
         if(keys[pg.K_SPACE]):
             if(self.rect.colliderect(self.game.player.rect)):
-                if(self.action == "sink_action"):
+                if(self.action == LAVAR_MAOS):
                     for i in range(3):
-                        print("Esfregando as mãos....")
+                        print("Esfregando as mãos."+"."*i)
                     print("Limpo!")
-    
+                elif(self.action == SECAR_MAOS):
+                    for i in range(3):
+                        print("Secando as mãos."+"."*i)
+                    print("Secas!")
+                elif(self.action == DESCARGA):
+                    for i in range(3):
+                        print("Dando descarga."+"."*i)
+                    print("Flusshhhhh")
+                elif(self.action == USAR_PAPEL):
+                    for i in range(3):
+                        print("Limpando a sujeira."+"."*i)
+                    print("Limpo!") 
+                elif(self.action == DESENTUPIR):
+                    for i in range(3):
+                        print("Desentupindo."+"."*i)
+                    print("Saiuuu!") 
+                elif(self.action == TOMAR_BANHO):
+                    for i in range(3):
+                        print("Esfregando as mãos."+"."*i)
+                    print("Limpo!")
     def update(self):
         self.do_action()
 
