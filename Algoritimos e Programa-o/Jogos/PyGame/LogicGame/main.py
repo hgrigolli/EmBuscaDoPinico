@@ -11,29 +11,46 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
-        pg.key.set_repeat(100, 100)
+        pg.key.set_repeat(500, 100)
         self.load_data()
 
     def load_data(self):
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'imagens')
-        char_folder = path.join(image_folder, 'char')
+        self.char_folder = path.join(image_folder, 'char')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.player_img = pg.image.load(path.join(char_folder, PLAYER_IMG)).convert_alpha()
+        self.player_imgs = []
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_RIGHT3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_LEFT3)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN1)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN2)).convert_alpha())
+        self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_DOWN3)).convert_alpha())
 
 
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
+        self.actions = pg.sprite.Group()
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
-                self.player = Player(self, tile_object.x, tile_object.y)
+                self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
+            elif(tile_object.name == 'towel_action' or tile_object.name == 'desentupidor' 
+                    or tile_object.name == 'vaso_action' or tile_object.name == 'papel' 
+                    or tile_object.name == 'sink_action' or tile_object.name == 'shower_action'):
+                ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
-                Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+                Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -53,15 +70,15 @@ class Game:
         self.all_sprites.update()
 
     def draw_grid(self):
-        for x in range(0, WIDTH, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
-        for y in range(0, HEIGHT, TILESIZE):
-            pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+        for x in range(0, self.map_rect.width , TILESIZE//2):
+            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X+x+6 , 0), (MAP_SHIFT_X+x+6, self.map_rect.height))
+        for y in range(0, self.map_rect.height, TILESIZE//2):
+            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
 
     def draw(self):
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
-        self.screen.blit(self.map_img, (0, 0))
+        self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
         #self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
@@ -75,13 +92,17 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1)
+                    self.player.move(dx=-1,index=6)
+                    #self.player.rotate(index=6)
                 if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1)
+                    self.player.move(dx=1,index=3)
+                    #self.player.rotate(index=3)
                 if event.key == pg.K_UP:
-                    self.player.move(dy=-1)
+                    self.player.move(dy=-1,index=0)
+                   # self.player.rotate(index=0)
                 if event.key == pg.K_DOWN:
-                    self.player.move(dy=1)
+                    self.player.move(dy=1,index=9)
+                   # self.player.rotate(index=9)
 
     def show_start_screen(self):
         pass
