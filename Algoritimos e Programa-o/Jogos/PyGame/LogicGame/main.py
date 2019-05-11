@@ -18,11 +18,31 @@ class Game:
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'imagens')
         self.char_folder = path.join(image_folder, 'char')
+        self.action_folder = path.join(image_folder, 'actions')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         self.player_imgs = []
+        self.player_actions_imgs = []
+
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_BAIXO)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_DIREITA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_ESQUERDA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TORNEIRA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TORNEIRA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TAMPA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DAR_DESCARGA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TAMPA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESENTUPIDOR)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LAVAR_MAOS_ACTION)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, SECAR_MAOS_ACTION)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAPEL_ACTION)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAUSE)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PLAY)).convert_alpha())
+
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP1)).convert_alpha())
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP2)).convert_alpha())
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP3)).convert_alpha())
@@ -42,6 +62,8 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.actions = pg.sprite.Group()
+        self.player_actions = pg.sprite.Group()
+        self.mouse_pos = pg.mouse.get_pos()
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
@@ -51,13 +73,14 @@ class Game:
                 ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
+        ChooseAction(self, 10, 10, "papel")
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
-            self.events()
+            # self.events()
             self.update()
             self.draw()
 
@@ -68,6 +91,7 @@ class Game:
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
+        self.player_actions.update()
 
     def draw_grid(self):
         for x in range(0, self.map_rect.width , TILESIZE//2):
@@ -82,6 +106,7 @@ class Game:
         #self.draw_grid()
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
+        self.player_actions.draw(self.screen)
         pg.display.flip()
 
     def events(self):
@@ -89,21 +114,7 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_ESCAPE:
-                    self.quit()
-                if event.key == pg.K_LEFT:
-                    self.player.move(dx=-1,index=6)
-                    #self.player.rotate(index=6)
-                if event.key == pg.K_RIGHT:
-                    self.player.move(dx=1,index=3)
-                    #self.player.rotate(index=3)
-                if event.key == pg.K_UP:
-                    self.player.move(dy=-1,index=0)
-                   # self.player.rotate(index=0)
-                if event.key == pg.K_DOWN:
-                    self.player.move(dy=1,index=9)
-                   # self.player.rotate(index=9)
+            
 
     def show_start_screen(self):
         pass

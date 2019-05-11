@@ -104,9 +104,84 @@ class ActionObstacle(pg.sprite.Sprite):
                     print("Saiuuu!") 
                 elif(self.action == TOMAR_BANHO):
                     for i in range(3):
-                        print("Esfregando as mãos."+"."*i)
+                        print("Tomando banho."+"."*i)
                     print("Limpo!")
     def update(self):
         self.do_action()
 
 
+class ChooseAction(pg.sprite.Sprite):
+        def __init__(self, game, x, y, action):
+            self.groups =  game.player_actions
+            pg.sprite.Sprite.__init__(self, self.groups)
+            self.game = game
+            self.drag = False
+            self.action = action
+            self.image = game.player_actions_imgs[1]
+            self.rect = self.image.get_rect()
+            self.x = x
+            self.y = y
+
+        def get_action(self):
+            keys = pg.key.get_pressed() ##Teclado
+            # offset_x = 0
+            # offset_y = 0
+            # print("eventos = ", pg.event.get())
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.game.quit()
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        if self.rect.collidepoint(event.pos):
+                            self.drag = True
+                            # mouse_x, mouse_y = event.pos
+                            # offset_x = self.rect.x - mouse_x
+                            # offset_y = self.rect.y - mouse_y
+                            print("colide")
+                elif(event.type == pg.MOUSEBUTTONUP):
+                    if(event.button == 1):
+                        self.drag = False
+                elif(event.type == pg.MOUSEMOTION):
+                    if self.drag:
+                            mouse_x, mouse_y = event.pos
+                            self.rect.x = mouse_x
+                            self.rect.y = mouse_y
+                            print("andando")
+
+
+        
+        def update(self):
+            self.get_action()
+
+
+
+class PlayerAction(pg.sprite.Sprite):
+    def __init__(self, game, x, y, w, h, action):
+        self.groups =  game.player_actions
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.action = action
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.width = w
+        self.height = h
+
+    def update(self):
+        self.acao
+
+    def acao(self):
+        keys = pg.key.get_pressed()
+        if(keys[pg.KEYDOWN]):
+            if keys[pg.K_LEFT]:
+                self.game.player.move(dx=-1,index=6)
+                #self.player.rotate(index=6)
+            if keys[pg.K_RIGHT]:
+                self.game.player.move(dx=1,index=3)
+                #self.player.rotate(index=3)
+            if keys[pg.K_UP]:
+                self.game.player.move(dy=-1,index=0)
+                # self.player.rotate(index=0)
+            if keys[pg.K_DOWN]:
+                self.game.player.move(dy=1,index=9)
+                # self.player.rotate(index=9)        
