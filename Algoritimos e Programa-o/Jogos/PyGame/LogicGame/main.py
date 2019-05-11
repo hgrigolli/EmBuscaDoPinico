@@ -81,6 +81,7 @@ class Game:
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
         #self.draw_grid()
         self.all_sprites.draw(self.screen)
+        self.map.render_acima(self.screen)
         pg.display.flip()
 
     def events(self):

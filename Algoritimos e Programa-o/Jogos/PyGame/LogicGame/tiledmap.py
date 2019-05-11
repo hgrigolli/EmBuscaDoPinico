@@ -14,10 +14,22 @@ class TiledMap:
         for layer in self.tmxdata.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid in layer:
-                    tile = ti(gid)
-                    if tile:
-                        surface.blit(tile, (x * self.tmxdata.tilewidth, 
-                                            y * self.tmxdata.tileheight))
+                    if(layer.name != 'objetoquatoacima'):
+                        tile = ti(gid)
+                        if tile:
+                            surface.blit(tile, (x * self.tmxdata.tilewidth, 
+                                                y * self.tmxdata.tileheight))
+
+    def render_acima(self, surface):
+        ti = self.tmxdata.get_tile_image_by_gid
+        for layer in self.tmxdata.visible_layers:
+            if isinstance(layer, pytmx.TiledTileLayer):
+                for x, y, gid in layer:
+                    if(layer.name == 'objetoquatoacima'):
+                        tile = ti(gid)
+                        if tile:
+                            surface.blit(tile, (x * self.tmxdata.tilewidth + MAP_SHIFT_X, 
+                                                y * self.tmxdata.tileheight))        
     
     def make_map(self):
         temp_surface = pg.Surface((self.width, self.height))

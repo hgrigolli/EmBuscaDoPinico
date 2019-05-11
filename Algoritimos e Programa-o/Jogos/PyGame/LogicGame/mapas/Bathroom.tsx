@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="2019.04.25" name="Bathroom" tilewidth="97" tileheight="134" tilecount="37" columns="0">
+<tileset version="1.2" tiledversion="1.2.3" name="Bathroom" tilewidth="97" tileheight="134" tilecount="37" columns="0">
  <grid orientation="orthogonal" width="24" height="24"/>
  <tile id="0">
   <image width="17" height="24" source="../imagens/bath/bath_01.png"/>
- </tile>
- <tile id="1">
-  <image width="30" height="27" source="../imagens/bath/bath_02.png"/>
  </tile>
  <tile id="2">
   <image width="46" height="134" source="../imagens/bath/bath_03.png"/>
@@ -56,10 +53,10 @@
   <image width="45" height="72" source="../imagens/bath/bath_18.png"/>
  </tile>
  <tile id="18">
-  <image width="48" height="53" source="../imagens/bath/bath_19.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_19.png"/>
  </tile>
  <tile id="19">
-  <image width="48" height="53" source="../imagens/bath/bath_20.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_20.png"/>
  </tile>
  <tile id="20">
   <image width="30" height="70" source="../imagens/bath/bath_21.png"/>
@@ -68,10 +65,10 @@
   <image width="32" height="69" source="../imagens/bath/bath_22.png"/>
  </tile>
  <tile id="22">
-  <image width="48" height="53" source="../imagens/bath/bath_23.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_23.png"/>
  </tile>
  <tile id="23">
-  <image width="49" height="53" source="../imagens/bath/bath_24.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_24.png"/>
  </tile>
  <tile id="24">
   <image width="12" height="26" source="../imagens/bath/bath_25.png"/>
@@ -80,16 +77,16 @@
   <image width="47" height="43" source="../imagens/bath/bath_26.png"/>
  </tile>
  <tile id="26">
-  <image width="48" height="45" source="../imagens/bath/bath_27.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_27.png"/>
  </tile>
  <tile id="27">
-  <image width="48" height="45" source="../imagens/bath/bath_28.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_28.png"/>
  </tile>
  <tile id="28">
   <image width="25" height="43" source="../imagens/bath/bath_29.png"/>
  </tile>
  <tile id="29">
-  <image width="44" height="48" source="../imagens/bath/bath_30.png"/>
+  <image width="48" height="48" source="../imagens/bath/bath_30.png"/>
  </tile>
  <tile id="30">
   <image width="39" height="47" source="../imagens/bath/bath_31.png"/>
@@ -103,13 +100,16 @@
  <tile id="33">
   <image width="9" height="23" source="../imagens/bath/bath_34.png"/>
  </tile>
- <tile id="34">
-  <image width="9" height="23" source="../imagens/bath/bath_35.png"/>
- </tile>
  <tile id="35">
   <image width="24" height="24" source="../imagens/bath/bath_36.png"/>
  </tile>
  <tile id="36">
   <image width="26" height="44" source="../imagens/bath/bath_37.png"/>
+ </tile>
+ <tile id="37">
+  <image width="24" height="24" source="../imagens/bath/bath_35.png"/>
+ </tile>
+ <tile id="38">
+  <image width="24" height="24" source="../imagens/bath/bath_02.png"/>
  </tile>
 </tileset>

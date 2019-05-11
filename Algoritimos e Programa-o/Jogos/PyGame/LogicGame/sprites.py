@@ -7,7 +7,7 @@ class Player(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.index = 0
+        self.index = 3
         self.image = game.player_imgs[self.index]
         self.rect = self.image.get_rect()
         # Rect de Colisão
@@ -43,9 +43,6 @@ class Player(pg.sprite.Sprite):
             collide_rect.y += dy * TILESIZE//2
             if collide_rect.colliderect(wall):
                 return True
-        print("no collide!")
-        print(collide_rect.x)
-        print(self.rect.x)
         return False
         
     def update(self):
@@ -54,7 +51,7 @@ class Player(pg.sprite.Sprite):
 
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
-        self.groups =  game.all_sprites, game.walls
+        self.groups =  game.walls
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((w, h))
@@ -68,7 +65,7 @@ class Obstacle(pg.sprite.Sprite):
 
 class ActionObstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h, action):
-        self.groups =  game.all_sprites, game.actions
+        self.groups =  game.actions
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.action = action
