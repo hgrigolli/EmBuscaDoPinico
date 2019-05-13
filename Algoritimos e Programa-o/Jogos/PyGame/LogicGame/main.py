@@ -13,18 +13,26 @@ class Game:
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.load_data()
+        pg.mouse.set_visible(False)
 
     def load_data(self):
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'imagens')
         self.char_folder = path.join(image_folder, 'char')
         self.action_folder = path.join(image_folder, 'actions')
+        self.ui_folder = path.join(image_folder, 'UI')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         self.player_imgs = []
         self.player_actions_imgs = []
+        self.mouse_img = []
+        self.rectmov_img = pg.image.load(path.join(self.ui_folder, 'rect_movement.png')).convert_alpha()
+
+        
+        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_pointerFlat.png')).convert_alpha())
+        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_hand.png')).convert_alpha())
 
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_BAIXO)).convert_alpha())
@@ -63,7 +71,10 @@ class Game:
         self.walls = pg.sprite.Group()
         self.actions = pg.sprite.Group()
         self.player_actions = pg.sprite.Group()
+        self.player_movement = pg.sprite.Group()
+        self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
+        self.evento = 0
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
@@ -73,14 +84,16 @@ class Game:
                 ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
-        ChooseAction(self, 10, 10, "papel")
+        ChooseAction(self, 0, 0, MOVER_BAIXO_IND)
+        PlayPauseAction(self, 350, 10)
+        PlayerAction(self,0,0)
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
-            # self.events()
+            self.events()
             self.update()
             self.draw()
 
@@ -107,6 +120,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
         self.player_actions.draw(self.screen)
+        self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
         pg.display.flip()
 
     def events(self):
@@ -114,6 +128,7 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
+            self.evento = event
             
 
     def show_start_screen(self):
