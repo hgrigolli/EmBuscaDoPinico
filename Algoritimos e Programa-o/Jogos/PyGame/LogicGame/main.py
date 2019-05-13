@@ -86,7 +86,7 @@ class Game:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
         ChooseAction(self, 0, 0, MOVER_BAIXO_IND)
         PlayPauseAction(self, 350, 10)
-        PlayerAction(self,0,0)
+        PlayerActionHolder(self,0,0)
 
     def run(self):
         # game loop - set self.playing = False to end the game

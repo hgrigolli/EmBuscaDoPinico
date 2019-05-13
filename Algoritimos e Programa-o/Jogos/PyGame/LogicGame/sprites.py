@@ -178,6 +178,7 @@ class PlayPauseAction(pg.sprite.Sprite):
                     self.mouse_hold = True
         elif(event.type == pg.MOUSEBUTTONUP):
             self.mouse_hold = False
+        
 
 
     def update(self):
@@ -185,31 +186,33 @@ class PlayPauseAction(pg.sprite.Sprite):
 
 
 
-class PlayerAction(pg.sprite.Sprite):
+class PlayerActionHolder(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups =  game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = self.game.rectmov_img
         self.rect = self.image.get_rect()
+        self.action_rect = self.rect
+        self.action_rect.x = self.x + 152
         self.x = x
         self.y = y
 
-    # def update(self):
-    #     self.draw.rect(self.game.screen, RED, self.rect)
+    def update(self):
+        self.get_action()
 
-    # def acao(self):
-    #     keys = pg.key.get_pressed()
-    #     if(keys[pg.KEYDOWN]):
-    #         if keys[pg.K_LEFT]:
-    #             self.game.player.move(dx=-1,index=6)
-    #             #self.player.rotate(index=6)
-    #         if keys[pg.K_RIGHT]:
-    #             self.game.player.move(dx=1,index=3)
-    #             #self.player.rotate(index=3)
-    #         if keys[pg.K_UP]:
-    #             self.game.player.move(dy=-1,index=0)
-    #             # self.player.rotate(index=0)
-    #         if keys[pg.K_DOWN]:
-    #             self.game.player.move(dy=1,index=9)
-    #             # self.player.rotate(index=9)        
+    def get_action(self):
+        keys = pg.key.get_pressed()
+        if(keys[pg.KEYDOWN]):
+            if keys[pg.K_LEFT]:
+                self.game.player.move(dx=-1,index=6)
+                #self.player.rotate(index=6)
+            if keys[pg.K_RIGHT]:
+                self.game.player.move(dx=1,index=3)
+                #self.player.rotate(index=3)
+            if keys[pg.K_UP]:
+                self.game.player.move(dy=-1,index=0)
+                # self.player.rotate(index=0)
+            if keys[pg.K_DOWN]:
+                self.game.player.move(dy=1,index=9)
+                # self.player.rotate(index=9)        
