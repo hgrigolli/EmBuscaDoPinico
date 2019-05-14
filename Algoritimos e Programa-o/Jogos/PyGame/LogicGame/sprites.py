@@ -264,12 +264,21 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def show_action(self, surface):
         posx = 30
         posy = 135
+        self.is_loop = False
         for action in self.actions_list:
             self.imagem = action.image
             self.imagem_rect = self.imagem.get_rect()
             self.imagem_rect.x = posx
             self.imagem_rect.y = posy
-            surface.blit(self.imagem, self.imagem_rect)
+            if(self.is_loop):
+                self.is_loop = False
+                self.imagem_rect.x = self.loop_pos[0] + 8
+                self.imagem_rect.y = self.loop_pos[1] + 4
+
+            if(self.imagem == self.game.player_actions_imgs[LOOP_IND]):
+                self.is_loop = True
+                self.loop_pos = (posx , posy)
+
             posy += 51
             if(posy > 585):
                 posy = 135
@@ -277,6 +286,8 @@ class PlayerActionHolder(pg.sprite.Sprite):
             if(posx >= 104*4):
                 posx = 30
                 # warning: vector limit
+
+            surface.blit(self.imagem, self.imagem_rect)
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
@@ -302,3 +313,21 @@ class PlayerActionChooser(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+
+class LoopConfig(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups =  game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = self.game.rectchoose_img
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+
+
+
+
+class ActionAnimation(pg.sprite.Sprite):
+    pass
