@@ -131,6 +131,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
         self.player_actions.draw(self.screen)
+        self.playerActionHolder.show_action(self.screen)
         self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
         pg.display.flip()
 

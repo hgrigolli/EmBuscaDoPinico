@@ -10,6 +10,7 @@ class Player(pg.sprite.Sprite):
         self.index = 3
         self.image = game.player_imgs[self.index]
         self.rect = self.image.get_rect()
+        self.startpos = (x, y)
         # Rect de Colisão
         # self.rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
         # self.image = pg.Surface((self.rect.width, self.rect.height))
@@ -35,6 +36,10 @@ class Player(pg.sprite.Sprite):
 
     def rotate(self, index):
         self.image = self.game.player_imgs[index]
+
+    def reset_pos(self):
+        self.rect.x = self.startpos[0]
+        self.rect.y = self.startpos[1]
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
@@ -80,32 +85,33 @@ class ActionObstacle(pg.sprite.Sprite):
 
     def do_action(self):
         keys = pg.key.get_pressed()
-        if(keys[pg.K_SPACE]):
-            if(self.rect.colliderect(self.game.player.rect)):
-                if(self.action == LAVAR_MAOS):
-                    for i in range(3):
-                        print("Esfregando as mãos."+"."*i)
-                    print("Limpo!")
-                elif(self.action == SECAR_MAOS):
-                    for i in range(3):
-                        print("Secando as mãos."+"."*i)
-                    print("Secas!")
-                elif(self.action == DESCARGA):
-                    for i in range(3):
-                        print("Dando descarga."+"."*i)
-                    print("Flusshhhhh")
-                elif(self.action == USAR_PAPEL):
-                    for i in range(3):
-                        print("Limpando a sujeira."+"."*i)
-                    print("Limpo!") 
-                elif(self.action == DESENTUPIR):
-                    for i in range(3):
-                        print("Desentupindo."+"."*i)
-                    print("Saiuuu!") 
-                elif(self.action == TOMAR_BANHO):
-                    for i in range(3):
-                        print("Tomando banho."+"."*i)
-                    print("Limpo!")
+        # if(keys[pg.K_SPACE]):
+        #     if(self.rect.colliderect(self.game.player.rect)):
+        #         if(self.action == LAVAR_MAOS):
+        #             for i in range(3):
+        #                 print("Esfregando as mãos."+"."*i)
+        #             print("Limpo!")
+        #         elif(self.action == SECAR_MAOS):
+        #             for i in range(3):
+        #                 print("Secando as mãos."+"."*i)
+        #             print("Secas!")
+        #         elif(self.action == DESCARGA):
+        #             for i in range(3):
+        #                 print("Dando descarga."+"."*i)
+        #             print("Flusshhhhh")
+        #         elif(self.action == USAR_PAPEL):
+        #             for i in range(3):
+        #                 print("Limpando a sujeira."+"."*i)
+        #             print("Limpo!") 
+        #         elif(self.action == DESENTUPIR):
+        #             for i in range(3):
+        #                 print("Desentupindo."+"."*i)
+        #             print("Saiuuu!") 
+        #         elif(self.action == TOMAR_BANHO):
+        #             for i in range(3):
+        #                 print("Tomando banho."+"."*i)
+        #             print("Limpo!")
+
     def update(self):
         self.do_action()
 
@@ -233,10 +239,9 @@ class PlayPauseAction(pg.sprite.Sprite):
 
     
     def pause(self):
-        self.game.new()
-        self.game.run()
         print("reset")
-        # self.game.new()
+        self.game.playerActionHolder.actions_list = []
+        self.game.player.reset_pos()
 
 
 
@@ -255,6 +260,22 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def add_action(self, action):
         self.actions_list.append(action)
         action.reset_pos()
+
+    def show_action(self, surface):
+        posx = 30
+        posy = 150
+        for action in self.actions_list:
+            imagem = action.image
+            imagem_rect = imagem.get_rect()
+            imagem_rect.x = posx
+            imagem_rect.y = posy
+            surface.blit(imagem, imagem_rect)
+            posy += 75.1
+            if(posy > 600):
+                posy = 150
+                posx += 104
+            if(posx >= 104*4):
+                posx = 30
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
