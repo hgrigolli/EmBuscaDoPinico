@@ -28,7 +28,9 @@ class Game:
         self.player_imgs = []
         self.player_actions_imgs = []
         self.mouse_img = []
+        
         self.rectmov_img = pg.image.load(path.join(self.ui_folder, 'rect_movement.png')).convert_alpha()
+        self.rectchoose_img = pg.image.load(path.join(self.ui_folder, 'rect_chooser.png')).convert_alpha()
 
         
         self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_pointerFlat.png')).convert_alpha())
@@ -84,9 +86,18 @@ class Game:
                 ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
-        ChooseAction(self, 0, 0, MOVER_BAIXO_IND)
-        PlayPauseAction(self, 350, 10)
-        PlayerActionHolder(self,0,0)
+        # ChooseAction(self, 0,640,0)
+        self.playPauseAction = PlayPauseAction(self, 350, 10)
+        self.playerActionHolder = PlayerActionHolder(self,0,0)
+        self.playerActionChooser = PlayerActionChooser(self, 0,600)
+        for i in range(len(self.player_actions_imgs)-2):
+            posx = 0 + i*3*TILESIZE
+            posy = 640
+            if(posx <= WIDTH):
+                ChooseAction(self, posx, posy, i)
+            else:
+                posy += 48
+                posx = 0
 
     def run(self):
         # game loop - set self.playing = False to end the game

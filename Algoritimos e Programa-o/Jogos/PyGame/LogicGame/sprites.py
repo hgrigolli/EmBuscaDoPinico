@@ -111,41 +111,83 @@ class ActionObstacle(pg.sprite.Sprite):
 
 
 class ChooseAction(pg.sprite.Sprite):
-        def __init__(self, game, x, y, action_index):
-            self.groups =  game.player_actions
-            pg.sprite.Sprite.__init__(self, self.groups)
-            self.game = game
-            self.drag = False
-            self.image = game.player_actions_imgs[action_index]
-            self.rect = self.image.get_rect()
-            self.x = x
-            self.y = y
+    def __init__(self, game, x, y, action_index):
+        self.groups =  game.player_actions
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.drag = False
+        self.action_index = action_index
+        self.image = game.player_actions_imgs[action_index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.startpos = (x, y)
+        self.added = False
 
-        def get_action(self):
-            event = self.game.evento
-            if event.type == pg.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    if self.rect.collidepoint(event.pos):
-                        self.drag = True
-                        self.game.mouse_img_active = self.game.mouse_img[1]
-                        mouse_x, mouse_y = event.pos
-                        self.offset_x = self.rect.x - mouse_x
-                        self.offset_y = self.rect.y - mouse_y
-            elif(event.type == pg.MOUSEBUTTONUP):
-                if(event.button == 1):
-                    self.drag = False
-                    self.game.mouse_img_active = self.game.mouse_img[0]
-            elif(event.type == pg.MOUSEMOTION):
-                if self.drag:
+    def get_action(self):
+        event = self.game.evento
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if self.rect.collidepoint(event.pos):
+                    self.drag = True
                     self.game.mouse_img_active = self.game.mouse_img[1]
                     mouse_x, mouse_y = event.pos
-                    self.rect.x = mouse_x + self.offset_x
-                    self.rect.y = mouse_y + self.offset_y
+                    self.offset_x = self.rect.x - mouse_x
+                    self.offset_y = self.rect.y - mouse_y
+                    self.added = False
+        elif(event.type == pg.MOUSEBUTTONUP):
+            if(event.button == 1):
+                self.drag = False
+                self.game.mouse_img_active = self.game.mouse_img[0]
+                if self.rect.colliderect(self.game.playerActionHolder.rect):
+                    if(not self.added):
+                        self.game.playerActionHolder.add_action(self)
+                        self.added = True
+        elif(event.type == pg.MOUSEMOTION):
+            if self.drag:
+                self.game.mouse_img_active = self.game.mouse_img[1]
+                mouse_x, mouse_y = event.pos
+                self.rect.x = mouse_x + self.offset_x
+                self.rect.y = mouse_y + self.offset_y
 
 
         
-        def update(self):
-            self.get_action()
+    def update(self):
+        self.get_action()
+
+    
+    def reset_pos(self):
+        self.rect.x = self.startpos[0]
+        self.rect.y = self.startpos[1]
+
+    def execute(self):
+        if(self.action_index == MOVER_CIMA_IND):
+            self.game.player.move(dy=-1,index=0)
+        if(self.action_index == MOVER_BAIXO_IND):
+            self.game.player.move(dy=1,index=9)
+        if(self.action_index == MOVER_ESQUERDA_IND):
+            self.game.player.move(dx=-1,index=6)
+        if(self.action_index == MOVER_DIREITA_IND):
+            self.game.player.move(dx=1,index=3)
+        # if(self.action_index == ABRIR_TORNEIRA_IND):
+
+        # if(self.action_index == FECHAR_TORNEIRA_IND):
+
+        # if(self.action_index == ABRIR_TAMPA_IND):
+
+        # if(self.action_index == DAR_DESCARGA_IND):
+
+        # if(self.action_index == FECHAR_TAMPA_IND):
+
+        # if(self.action_index == DESENTUPIDOR_IND):
+
+        # if(self.action_index == LAVAR_MAOS_ACTION_IND):
+
+        # if(self.action_index == SECAR_MAOS_ACTION_IND):
+
+        # if(self.action_index == PAPEL_ACTION_IND):
+
+        # if(self.action_index == LOOP_IND):
 
 
 
@@ -170,12 +212,14 @@ class PlayPauseAction(pg.sprite.Sprite):
                     self.image = self.game.player_actions_imgs[self.index-1]
                     self.playing = True
                     self.mouse_hold = True
+                    self.play()
         elif(event.type == pg.MOUSEBUTTONDOWN and self.playing and not self.mouse_hold):
             if(event.button == 1):
                 if self.rect.collidepoint(event.pos):
                     self.image = self.game.player_actions_imgs[self.index]
                     self.playing = False
                     self.mouse_hold = True
+                    self.pause()
         elif(event.type == pg.MOUSEBUTTONUP):
             self.mouse_hold = False
         
@@ -183,6 +227,17 @@ class PlayPauseAction(pg.sprite.Sprite):
 
     def update(self):
         self.get_action()
+
+    def play(self):
+        self.game.playerActionHolder.execute_action()
+
+    
+    def pause(self):
+        self.game.new()
+        self.game.run()
+        print("reset")
+        # self.game.new()
+
 
 
 
@@ -193,26 +248,32 @@ class PlayerActionHolder(pg.sprite.Sprite):
         self.game = game
         self.image = self.game.rectmov_img
         self.rect = self.image.get_rect()
-        self.action_rect = self.rect
-        self.action_rect.x = self.x + 152
+        self.actions_list = []
         self.x = x
         self.y = y
 
-    def update(self):
-        self.get_action()
+    def add_action(self, action):
+        self.actions_list.append(action)
+        action.reset_pos()
 
-    def get_action(self):
-        keys = pg.key.get_pressed()
-        if(keys[pg.KEYDOWN]):
-            if keys[pg.K_LEFT]:
-                self.game.player.move(dx=-1,index=6)
-                #self.player.rotate(index=6)
-            if keys[pg.K_RIGHT]:
-                self.game.player.move(dx=1,index=3)
-                #self.player.rotate(index=3)
-            if keys[pg.K_UP]:
-                self.game.player.move(dy=-1,index=0)
-                # self.player.rotate(index=0)
-            if keys[pg.K_DOWN]:
-                self.game.player.move(dy=1,index=9)
-                # self.player.rotate(index=9)        
+    def execute_action(self):
+        if(self.game.playPauseAction.playing):
+            for action in self.actions_list:
+                action.execute()
+                self.game.update()
+                self.game.draw()
+                pg.time.wait(80)
+            self.game.playPauseAction.playing = False
+            self.game.playPauseAction.image =  self.game.player_actions_imgs[15]
+
+
+
+class PlayerActionChooser(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups =  game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = self.game.rectchoose_img
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
