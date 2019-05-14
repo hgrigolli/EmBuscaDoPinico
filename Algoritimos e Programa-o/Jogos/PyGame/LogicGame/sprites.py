@@ -264,6 +264,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def show_action(self, surface):
         posx = 30
         posy = 135
+        self.loopImage = False
         self.is_loop = False
         for action in self.actions_list:
             self.imagem = action.image
@@ -274,20 +275,33 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 self.is_loop = False
                 self.imagem_rect.x = self.loop_pos[0] + 8
                 self.imagem_rect.y = self.loop_pos[1] + 4
+                self.loopImage = True
 
             if(self.imagem == self.game.player_actions_imgs[LOOP_IND]):
                 self.is_loop = True
                 self.loop_pos = (posx , posy)
+                self.loop_rect = self.imagem_rect
 
-            posy += 51
-            if(posy > 585):
-                posy = 135
-                posx += 104
-            if(posx >= 104*4):
-                posx = 30
-                # warning: vector limit
+            
+            if(not self.is_loop):
+                posy += 51
+                if(self.imagem_rect.colliderect(self.game.playerActionChooser.rect)):
+                    posy = 135
+                    posx += 104
+                if(posx >= 104*4):
+                    posx = 30
+            else:
+                posy += 21
+                if(self.imagem_rect.colliderect(self.game.playerActionChooser.rect)):
+                    posy = 135
+                    posx += 104
+                if(posx >= 104*4):
+                    posx = 30   
 
             surface.blit(self.imagem, self.imagem_rect)
+            if(self.loopImage):
+                surface.blit(self.game.player_actions_imgs[LOOP_IND], self.loop_rect)
+                self.loopImage = False
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
