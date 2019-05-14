@@ -83,37 +83,37 @@ class ActionObstacle(pg.sprite.Sprite):
         self.width = w
         self.height = h
 
-    def do_action(self):
-        keys = pg.key.get_pressed()
-        # if(keys[pg.K_SPACE]):
-        #     if(self.rect.colliderect(self.game.player.rect)):
-        #         if(self.action == LAVAR_MAOS):
-        #             for i in range(3):
-        #                 print("Esfregando as mãos."+"."*i)
-        #             print("Limpo!")
-        #         elif(self.action == SECAR_MAOS):
-        #             for i in range(3):
-        #                 print("Secando as mãos."+"."*i)
-        #             print("Secas!")
-        #         elif(self.action == DESCARGA):
-        #             for i in range(3):
-        #                 print("Dando descarga."+"."*i)
-        #             print("Flusshhhhh")
-        #         elif(self.action == USAR_PAPEL):
-        #             for i in range(3):
-        #                 print("Limpando a sujeira."+"."*i)
-        #             print("Limpo!") 
-        #         elif(self.action == DESENTUPIR):
-        #             for i in range(3):
-        #                 print("Desentupindo."+"."*i)
-        #             print("Saiuuu!") 
-        #         elif(self.action == TOMAR_BANHO):
-        #             for i in range(3):
-        #                 print("Tomando banho."+"."*i)
-        #             print("Limpo!")
+    # def do_action(self):
+    #     keys = pg.key.get_pressed()
+    #     # if(keys[pg.K_SPACE]):
+    #     #     if(self.rect.colliderect(self.game.player.rect)):
+    #     #         if(self.action == LAVAR_MAOS):
+    #     #             for i in range(3):
+    #     #                 print("Esfregando as mãos."+"."*i)
+    #     #             print("Limpo!")
+    #     #         elif(self.action == SECAR_MAOS):
+    #     #             for i in range(3):
+    #     #                 print("Secando as mãos."+"."*i)
+    #     #             print("Secas!")
+    #     #         elif(self.action == DESCARGA):
+    #     #             for i in range(3):
+    #     #                 print("Dando descarga."+"."*i)
+    #     #             print("Flusshhhhh")
+    #     #         elif(self.action == USAR_PAPEL):
+    #     #             for i in range(3):
+    #     #                 print("Limpando a sujeira."+"."*i)
+    #     #             print("Limpo!") 
+    #     #         elif(self.action == DESENTUPIR):
+    #     #             for i in range(3):
+    #     #                 print("Desentupindo."+"."*i)
+    #     #             print("Saiuuu!") 
+    #     #         elif(self.action == TOMAR_BANHO):
+    #     #             for i in range(3):
+    #     #                 print("Tomando banho."+"."*i)
+    #     #             print("Limpo!")
 
-    def update(self):
-        self.do_action()
+    # def update(self):
+    #     self.do_action()
 
 
 class ChooseAction(pg.sprite.Sprite):
@@ -263,22 +263,25 @@ class PlayerActionHolder(pg.sprite.Sprite):
 
     def show_action(self, surface):
         posx = 30
-        posy = 150
+        posy = 135
         for action in self.actions_list:
-            imagem = action.image
-            imagem_rect = imagem.get_rect()
-            imagem_rect.x = posx
-            imagem_rect.y = posy
-            surface.blit(imagem, imagem_rect)
-            posy += 75.1
-            if(posy > 600):
-                posy = 150
+            self.imagem = action.image
+            self.imagem_rect = self.imagem.get_rect()
+            self.imagem_rect.x = posx
+            self.imagem_rect.y = posy
+            surface.blit(self.imagem, self.imagem_rect)
+            posy += 51
+            if(posy > 585):
+                posy = 135
                 posx += 104
             if(posx >= 104*4):
                 posx = 30
+                # warning: vector limit
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
+            posx = 30
+            posy = 135
             for action in self.actions_list:
                 action.execute()
                 self.game.update()
@@ -286,6 +289,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 pg.time.wait(80)
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[15]
+
 
 
 

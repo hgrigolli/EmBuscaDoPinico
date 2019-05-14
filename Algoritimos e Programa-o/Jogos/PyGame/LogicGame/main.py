@@ -48,8 +48,8 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESENTUPIDOR)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LAVAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, SECAR_MAOS_ACTION)).convert_alpha())
-        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAPEL_ACTION)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAUSE)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PLAY)).convert_alpha())
 
@@ -86,18 +86,17 @@ class Game:
                 ActionObstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height, tile_object.name)
             else:
                 Obstacle(self, tile_object.x + MAP_SHIFT_X, tile_object.y, tile_object.width, tile_object.height)
-        # ChooseAction(self, 0,640,0)
         self.playPauseAction = PlayPauseAction(self, 350, 10)
         self.playerActionHolder = PlayerActionHolder(self,0,0)
         self.playerActionChooser = PlayerActionChooser(self, 0,600)
         for i in range(len(self.player_actions_imgs)-2):
-            posx = 0 + i*3*TILESIZE
+            posx = 10 + i*3*TILESIZE
             posy = 640
             if(posx <= WIDTH):
                 ChooseAction(self, posx, posy, i)
             else:
                 posy += 48
-                posx = 0
+                posx = 10
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -127,12 +126,13 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
-        #self.draw_grid()
+        self.draw_grid()
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
-        self.player_actions.draw(self.screen)
         self.playerActionHolder.show_action(self.screen)
+        self.player_actions.draw(self.screen)
         self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
+
         pg.display.flip()
 
     def events(self):
