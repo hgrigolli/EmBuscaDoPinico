@@ -199,8 +199,19 @@ class ChooseAction(pg.sprite.Sprite):
         # if(self.action_index == PAPEL_ACTION_IND):
 
         if(self.action_index == LOOP_IND):
-            print("LOOP ACTION: ", self.loop_action)
-            print("LOOP CYCLES: ", self.loop_cycles)
+            n = self.loop_cycles
+            for i in range(n):
+                if(self.loop_action == MOVER_CIMA_IND):
+                    self.game.player.move(dy=-1,index=0)
+                if(self.loop_action == MOVER_BAIXO_IND):
+                    self.game.player.move(dy=1,index=9)
+                if(self.loop_action == MOVER_ESQUERDA_IND):
+                    self.game.player.move(dx=-1,index=6)
+                if(self.loop_action == MOVER_DIREITA_IND):
+                    self.game.player.move(dx=1,index=3)
+                self.game.update()
+                self.game.draw()
+                pg.time.wait(80)
             
 
 
@@ -355,7 +366,7 @@ class LoopAction(ChooseAction):
     def __init__(self, game, x, y, action_index = LOOP_IND):
         ChooseAction.__init__(self, game, x, y, action_index)
         self.loop_action = 0
-        self.loop_cycles = 0
+        self.loop_cycles = 5
         
 
 
