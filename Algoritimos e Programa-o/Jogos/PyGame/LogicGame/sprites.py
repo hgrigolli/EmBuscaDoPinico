@@ -163,8 +163,13 @@ class ChooseAction(pg.sprite.Sprite):
 
     
     def reset_pos(self):
-        self.rect.x = self.startpos[0]
-        self.rect.y = self.startpos[1]
+        if(self.action_index == LOOP_IND):
+            self.rect.x = 2000
+            self.rect.y = 2000 #paliativo para destruir o loop antigo
+            LoopAction(self.game, self.startpos[0], self.startpos[1])
+        else:
+            self.rect.x = self.startpos[0]
+            self.rect.y = self.startpos[1]
 
     def execute(self):
         if(self.action_index == MOVER_CIMA_IND):
@@ -193,7 +198,12 @@ class ChooseAction(pg.sprite.Sprite):
 
         # if(self.action_index == PAPEL_ACTION_IND):
 
-        # if(self.action_index == LOOP_IND):
+        if(self.action_index == LOOP_IND):
+            print("LOOP ACTION: ", self.loop_action)
+            print("LOOP CYCLES: ", self.loop_cycles)
+            
+
+
 
 
 
@@ -254,11 +264,25 @@ class PlayerActionHolder(pg.sprite.Sprite):
         self.image = self.game.rectmov_img
         self.rect = self.image.get_rect()
         self.actions_list = []
+        self.after_loop = False
+        self.index = 0
         self.x = x
         self.y = y
 
     def add_action(self, action):
-        self.actions_list.append(action)
+        if(action.action_index == LOOP_IND):
+            self.after_loop = True
+            self.actions_list.append(action)
+            self.index = len(self.actions_list)-1
+        elif(self.after_loop):
+            self.after_loop = False
+            loop = self.actions_list[self.index]
+            print(loop)
+            loop.loop_action = action.action_index
+            loop = None
+            self.actions_list.append(action)
+        else:
+            self.actions_list.append(action)
         action.reset_pos()
 
     def show_action(self, surface):
@@ -283,16 +307,16 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 self.loop_rect = self.imagem_rect
 
             
-            if(not self.is_loop):
+            if(not self.is_loop and not self.loopImage):
                 posy += 51
-                if(self.imagem_rect.colliderect(self.game.playerActionChooser.rect)):
+                if(posy > 552):
                     posy = 135
                     posx += 104
                 if(posx >= 104*4):
                     posx = 30
             else:
-                posy += 21
-                if(self.imagem_rect.colliderect(self.game.playerActionChooser.rect)):
+                posy += 36
+                if(posy > 552):
                     posy = 135
                     posx += 104
                 if(posx >= 104*4):
@@ -305,8 +329,6 @@ class PlayerActionHolder(pg.sprite.Sprite):
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
-            posx = 30
-            posy = 135
             for action in self.actions_list:
                 action.execute()
                 self.game.update()
@@ -329,15 +351,12 @@ class PlayerActionChooser(pg.sprite.Sprite):
         self.rect.y = y
 
 
-class LoopConfig(pg.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.groups =  game.all_sprites
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-        self.image = self.game.rectchoose_img
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+class LoopAction(ChooseAction):
+    def __init__(self, game, x, y, action_index = LOOP_IND):
+        ChooseAction.__init__(self, game, x, y, action_index)
+        self.loop_action = 0
+        self.loop_cycles = 0
+        
 
 
 

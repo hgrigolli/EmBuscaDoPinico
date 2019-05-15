@@ -92,8 +92,10 @@ class Game:
         for i in range(len(self.player_actions_imgs)-2):
             posx = 10 + i*3*TILESIZE
             posy = 640
-            if(posx <= WIDTH):
+            if(posx <= WIDTH and i != LOOP_IND):
                 ChooseAction(self, posx, posy, i)
+            elif(i == LOOP_IND):
+                LoopAction(self, posx, posy)
             else:
                 posy += 48
                 posx = 10
@@ -126,7 +128,7 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
-        self.draw_grid()
+        # self.draw_grid()
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
