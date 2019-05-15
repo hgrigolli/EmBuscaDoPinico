@@ -141,8 +141,7 @@ class ChooseAction(pg.sprite.Sprite):
 
     def reset_pos(self):
         if(self.action_index == LOOP_IND):
-            self.rect.x = 2000
-            self.rect.y = 2000 #paliativo para destruir o loop antigo
+            self.kill()
             LoopAction(self.game, self.startpos[0], self.startpos[1])
         else:
             self.rect.x = self.startpos[0]
