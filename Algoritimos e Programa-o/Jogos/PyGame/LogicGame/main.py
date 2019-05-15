@@ -28,10 +28,13 @@ class Game:
         self.player_imgs = []
         self.player_actions_imgs = []
         self.mouse_img = []
+        self.ui_popups = []
         
         self.rectmov_img = pg.image.load(path.join(self.ui_folder, 'rect_movement.png')).convert_alpha()
         self.rectchoose_img = pg.image.load(path.join(self.ui_folder, 'rect_chooser.png')).convert_alpha()
-
+        
+        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, 'UI_repet_loop_unsel.png')).convert_alpha())
+        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, 'UI_repet_loop_sel.png')).convert_alpha())
         
         self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_pointerFlat.png')).convert_alpha())
         self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_hand.png')).convert_alpha())
@@ -50,6 +53,8 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, SECAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAPEL_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PANTS_DOWN)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PANTS_UP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAUSE)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PLAY)).convert_alpha())
 
@@ -74,6 +79,7 @@ class Game:
         self.actions = pg.sprite.Group()
         self.player_actions = pg.sprite.Group()
         self.player_movement = pg.sprite.Group()
+        self.popups = pg.sprite.Group()
         self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
         self.evento = 0
@@ -89,16 +95,22 @@ class Game:
         self.playPauseAction = PlayPauseAction(self, 350, 10)
         self.playerActionHolder = PlayerActionHolder(self,0,0)
         self.playerActionChooser = PlayerActionChooser(self, 0,600)
+        k = 0
+        const = 10
+        posy = 640
         for i in range(len(self.player_actions_imgs)-2):
-            posx = 10 + i*3*TILESIZE
-            posy = 640
-            if(posx <= WIDTH and i != LOOP_IND):
-                ChooseAction(self, posx, posy, i)
-            elif(i == LOOP_IND):
-                LoopAction(self, posx, posy)
-            else:
-                posy += 48
+            posx = const + k*3*TILESIZE
+            if(posx >= WIDTH - 3*TILESIZE):
+                posy += 64
                 posx = 10
+                k = 0
+            if(i != LOOP_IND):
+                ChooseAction(self, posx, posy, i)
+            else:
+                LoopAction(self, posx, posy)
+                # loop.handle_event()
+            k += 1
+            
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -117,6 +129,7 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.player_actions.update()
+        self.popups.update()
 
     def draw_grid(self):
         for x in range(0, self.map_rect.width , TILESIZE//2):
@@ -133,7 +146,13 @@ class Game:
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
         self.player_actions.draw(self.screen)
+        self.popups.draw(self.screen)
+        # if(len(self.playerActionHolder.actions_list) > 0):
+        for action in self.playerActionHolder.actions_list:
+            if(action.inputbox is not None):
+                action.inputbox.render(self.screen)
         self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
+    
 
         pg.display.flip()
 

@@ -83,37 +83,9 @@ class ActionObstacle(pg.sprite.Sprite):
         self.width = w
         self.height = h
 
-    # def do_action(self):
-    #     keys = pg.key.get_pressed()
-    #     # if(keys[pg.K_SPACE]):
+
     #     #     if(self.rect.colliderect(self.game.player.rect)):
     #     #         if(self.action == LAVAR_MAOS):
-    #     #             for i in range(3):
-    #     #                 print("Esfregando as mãos."+"."*i)
-    #     #             print("Limpo!")
-    #     #         elif(self.action == SECAR_MAOS):
-    #     #             for i in range(3):
-    #     #                 print("Secando as mãos."+"."*i)
-    #     #             print("Secas!")
-    #     #         elif(self.action == DESCARGA):
-    #     #             for i in range(3):
-    #     #                 print("Dando descarga."+"."*i)
-    #     #             print("Flusshhhhh")
-    #     #         elif(self.action == USAR_PAPEL):
-    #     #             for i in range(3):
-    #     #                 print("Limpando a sujeira."+"."*i)
-    #     #             print("Limpo!") 
-    #     #         elif(self.action == DESENTUPIR):
-    #     #             for i in range(3):
-    #     #                 print("Desentupindo."+"."*i)
-    #     #             print("Saiuuu!") 
-    #     #         elif(self.action == TOMAR_BANHO):
-    #     #             for i in range(3):
-    #     #                 print("Tomando banho."+"."*i)
-    #     #             print("Limpo!")
-
-    # def update(self):
-    #     self.do_action()
 
 
 class ChooseAction(pg.sprite.Sprite):
@@ -129,6 +101,7 @@ class ChooseAction(pg.sprite.Sprite):
         self.rect.y = y
         self.startpos = (x, y)
         self.added = False
+        self.inputbox = None
 
     def get_action(self):
         event = self.game.evento
@@ -147,8 +120,15 @@ class ChooseAction(pg.sprite.Sprite):
                 self.game.mouse_img_active = self.game.mouse_img[0]
                 if self.rect.colliderect(self.game.playerActionHolder.rect):
                     if(not self.added):
+                        if(self.action_index == LOOP_IND):
+                            self.inputbox = InputBox(self.game)
                         self.game.playerActionHolder.add_action(self)
                         self.added = True
+                        if(self.inputbox is not None and self.inputbox.valid):
+                            self.inputbox.kill()
+                # elif(not self.rect.colliderect(self.game.playerActionHolder.rect)):
+                #     self.reset_pos()
+                # comentado pois está quebrando o fps.
         elif(event.type == pg.MOUSEMOTION):
             if self.drag:
                 self.game.mouse_img_active = self.game.mouse_img[1]
@@ -156,12 +136,9 @@ class ChooseAction(pg.sprite.Sprite):
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-
-        
     def update(self):
         self.get_action()
 
-    
     def reset_pos(self):
         if(self.action_index == LOOP_IND):
             self.rect.x = 2000
@@ -198,6 +175,10 @@ class ChooseAction(pg.sprite.Sprite):
 
         # if(self.action_index == PAPEL_ACTION_IND):
 
+        # if(self.action_index == PANTS_DOWN_IND):
+
+        # if(self.action_index == PANTS_UP_IND):
+
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
             for i in range(n):
@@ -214,17 +195,13 @@ class ChooseAction(pg.sprite.Sprite):
                 pg.time.wait(80)
             
 
-
-
-
-
 class PlayPauseAction(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups =  game.player_actions
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.playing = False
-        self.index = 15
+        self.index = PLAY_IND
         self.mouse_hold = False
         self.image = self.game.player_actions_imgs[self.index]
         self.rect = self.image.get_rect()
@@ -346,7 +323,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 self.game.draw()
                 pg.time.wait(80)
             self.game.playPauseAction.playing = False
-            self.game.playPauseAction.image =  self.game.player_actions_imgs[15]
+            self.game.playPauseAction.image =  self.game.player_actions_imgs[PLAY_IND]
 
 
 
@@ -363,12 +340,80 @@ class PlayerActionChooser(pg.sprite.Sprite):
 
 
 class LoopAction(ChooseAction):
-    def __init__(self, game, x, y, action_index = LOOP_IND):
+    def __init__(self, game, x, y, action_index = LOOP_IND ):
         ChooseAction.__init__(self, game, x, y, action_index)
         self.loop_action = 0
-        self.loop_cycles = 5
+        self.loop_cycles = 0
         
 
+
+
+class InputBox(pg.sprite.Sprite):
+
+    def __init__(self, game, text='1'):
+        self.groups =  game.popups
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = self.game.ui_popups[UI_N_LOOP_UNSEL]
+        self.rect = self.image.get_rect()
+        self.rect.centerx = WIDTH/2
+        self.rect.centery = HEIGHT/2
+        self.pressed = False
+        self.mouse_clicked = False
+        self.text = text
+        self.FONT = pg.font.Font(None, 32)
+        self.txt_surface = self.FONT.render(self.text, True, TEXT_BLUE)
+        self.active = False
+        self.valid = False
+
+    def handle_event(self):
+        event = self.game.evento
+        if event.type == pg.MOUSEBUTTONDOWN and not self.mouse_clicked:
+            self.mouse_clicked = True
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.image = self.game.ui_popups[UI_N_LOOP_SEL]
+                print("Ativo")
+                self.active = not self.active
+            else:
+                print("inativo")
+                self.image = self.game.ui_popups[UI_N_LOOP_UNSEL]
+                self.active = False
+            # Change the current color of the input box.
+        if event.type == pg.KEYDOWN:
+            if self.active and not self.pressed:
+                if event.key == pg.K_RETURN:
+                    self.pressed = True
+                    print(self.text)
+                    while(not self.valid):
+                        try:
+                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
+                            self.valid = True
+                        except:
+                            print("texto não numérico")
+                            self.valid = False
+                    self.text = ''
+                elif event.key == pg.K_BACKSPACE:
+                    self.pressed = True
+                    self.text = self.text[:-1]
+                else:
+                    self.pressed = True
+                    self.text += event.unicode
+                # Re-render the text.
+                self.txt_surface = self.FONT.render(self.text, True, TEXT_BLUE)
+        if event.type == pg.KEYUP:
+            self.pressed = False
+        if event.type == pg.MOUSEBUTTONUP:
+            self.mouse_clicked = False
+
+    def update(self):
+        self.handle_event()
+
+    def render(self, screen):
+        screen.blit(self.txt_surface, (self.rect.x+30, self.rect.y+50))
+        if(self.valid):
+            self.kill()
 
 
 
