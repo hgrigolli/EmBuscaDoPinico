@@ -184,12 +184,14 @@ class ChooseAction(pg.sprite.Sprite):
             for i in range(n):
                 if(self.loop_action == MOVER_CIMA_IND):
                     self.game.player.move(dy=-1,index=0)
-                if(self.loop_action == MOVER_BAIXO_IND):
+                elif(self.loop_action == MOVER_BAIXO_IND):
                     self.game.player.move(dy=1,index=9)
-                if(self.loop_action == MOVER_ESQUERDA_IND):
+                elif(self.loop_action == MOVER_ESQUERDA_IND):
                     self.game.player.move(dx=-1,index=6)
-                if(self.loop_action == MOVER_DIREITA_IND):
+                elif(self.loop_action == MOVER_DIREITA_IND):
                     self.game.player.move(dx=1,index=3)
+                else:
+                    break
                 self.game.update()
                 self.game.draw()
                 pg.time.wait(80)
