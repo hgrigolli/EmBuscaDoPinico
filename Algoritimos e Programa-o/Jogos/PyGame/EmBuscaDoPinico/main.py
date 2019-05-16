@@ -4,6 +4,7 @@ from os import path
 from settings import *
 from sprites import *
 from tiledmap import *
+import numpy
 
 class Game:
     def __init__(self):
@@ -139,11 +140,23 @@ class Game:
         self.player_actions.update()
         self.popups.update()
 
+    # def draw_grid(self):
+    #     for x in range(0, self.map_rect.width , TILESIZE//2):
+    #         pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X+x+6 , 0), (MAP_SHIFT_X+x+6, self.map_rect.height))
+    #     for y in range(0, self.map_rect.height, TILESIZE//2):
+    #         pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
+    
     def draw_grid(self):
         for x in range(0, self.map_rect.width , TILESIZE//2):
-            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X+x+6 , 0), (MAP_SHIFT_X+x+6, self.map_rect.height))
+            vertical_line = pg.Surface((self.map_rect.height, 1), pg.SRCALPHA)
+            vertical_line.fill(LIGHTGREY2_ALPHA)
+            self.screen.blit(vertical_line, (MAP_SHIFT_X+6, x))
+            # pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X+x+6 , 0), (MAP_SHIFT_X+x+6, self.map_rect.height))
         for y in range(0, self.map_rect.height, TILESIZE//2):
-            pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
+            horizontal_line = pg.Surface((1, self.map_rect.width), pg.SRCALPHA)
+            horizontal_line.fill(LIGHTGREY2_ALPHA)
+            self.screen.blit(horizontal_line, (MAP_SHIFT_X+y+6, 0))
+            # pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
 
     def draw_text(self, text, font_name, size, color, x, y, align="topleft"):
         font = pg.font.Font(font_name, size)
@@ -155,10 +168,10 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()) + " - MOUSE POS: "+str(pg.mouse.get_pos() ))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
-        # self.draw_grid()
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
+        self.draw_grid()
         self.player_actions.draw(self.screen)
         self.popups.draw(self.screen)
         for action in self.playerActionHolder.actions_list:
