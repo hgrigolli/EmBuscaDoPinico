@@ -150,14 +150,19 @@ class ChooseAction(pg.sprite.Sprite):
     def execute(self):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
         self.fez_acao = False
+        
         if(self.action_index == MOVER_CIMA_IND):
             self.game.player.move(dy=-1,index=0)
+
         if(self.action_index == MOVER_BAIXO_IND):
             self.game.player.move(dy=1,index=9)
+
         if(self.action_index == MOVER_ESQUERDA_IND):
             self.game.player.move(dx=-1,index=6)
+
         if(self.action_index == MOVER_DIREITA_IND):
             self.game.player.move(dx=1,index=3)
+
         if(self.action_index == ABRIR_TORNEIRA_IND):
             for acao in acoes_do_player:
                 if acao.action == ABRIR_TORNEIRA_ACTION:

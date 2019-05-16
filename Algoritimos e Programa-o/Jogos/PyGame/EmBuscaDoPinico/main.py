@@ -178,7 +178,21 @@ class Game:
             
 
     def show_start_screen(self):
-        pass
+        start = False
+        creditos = False
+
+        while(not start):
+
+            if(creditos):
+                self.show_credits_screen()
+    
+
+
+    def show_credits_screen(self):
+        voltar = False
+        while(not voltar):
+            pass #do smth
+
 
     def show_go_screen(self):
         pass
