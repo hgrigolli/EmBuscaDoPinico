@@ -44,13 +44,25 @@ TILESIZE = 24
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
-#ACTION OBJECTS
+#PLAYER ACTION OBJECTS
 LAVAR_MAOS = 'sink_action'
+ABRIR_TORNEIRA_ACTION = 'sink_action'
+FECHAR_TORNEIRA_ACTION = 'sink_action'
+
 SECAR_MAOS = 'towel_action'
-DESCARGA = 'vaso_action'
+
+DAR_DESCARGA = 'vaso_action'
+ABAIXAR_CALCAS_ACTION = 'vaso_action'
+LEVANTAR_CALCAS_ACTION = 'vaso_action'
+ABRIR_TAMPA_ACTION = 'vaso_action'
+FECHAR_TAMPA_ACTION = 'vaso_action'
+
 USAR_PAPEL = 'papel'
+
 DESENTUPIR = 'desentupidor'
-TOMAR_BANHO = 'shower_action'
+
+TOMAR_BANHO = 'shower_action' # AINDA NÃO IMPLEMENTADO
+
 
 # ACTION IMAGENS
 MOVER_CIMA = 'up-arrow.png'
@@ -60,7 +72,7 @@ MOVER_ESQUERDA = 'left-arrow.png'
 ABRIR_TORNEIRA = 'abrir_torneira.png'
 FECHAR_TORNEIRA = 'fechar_torneira.png'
 ABRIR_TAMPA = 'tampa_aberta.png'
-DAR_DESCARGA = 'descarga.png'
+DESCARGA = 'descarga.png'
 FECHAR_TAMPA = 'tampa_fechada.png'
 DESENTUPIDOR = 'desentupidor.png'
 LAVAR_MAOS_ACTION = 'lavar_maos.png'
@@ -96,9 +108,27 @@ PLAY_IND = 17
 RESET_IND = 18
 
 
-#UI POP UPS
+
+#UI
+
+## UI POP UPS
 UI_N_LOOP_UNSEL = 0
 UI_N_LOOP_SEL = 1
+
+
+## UI CURSOR
+CURSOR_GRAB = 'cursor_hand.png'
+CURSOR = 'cursor_pointerFlat.png'
+
+## UI POPUP CONFIGS
+UI_N_LOOP_UNSEL_IMG = 'UI_repet_loop_unsel.png'
+UI_N_LOOP_SEL_IMG = 'UI_repet_loop_sel.png'
+
+UI_RECT_ACTION_IMG = 'rect_movement.png'
+UI_RECT_CHOOSER_IMG = 'rect_chooser.png'
+
+## UI ANIMATIONS
+UI_ANIM_BOX = 'anim_box.png'
 
 
 

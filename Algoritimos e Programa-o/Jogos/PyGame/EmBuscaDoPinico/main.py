@@ -21,6 +21,7 @@ class Game:
         self.char_folder = path.join(image_folder, 'char')
         self.action_folder = path.join(image_folder, 'actions')
         self.ui_folder = path.join(image_folder, 'UI')
+        self.anim_folder = path.join(image_folder, 'animations')
         map_folder = path.join(game_folder, 'mapas')
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
@@ -29,16 +30,20 @@ class Game:
         self.player_actions_imgs = []
         self.mouse_img = []
         self.ui_popups = []
+        self.animations = []
         
-        self.rectmov_img = pg.image.load(path.join(self.ui_folder, 'rect_movement.png')).convert_alpha()
-        self.rectchoose_img = pg.image.load(path.join(self.ui_folder, 'rect_chooser.png')).convert_alpha()
-        
-        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, 'UI_repet_loop_unsel.png')).convert_alpha())
-        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, 'UI_repet_loop_sel.png')).convert_alpha())
-        
-        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_pointerFlat.png')).convert_alpha())
-        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, 'cursor_hand.png')).convert_alpha())
+        #UI
+        self.rectmov_img = pg.image.load(path.join(self.ui_folder, UI_RECT_ACTION_IMG)).convert_alpha()
+        self.rectchoose_img = pg.image.load(path.join(self.ui_folder, UI_RECT_CHOOSER_IMG)).convert_alpha()
+        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, UI_N_LOOP_UNSEL_IMG)).convert_alpha())
+        self.ui_popups.append(pg.image.load(path.join(self.ui_folder, UI_N_LOOP_SEL_IMG)).convert_alpha())
+        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, CURSOR)).convert_alpha())
+        self.mouse_img.append(pg.image.load(path.join(self.ui_folder, CURSOR_GRAB)).convert_alpha())
 
+        #ANIMATIONS
+        self.animations.append(pg.image.load(path.join(self.anim_folder, UI_ANIM_BOX)).convert_alpha())
+
+        #PLAYER ACTIONS
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_BAIXO)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_DIREITA)).convert_alpha())
@@ -46,7 +51,7 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TORNEIRA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TORNEIRA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TAMPA)).convert_alpha())
-        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DAR_DESCARGA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESCARGA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TAMPA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESENTUPIDOR)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LAVAR_MAOS_ACTION)).convert_alpha())
@@ -59,6 +64,7 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PLAY)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, RESET)).convert_alpha())
 
+        #PLAYER CHAR SPRITES
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP1)).convert_alpha())
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP2)).convert_alpha())
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP3)).convert_alpha())
@@ -80,6 +86,7 @@ class Game:
         self.actions = pg.sprite.Group()
         self.player_actions = pg.sprite.Group()
         self.player_movement = pg.sprite.Group()
+        self.player_sprite = pg.sprite.Group()
         self.popups = pg.sprite.Group()
         self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
@@ -99,7 +106,7 @@ class Game:
         k = 0
         const = 10
         posy = 640
-        for i in range(len(self.player_actions_imgs)-2):
+        for i in range(len(self.player_actions_imgs)-3):
             posx = const + k*3*TILESIZE
             if(posx >= WIDTH - 3*TILESIZE):
                 posy += 64
@@ -117,7 +124,7 @@ class Game:
         # game loop - set self.playing = False to end the game
         self.playing = True
         while self.playing:
-            self.dt = self.clock.tick(FPS) / 1000
+            self.dt = self.clock.tick(FPS) / 1000 # Amount of seconds between each loop.
             self.events()
             self.update()
             self.draw()
@@ -154,7 +161,6 @@ class Game:
         self.playerActionHolder.show_action(self.screen)
         self.player_actions.draw(self.screen)
         self.popups.draw(self.screen)
-        # if(len(self.playerActionHolder.actions_list) > 0):
         for action in self.playerActionHolder.actions_list:
             if(action.inputbox is not None):
                 action.inputbox.render(self.screen)
