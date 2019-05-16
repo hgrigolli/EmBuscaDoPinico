@@ -197,7 +197,7 @@ class ChooseAction(pg.sprite.Sprite):
             for acao in acoes_do_player:
                 if acao.action == DAR_DESCARGA:
                     print("Dando descarga...\nFlushhhhhh")
-                        self.fez_acao = True
+                    self.fez_acao = True
                     break
             if(not self.fez_acao):
                 self.fez_acao = False
