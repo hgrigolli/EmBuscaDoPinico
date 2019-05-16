@@ -57,6 +57,7 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PANTS_UP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAUSE)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PLAY)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, RESET)).convert_alpha())
 
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP1)).convert_alpha())
         self.player_imgs.append(pg.image.load(path.join(self.char_folder, PLAYER_IMG_UP2)).convert_alpha())
@@ -137,8 +138,14 @@ class Game:
         for y in range(0, self.map_rect.height, TILESIZE//2):
             pg.draw.line(self.screen, LIGHTGREY2, (MAP_SHIFT_X, y), (MAP_SHIFT_X+self.map_rect.width, y))
 
+    def draw_text(self, text, font_name, size, color, x, y, align="topleft"):
+        font = pg.font.Font(font_name, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect(**{align: (x, y)})
+        self.screen.blit(text_surface, text_rect)
+
     def draw(self):
-        pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()))
+        pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()) + " - MOUSE POS: "+str(pg.mouse.get_pos() ))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
         # self.draw_grid()

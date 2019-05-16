@@ -10,6 +10,7 @@ YELLOW = (255, 255, 0)
 COLOR_INACTIVE = (40, 40, 40)
 COLOR_ACTIVE = (176,176,176)
 TEXT_BLUE = (137,194,212)
+TEXT_DARK_BLUE = (25,75,184)
 
 # GAME SETTINGS
 WIDTH = 1024
@@ -32,6 +33,9 @@ PLAYER_IMG_LEFT3 = 'char_01 (7).png'
 PLAYER_IMG_DOWN1 = 'char_01 (3).png'
 PLAYER_IMG_DOWN2 = 'char_01 (2).png'
 PLAYER_IMG_DOWN3 = 'char_01 (4).png'
+
+#PLAYER MOVEMENT
+PLAYER_TIME_WAIT = 100
 
 #MAP SETTINGS
 MAP_SHIFT_X = 424
@@ -63,10 +67,11 @@ LAVAR_MAOS_ACTION = 'lavar_maos.png'
 SECAR_MAOS_ACTION = 'secar_maos.png'
 LOOP = 'loop.png'
 PAPEL_ACTION = 'papel.png'
-PAUSE = 'pause-button.png'
-PLAY = 'play-button.png'
 PANTS_DOWN = 'pants_down.png'
 PANTS_UP = 'pants_up.png'
+PAUSE = 'pause-button.png'
+PLAY = 'play-button.png'
+RESET = 'reload-button.png'
 
 #ACTION INDEX
 
@@ -88,6 +93,7 @@ PANTS_DOWN_IND = 14
 PANTS_UP_IND = 15
 PAUSE_IND = 16
 PLAY_IND = 17
+RESET_IND = 18
 
 
 #UI POP UPS

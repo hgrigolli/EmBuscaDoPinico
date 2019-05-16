@@ -38,8 +38,11 @@ class Player(pg.sprite.Sprite):
         self.image = self.game.player_imgs[index]
 
     def reset_pos(self):
-        self.rect.x = self.startpos[0]
-        self.rect.y = self.startpos[1]
+        print("player resetado")
+        print(self.startpos)
+        self.x = self.startpos[0]
+        self.y = self.startpos[1]
+        self.image = self.game.player_imgs[self.index]
 
     def collide_with_walls(self, dx=0, dy=0):
         for wall in self.game.walls:
@@ -84,8 +87,8 @@ class ActionObstacle(pg.sprite.Sprite):
         self.height = h
 
 
-    #     #     if(self.rect.colliderect(self.game.player.rect)):
-    #     #         if(self.action == LAVAR_MAOS):
+        #     if(self.rect.colliderect(self.game.player.rect)):
+        #         if(self.action == LAVAR_MAOS):
 
 
 class ChooseAction(pg.sprite.Sprite):
@@ -193,7 +196,9 @@ class ChooseAction(pg.sprite.Sprite):
                     break
                 self.game.update()
                 self.game.draw()
-                pg.time.wait(80)
+                self.game.draw_text('Repetições restantes: {}'.format(n-i-1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                pg.display.flip()
+                pg.time.wait(PLAYER_TIME_WAIT)
             
 
 class PlayPauseAction(pg.sprite.Sprite):
@@ -206,25 +211,27 @@ class PlayPauseAction(pg.sprite.Sprite):
         self.mouse_hold = False
         self.image = self.game.player_actions_imgs[self.index]
         self.rect = self.image.get_rect()
+        self.played = False
         self.rect.x = x
         self.rect.y = y
 
     def get_action(self):
         event = self.game.evento
-        if (event.type == pg.MOUSEBUTTONDOWN and not self.playing and not self.mouse_hold):
+        if (event.type == pg.MOUSEBUTTONDOWN and not self.mouse_hold and not self.played):
             if event.button == 1:
                 if self.rect.collidepoint(event.pos):
-                    self.image = self.game.player_actions_imgs[self.index-1]
+                    self.image = self.game.player_actions_imgs[PAUSE_IND]
                     self.playing = True
                     self.mouse_hold = True
+                    self.played = True
                     self.play()
-        elif(event.type == pg.MOUSEBUTTONDOWN and self.playing and not self.mouse_hold):
+        elif(event.type == pg.MOUSEBUTTONDOWN and not self.mouse_hold and self.played):
             if(event.button == 1):
                 if self.rect.collidepoint(event.pos):
-                    self.image = self.game.player_actions_imgs[self.index]
-                    self.playing = False
+                    self.image = self.game.player_actions_imgs[PLAY_IND]
+                    self.played = False
                     self.mouse_hold = True
-                    self.pause()
+                    self.reset()
         elif(event.type == pg.MOUSEBUTTONUP):
             self.mouse_hold = False
         
@@ -237,10 +244,12 @@ class PlayPauseAction(pg.sprite.Sprite):
         self.game.playerActionHolder.execute_action()
 
     
-    def pause(self):
+    def reset(self):
         print("reset")
         self.game.playerActionHolder.actions_list = []
         self.game.player.reset_pos()
+        self.game.update()
+        self.game.draw()
 
 
 
@@ -266,7 +275,6 @@ class PlayerActionHolder(pg.sprite.Sprite):
         elif(self.after_loop):
             self.after_loop = False
             loop = self.actions_list[self.index]
-            print(loop)
             loop.loop_action = action.action_index
             loop = None
             self.actions_list.append(action)
@@ -276,7 +284,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
 
     def show_action(self, surface):
         posx = 30
-        posy = 135
+        posy = 95
         self.loopImage = False
         self.is_loop = False
         for action in self.actions_list:
@@ -312,6 +320,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
                     posx = 30   
 
             surface.blit(self.imagem, self.imagem_rect)
+            # Blit para loop aparecer por cima da imagem de ação.
             if(self.loopImage):
                 surface.blit(self.game.player_actions_imgs[LOOP_IND], self.loop_rect)
                 self.loopImage = False
@@ -322,9 +331,9 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 action.execute()
                 self.game.update()
                 self.game.draw()
-                pg.time.wait(80)
+                pg.time.wait(PLAYER_TIME_WAIT)
             self.game.playPauseAction.playing = False
-            self.game.playPauseAction.image =  self.game.player_actions_imgs[PLAY_IND]
+            self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
 
 
 
