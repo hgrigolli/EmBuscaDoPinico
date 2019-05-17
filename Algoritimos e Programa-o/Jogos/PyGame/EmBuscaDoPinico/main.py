@@ -49,16 +49,16 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_BAIXO)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_DIREITA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_ESQUERDA)).convert_alpha())
+        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TORNEIRA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TORNEIRA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, ABRIR_TAMPA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESCARGA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, FECHAR_TAMPA)).convert_alpha())
-        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESENTUPIDOR)).convert_alpha())
+        # self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, DESENTUPIDOR)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LAVAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, SECAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAPEL_ACTION)).convert_alpha())
-        self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, LOOP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PANTS_DOWN)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PANTS_UP)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, PAUSE)).convert_alpha())
@@ -92,6 +92,7 @@ class Game:
         self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
         self.evento = 0
+
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = Player(self, tile_object.x + MAP_SHIFT_X, tile_object.y)
@@ -168,6 +169,7 @@ class Game:
         pg.display.set_caption(TITLE + " - FPS: "+"{:.2f}".format(self.clock.get_fps()) + " - MOUSE POS: "+str(pg.mouse.get_pos() ))
         self.screen.fill(BGCOLOR)
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
+        self.map.render(self.screen)
         self.all_sprites.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)

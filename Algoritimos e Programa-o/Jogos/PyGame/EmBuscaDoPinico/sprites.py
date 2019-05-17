@@ -11,6 +11,13 @@ class Player(pg.sprite.Sprite):
         self.image = game.player_imgs[self.index]
         self.rect = self.image.get_rect()
         self.startpos = (x, y)
+
+        #player actions
+        self.tampa_aberta = False
+        self.toneira_aberta = False
+        self.deu_descarga = False
+        self.evacuou = False
+
         # Rect de Colisão
         # self.rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
         # self.image = pg.Surface((self.rect.width, self.rect.height))
@@ -103,6 +110,8 @@ class ChooseAction(pg.sprite.Sprite):
         self.added = False
         self.inputbox = None
 
+
+
     def get_action(self):
         event = self.game.evento
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -149,148 +158,241 @@ class ChooseAction(pg.sprite.Sprite):
 
     def execute(self):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
-        self.fez_acao = False
+        fez_acao = False
+
+        tampa_aberta = self.game.player.tampa_aberta
+        toneira_aberta = self.game.player.toneira_aberta
+        deu_descarga = self.game.player.deu_descarga
+        evacuou = self.game.player.evacuou
         
+        #AÇÕES
         if(self.action_index == MOVER_CIMA_IND):
-            self.game.player.move(dy=-1,index=0)
+            for i in range(PLAYER_STEPS):
+                self.game.player.move(dy=-1,index=0)
+                self.game.update()
+                self.game.draw()
+                pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_BAIXO_IND):
-            self.game.player.move(dy=1,index=9)
+            for i in range(PLAYER_STEPS):
+                self.game.player.move(dy=1,index=9)
+                self.game.update()
+                self.game.draw()
+                pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_ESQUERDA_IND):
-            self.game.player.move(dx=-1,index=6)
+            for i in range(PLAYER_STEPS):
+                self.game.player.move(dx=-1,index=6)
+                self.game.update()
+                self.game.draw()
+                pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_DIREITA_IND):
-            self.game.player.move(dx=1,index=3)
+            for i in range(PLAYER_STEPS):
+                self.game.player.move(dx=1,index=3)
+                self.game.update()
+                self.game.draw()
+                pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == ABRIR_TORNEIRA_IND):
             for acao in acoes_do_player:
-                if acao.action == ABRIR_TORNEIRA_ACTION:
+                if acao.action == ABRIR_TORNEIRA_ACTION and not toneira_aberta:
                     print("Abrindo torneira...")
-                    self.fez_acao = True
+                    fez_acao = True
+                    toneira_aberta = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == ABRIR_TORNEIRA_ACTION):
+                    print("A torneira ja está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == FECHAR_TORNEIRA_IND):
             for acao in acoes_do_player:
-                if acao.action == FECHAR_TORNEIRA_ACTION:
+                if acao.action == FECHAR_TORNEIRA_ACTION and toneira_aberta:
                     print("Fechando torneira...")
-                    self.fez_acao = True
+                    fez_acao = True
+                    toneira_aberta = False
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == FECHAR_TORNEIRA_ACTION):
+                    print("A torneira ja está fechada!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
+
 
         if(self.action_index == ABRIR_TAMPA_IND):
             for acao in acoes_do_player:
-                if acao.action == ABRIR_TAMPA_ACTION:
+                if acao.action == ABRIR_TAMPA_ACTION and not self.game.player.tampa_aberta:
                     print("Abrindo tampa do vaso...")
-                    self.fez_acao = True
+                    self.game.player.tampa_aberta = True
+                    fez_acao = True
+                    self.game.map.toggle_vaso(self.game.player.tampa_aberta)
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
-                print("Não pode fazer isso aqui..")
-
-        if(self.action_index == DAR_DESCARGA_IND):
-            for acao in acoes_do_player:
-                if acao.action == DAR_DESCARGA:
-                    print("Dando descarga...\nFlushhhhhh")
-                    self.fez_acao = True
+                elif(acao.action == ABRIR_TAMPA_ACTION):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == FECHAR_TAMPA_IND):
             for acao in acoes_do_player:
-                if acao.action == FECHAR_TAMPA_ACTION:
+                if acao.action == FECHAR_TAMPA_ACTION and self.game.player.tampa_aberta:
                     print("Fechando a tampa do vaso..")
-                    self.fez_acao = True
+                    self.game.player.tampa_aberta = False
+                    self.game.map.toggle_vaso(self.game.player.tampa_aberta)
+                    self.game.update()
+                    self.game.draw()
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == FECHAR_TAMPA_ACTION):
+                    print("A tampa já está fechada!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
-        if(self.action_index == DESENTUPIDOR_IND):
+        if(self.action_index == DAR_DESCARGA_IND):
             for acao in acoes_do_player:
-                if acao.action == DESENTUPIR:
-                    print("Travou a parada aqui..\nDesentupindo...")
-                    self.fez_acao = True
+                if acao.action == DAR_DESCARGA and not deu_descarga and evacuou:
+                    print("Dando descarga...\nFlushhhhhh")
+                    fez_acao = True
+                    deu_descarga = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == DAR_DESCARGA):
+                    print("Você já deu descarga, economize água!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
+
+
+        # if(self.action_index == DESENTUPIDOR_IND):
+        #     for acao in acoes_do_player:
+        #         if acao.action == DESENTUPIR:
+        #             print("Travou a parada aqui..\nDesentupindo...")
+        #             fez_acao = True
+        #             break
+        #         elif(acao.action == DESENTUPIR):
+        #             print("A tampa já está aberta!")
+        #             fez_acao = True
+        #             break
+        #     if(not fez_acao):
+        #         print("Não pode fazer isso aqui..")
 
         if(self.action_index == LAVAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == LAVAR_MAOS_ACTION:
                     print("Lava uma mão..\nLava outra, lava uma mão..")
-                    self.fez_acao = True
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == ABRIR_TAMPA_ACTION):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == SECAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == SECAR_MAOS_ACTION:
                     print("Secando a mão..")
-                    self.fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == SECAR_MAOS_ACTION):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == PAPEL_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == USAR_PAPEL:
                     print("Papel!")
-                    self.fez_acao = True
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == USAR_PAPEL):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == PANTS_DOWN_IND):
             for acao in acoes_do_player:
                 if acao.action == ABAIXAR_CALCAS_ACTION:
                     print("Tirando a calça..")
-                    self.fez_acao = True
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == ABAIXAR_CALCAS_ACTION):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == PANTS_UP_IND):
             for acao in acoes_do_player:
                 if acao.action == LEVANTAR_CALCAS_ACTION:
                     print("Colocando a calça...\nZip!")
-                    self.fez_acao = True
+                    fez_acao = True
                     break
-            if(not self.fez_acao):
-                self.fez_acao = False
+                elif(acao.action == LEVANTAR_CALCAS_ACTION):
+                    print("A tampa já está aberta!")
+                    fez_acao = True
+                    break
+            if(not fez_acao):
                 print("Não pode fazer isso aqui..")
 
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
             for i in range(n):
                 if(self.loop_action == MOVER_CIMA_IND):
-                    self.game.player.move(dy=-1,index=0)
+                    for i in range(PLAYER_STEPS):
+                        self.game.player.move(dy=-1,index=0)
+                        self.game.update()
+                        self.game.draw()
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        pg.display.flip()
+                        pg.time.delay(PLAYER_TIME_WAIT)
+
                 elif(self.loop_action == MOVER_BAIXO_IND):
-                    self.game.player.move(dy=1,index=9)
+                    for i in range(PLAYER_STEPS):
+                        self.game.player.move(dy=1,index=9)
+                        self.game.update()
+                        self.game.draw()
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        pg.display.flip()
+                        pg.time.delay(PLAYER_TIME_WAIT)
+
                 elif(self.loop_action == MOVER_ESQUERDA_IND):
-                    self.game.player.move(dx=-1,index=6)
+                    for i in range(PLAYER_STEPS):
+                        self.game.player.move(dx=-1,index=6)
+                        self.game.update()
+                        self.game.draw()
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        pg.display.flip()
+                        pg.time.delay(PLAYER_TIME_WAIT)
+
                 elif(self.loop_action == MOVER_DIREITA_IND):
-                    self.game.player.move(dx=1,index=3)
+                    for i in range(PLAYER_STEPS):
+                        self.game.player.move(dx=1,index=3)
+                        self.game.update()
+                        self.game.draw()
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        pg.display.flip()
+                        pg.time.delay(PLAYER_TIME_WAIT)
                 else:
                     break
                 self.game.update()
                 self.game.draw()
-                self.game.draw_text('Repetições restantes: {}'.format(n-i-1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
                 pg.display.flip()
-                pg.time.wait(PLAYER_TIME_WAIT)
+                pg.time.delay(PLAYER_TIME_WAIT)
+        
             
 
 class PlayPauseAction(pg.sprite.Sprite):
@@ -360,9 +462,12 @@ class PlayerActionHolder(pg.sprite.Sprite):
 
     def add_action(self, action):
         if(action.action_index == LOOP_IND):
-            self.after_loop = True
-            self.actions_list.append(action)
-            self.index = len(self.actions_list)-1
+            if(self.after_loop):
+                action.reset_pos()
+            else:
+                self.after_loop = True
+                self.actions_list.append(action)
+                self.index = len(self.actions_list)-1
         elif(self.after_loop):
             self.after_loop = False
             loop = self.actions_list[self.index]
@@ -376,26 +481,26 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def show_action(self, surface):
         posx = 30
         posy = 95
-        self.loopImage = False
-        self.is_loop = False
+        loopImage = False
+        is_loop = False
         for action in self.actions_list:
             self.imagem = action.image
             self.imagem_rect = self.imagem.get_rect()
             self.imagem_rect.x = posx
             self.imagem_rect.y = posy
-            if(self.is_loop):
-                self.is_loop = False
+            if(is_loop):
+                is_loop = False
                 self.imagem_rect.x = self.loop_pos[0] + 8
                 self.imagem_rect.y = self.loop_pos[1] + 4
-                self.loopImage = True
+                loopImage = True
 
             if(self.imagem == self.game.player_actions_imgs[LOOP_IND]):
-                self.is_loop = True
+                is_loop = True
                 self.loop_pos = (posx , posy)
                 self.loop_rect = self.imagem_rect
 
             
-            if(not self.is_loop and not self.loopImage):
+            if(not is_loop and not loopImage):
                 posy += 51
                 if(posy > 552):
                     posy = 135
@@ -412,9 +517,9 @@ class PlayerActionHolder(pg.sprite.Sprite):
 
             surface.blit(self.imagem, self.imagem_rect)
             # Blit para loop aparecer por cima da imagem de ação.
-            if(self.loopImage):
+            if(loopImage):
                 surface.blit(self.game.player_actions_imgs[LOOP_IND], self.loop_rect)
-                self.loopImage = False
+                loopImage = False
 
     def execute_action(self):
         if(self.game.playPauseAction.playing):
@@ -422,7 +527,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 action.execute()
                 self.game.update()
                 self.game.draw()
-                pg.time.wait(PLAYER_TIME_WAIT)
+                pg.time.delay(PLAYER_TIME_WAIT)
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
 
@@ -486,11 +591,15 @@ class InputBox(pg.sprite.Sprite):
                     self.pressed = True
                     while(not self.valid):
                         try:
+                            if( int(self.text) <= 0 ):
+                                self.text = '0'
+                            else:
+                                self.text = str(int(self.text)-1)
                             self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
                             self.valid = True
                         except:
                             print("texto não numérico")
-                            self.valid = False
+                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
                     self.text = ''
                 elif event.key == pg.K_BACKSPACE:
                     self.pressed = True
