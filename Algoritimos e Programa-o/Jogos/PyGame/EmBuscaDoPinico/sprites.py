@@ -156,6 +156,10 @@ class ChooseAction(pg.sprite.Sprite):
             self.rect.x = self.startpos[0]
             self.rect.y = self.startpos[1]
 
+
+    def nao_pode_exec_acao(self):
+        ActionAnimation(self.game, txt="naopode").play()
+
     def execute(self):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
         fez_acao = False
@@ -206,7 +210,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == FECHAR_TORNEIRA_IND):
             for acao in acoes_do_player:
@@ -220,7 +224,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
 
         if(self.action_index == ABRIR_TAMPA_IND):
@@ -236,7 +240,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == FECHAR_TAMPA_IND):
             for acao in acoes_do_player:
@@ -253,7 +257,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == DAR_DESCARGA_IND):
             for acao in acoes_do_player:
@@ -267,7 +271,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
 
         # if(self.action_index == DESENTUPIDOR_IND):
@@ -294,7 +298,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == SECAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
@@ -306,7 +310,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == PAPEL_ACTION_IND):
             for acao in acoes_do_player:
@@ -319,7 +323,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == PANTS_DOWN_IND):
             for acao in acoes_do_player:
@@ -332,7 +336,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == PANTS_UP_IND):
             for acao in acoes_do_player:
@@ -345,7 +349,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     break
             if(not fez_acao):
-                print("Não pode fazer isso aqui..")
+                self.nao_pode_exec_acao()
 
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
@@ -626,19 +630,28 @@ class InputBox(pg.sprite.Sprite):
 
 
 class ActionAnimation(pg.sprite.Sprite):
-    def __init__(self, game, action):
+    def __init__(self, game, action=0, txt=''):
         self.groups =  game.popups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = self.game.animations[0] #ANIM BOX
         self.rect = self.image.get_rect()
         self.action = action
+        self.txt = txt
         self.rect.centerx = WIDTH/2
         self.rect.centery = HEIGHT/2 - 100
 
     def play(self):
-        for i in range(20):
-            #LOOP ANIMATION
+        if(self.txt == ''):
+            for i in range(20):
+                #LOOP ANIMATION
+                self.game.update()
+                self.game.draw()
+
+        if(self.txt != ''):
             self.game.update()
             self.game.draw()
+            pg.display.flip()
+            pg.time.delay(1000)
+
         self.kill()
