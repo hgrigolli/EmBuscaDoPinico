@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="251.17592"
-     inkscape:cy="714.16317"
+     inkscape:zoom="1.4"
+     inkscape:cx="47.900331"
+     inkscape:cy="904.44319"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showguides="true"
      inkscape:snap-global="true"
      inkscape:window-width="1366"
-     inkscape:window-height="715"
+     inkscape:window-height="705"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -211,58 +211,6 @@
            id="path3077"
            inkscape:connector-curvature="0" />
       </g>
-    </g>
-    <g
-       id="g3110"
-       transform="matrix(0.02480469,0,0,0.02480469,101.6,4.9000008)"
-       style="stroke-width:10.66666603"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96">
-      <circle
-         id="circle2436-1"
-         r="256"
-         cy="256"
-         cx="256"
-         style="fill:#590f38;stroke-width:10.66666603" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2438"
-         d="m 512,256 c 0,-7.5 -0.342,-14.918 -0.974,-22.254 L 386.678,109.397 124.406,404.937 230.178,510.709 C 238.67,511.56 247.283,512 256,512 397.385,512 512,397.385 512,256 Z"
-         style="fill:#3f0c2a;stroke-width:10.66666603" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2440"
-         d="m 106.777,368.354 c 0,42.824 66.809,77.539 149.223,77.539 82.414,0 149.223,-34.715 149.223,-77.539 V 146.855 H 106.777 Z"
-         style="fill:#e0e0e0;stroke-width:10.66666603" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2442"
-         d="M 255.667,146.854 V 445.89 c 0.111,0 0.222,0.002 0.333,0.002 82.414,0 149.223,-34.715 149.223,-77.539 V 146.854 Z"
-         style="fill:#c0c0c0;stroke-width:10.66666603" />
-      <ellipse
-         id="ellipse2444"
-         ry="77.540001"
-         rx="149.22"
-         cy="146.85001"
-         cx="256"
-         style="fill:#ffffff;stroke-width:10.66666603" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2446"
-         d="m 256,69.315 c -0.111,0 -0.222,0.002 -0.333,0.002 v 155.074 c 0.111,0 0.222,0.002 0.333,0.002 82.414,0 149.223,-34.716 149.223,-77.539 0,-42.823 -66.809,-77.539 -149.223,-77.539 z"
-         style="fill:#e0e0e0;stroke-width:10.66666603" />
-      <ellipse
-         id="ellipse2448"
-         ry="27.959"
-         rx="53.806999"
-         cy="146.85001"
-         cx="256"
-         style="fill:#c0c0c0;stroke-width:10.66666603" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path2450"
-         d="m 256,118.895 c -0.112,0 -0.221,0.004 -0.333,0.004 v 55.909 c 0.112,0 0.222,0.004 0.333,0.004 29.717,0 53.807,-12.518 53.807,-27.959 0,-15.44 -24.091,-27.958 -53.807,-27.958 z"
-         style="fill:#758f9b;stroke-width:10.66666603" />
     </g>
     <g
        id="g4160"
@@ -1209,6 +1157,59 @@
              style="fill:#dbeeff;stroke-width:10.66666603" />
         </g>
       </g>
+    </g>
+    <g
+       transform="matrix(0.02480469,0,0,0.02480469,101.6,4.9000008)"
+       id="g1789"
+       style="stroke-width:14.22222233"
+       inkscape:export-filename="C:\Users\hgrigolli\Desktop\python_mack\Algoritimos e Programa-o\Jogos\PyGame\EmBuscaDoPinico\imagens\actions\papel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:#ffbc00;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path2-1"
+         d="M 512,256 C 512,397.38672 397.38672,512 256,512 114.61328,512 0,397.38672 0,256 0,114.61328 114.61328,0 256,0 397.38672,0 512,114.61328 512,256 Z m 0,0" />
+      <path
+         style="fill:#ff9700;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path4-1"
+         d="m 512,256 c 0,-26.32422 -3.97656,-51.71484 -11.35547,-75.61328 L 421.63672,101.37891 107.72656,385.57812 233.12109,510.97266 C 240.66016,511.64063 248.28516,512 256,512 397.38672,512 512,397.38672 512,256 Z m 0,0" />
+      <path
+         style="fill:#ffffff;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path6-4"
+         d="M 226.72266,101.37891 H 421.63281 V 348.39062 H 226.72266 Z m 0,0" />
+      <path
+         style="fill:#ebfffb;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path8-0"
+         d="m 353.39453,159.50391 c 0,-32.10157 -56.89844,-58.125 -127.08203,-58.125 -70.18359,0 -127.078125,26.02343 -127.078125,58.125 0,32.10156 56.894535,58.125 127.078125,58.125 70.18359,0 127.08203,-26.02344 127.08203,-58.125 z m 0,0" />
+      <path
+         style="fill:#a8f3e9;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path10-7"
+         d="m 353.39453,159.50391 c 0,-32.08594 -56.83594,-58.09766 -126.96484,-58.125 v 116.25 c 70.1289,-0.0312 126.96484,-26.04297 126.96484,-58.125 z m 0,0" />
+      <path
+         style="fill:#4a98f7;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path12-7"
+         d="m 263.90625,159.50391 c 0,-9.4961 -16.83203,-17.19532 -37.59375,-17.19532 -20.75781,0 -37.58984,7.69922 -37.58984,17.19532 0,9.49609 16.83203,17.1914 37.58984,17.1914 20.76172,0 37.59375,-7.69531 37.59375,-17.1914 z m 0,0" />
+      <path
+         style="fill:#2864f0;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path14-5"
+         d="m 263.90625,159.50391 c 0,-9.48047 -16.76953,-17.16407 -37.47656,-17.19532 v 34.38672 c 20.70703,-0.0273 37.47656,-7.71484 37.47656,-17.1914 z m 0,0" />
+      <path
+         style="fill:#ffffff;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path16-1"
+         d="m 99.234375,364.65234 c 0,32.10157 56.894535,58.125 127.078125,58.125 70.18359,0 127.08203,-26.02343 127.08203,-58.125 V 159.50391 c 0,32.10156 -56.89844,58.125 -127.08203,58.125 -70.18359,0 -127.078125,-26.02344 -127.078125,-58.125 z m 0,0" />
+      <path
+         style="fill:#e1fffa;stroke-width:14.22222233"
+         inkscape:connector-curvature="0"
+         id="path18-6"
+         d="m 226.42969,217.62891 v 205.14843 c 70.1289,-0.0273 126.96484,-26.03906 126.96484,-58.125 V 159.50391 c 0,32.08203 -56.83594,58.09375 -126.96484,58.125 z m 0,0" />
     </g>
   </g>
 </svg>

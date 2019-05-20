@@ -15,6 +15,7 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
         pg.mouse.set_visible(False)
+        self.elapsed = 0
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -44,6 +45,27 @@ class Game:
         #ANIMATIONS
         self.animations.append(pg.image.load(path.join(self.anim_folder, UI_ANIM_BOX)).convert_alpha())
         self.animations.append(pg.image.load(path.join(self.anim_folder, UI_BOX_NOT_ALLOWED)).convert_alpha())
+
+        self.vaso_anim_folder = path.join(self.anim_folder, 'vaso_anim')
+        self.vaso_anim = []
+        for i in range(180):
+            if(i < 10):
+                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out00"+str(i)+".png") )).convert_alpha())
+            elif(i < 100):
+                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out0"+str(i)+".png") )).convert_alpha())
+            else:
+                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out"+str(i)+".png") )).convert_alpha())
+        
+
+        self.hands_anim_folder = path.join(self.anim_folder, 'hands_anim')
+        self.hands_anim = []
+        for i in range(180):
+            if(i < 10):
+                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out00"+str(i)+".png") )).convert_alpha())
+            elif(i < 100):
+                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out0"+str(i)+".png") )).convert_alpha())
+            else:
+                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out"+str(i)+".png") )).convert_alpha())
 
         #PLAYER ACTIONS
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
@@ -139,10 +161,7 @@ class Game:
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
-        if pg.time.get_ticks() >= self.player.next_move: 
-            self.player.next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-            self.player_sprite.update()
-        
+        self.player_sprite.update()
         self.player_actions.update()
         self.popups.update()
 
