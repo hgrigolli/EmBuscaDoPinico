@@ -10,7 +10,7 @@
    version="1.1"
    id="svg1853"
    sodipodi:docname="uipackSpace_vector.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:version="0.92.1 r15371">
   <metadata
      id="metadata1857">
     <rdf:RDF>
@@ -32,12 +32,12 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1366"
-     inkscape:window-height="715"
+     inkscape:window-height="705"
      id="namedview1855"
      showgrid="false"
-     inkscape:zoom="2.88"
-     inkscape:cx="260.90884"
-     inkscape:cy="-625.15829"
+     inkscape:zoom="0.72"
+     inkscape:cx="304.62804"
+     inkscape:cy="-416.26552"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -1310,7 +1310,8 @@
      id="path1849"
      d="m 598,73.5 q 0,-0.85 -0.55,-1.4 l -9.5,-9.5 Q 587.35,62 586.5,62 h -79.45 q -1.85,0 -3.05,0.7 -2,1.15 -2,4.35 v 85.9 q 0,3.2 2,4.35 1.2,0.7 3.05,0.7 h 85.85 q 5.1,0 5.1,-5.05 V 73.5 m 0.85,-2.85 v 0.05 q 1.15,1.15 1.15,2.8 v 79.45 q 0,3.5 -1.85,5.2 -1.7,1.85 -5.25,1.85 h -85.85 q -2.5,0 -4.05,-0.95 -3,-1.6 -3,-6.1 v -85.9 q 0,-4.5 3,-6.05 1.55,-1 4.05,-1 h 79.45 q 1.65,0 2.85,1.15 l 9.5,9.5" />
   <g
-     id="g1132">
+     id="g1132"
+     transform="translate(73.611111,-59.722222)">
     <path
        sodipodi:nodetypes="csccsscccssccccsscccccssssccssssssccsc"
        transform="translate(-442.07431,609.4728)"

@@ -4,13 +4,14 @@ from settings import *
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
-        self.groups = game.player_sprite, game.all_sprites
+        self.groups = game.player_sprite
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.index = 3
         self.image = game.player_imgs[self.index]
         self.rect = self.image.get_rect()
         self.startpos = (x, y)
+        self.next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
 
         #player actions
         self.tampa_aberta = False
@@ -47,6 +48,10 @@ class Player(pg.sprite.Sprite):
     def reset_pos(self):
         self.x = self.startpos[0]
         self.y = self.startpos[1]
+        self.tampa_aberta = False
+        self.toneira_aberta = False
+        self.deu_descarga = False
+        self.evacuou = False
         self.image = self.game.player_imgs[self.index]
 
     def collide_with_walls(self, dx=0, dy=0):
@@ -175,28 +180,28 @@ class ChooseAction(pg.sprite.Sprite):
                 self.game.player.move(dy=-1,index=0)
                 self.game.update()
                 self.game.draw()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_BAIXO_IND):
             for i in range(PLAYER_STEPS):
                 self.game.player.move(dy=1,index=9)
                 self.game.update()
                 self.game.draw()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_ESQUERDA_IND):
             for i in range(PLAYER_STEPS):
                 self.game.player.move(dx=-1,index=6)
                 self.game.update()
                 self.game.draw()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == MOVER_DIREITA_IND):
             for i in range(PLAYER_STEPS):
                 self.game.player.move(dx=1,index=3)
                 self.game.update()
                 self.game.draw()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
 
         if(self.action_index == ABRIR_TORNEIRA_IND):
             for acao in acoes_do_player:
@@ -353,49 +358,49 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
-            for i in range(n):
+            for i in range(1,n+1):
                 if(self.loop_action == MOVER_CIMA_IND):
-                    for i in range(PLAYER_STEPS):
+                    for j in range(PLAYER_STEPS):
                         self.game.player.move(dy=-1,index=0)
                         self.game.update()
                         self.game.draw()
-                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
                         pg.display.flip()
-                        pg.time.delay(PLAYER_TIME_WAIT)
+                        # pg.time.delay(PLAYER_TIME_WAIT)
 
                 elif(self.loop_action == MOVER_BAIXO_IND):
-                    for i in range(PLAYER_STEPS):
+                    for j in range(PLAYER_STEPS):
                         self.game.player.move(dy=1,index=9)
                         self.game.update()
                         self.game.draw()
-                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
                         pg.display.flip()
-                        pg.time.delay(PLAYER_TIME_WAIT)
+                        # pg.time.delay(PLAYER_TIME_WAIT)
 
                 elif(self.loop_action == MOVER_ESQUERDA_IND):
-                    for i in range(PLAYER_STEPS):
+                    for j in range(PLAYER_STEPS):
                         self.game.player.move(dx=-1,index=6)
                         self.game.update()
                         self.game.draw()
-                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
                         pg.display.flip()
-                        pg.time.delay(PLAYER_TIME_WAIT)
+                        # pg.time.delay(PLAYER_TIME_WAIT)
 
                 elif(self.loop_action == MOVER_DIREITA_IND):
-                    for i in range(PLAYER_STEPS):
+                    for j in range(PLAYER_STEPS):
                         self.game.player.move(dx=1,index=3)
                         self.game.update()
                         self.game.draw()
-                        self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                        self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
                         pg.display.flip()
-                        pg.time.delay(PLAYER_TIME_WAIT)
+                        # pg.time.delay(PLAYER_TIME_WAIT)
                 else:
                     break
                 self.game.update()
                 self.game.draw()
-                self.game.draw_text('Repetições restantes: {}'.format(n-i+1), None, 24, TEXT_DARK_BLUE, 10, 50)
+                self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
                 pg.display.flip()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
         
             
 
@@ -445,6 +450,7 @@ class PlayPauseAction(pg.sprite.Sprite):
     def reset(self):
         self.game.playerActionHolder.actions_list = []
         self.game.player.reset_pos()
+        self.game.map.reset_map()
         self.game.update()
         self.game.draw()
 
@@ -531,7 +537,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 action.execute()
                 self.game.update()
                 self.game.draw()
-                pg.time.delay(PLAYER_TIME_WAIT)
+                # pg.time.delay(PLAYER_TIME_WAIT)
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
 
@@ -598,12 +604,13 @@ class InputBox(pg.sprite.Sprite):
                             if( int(self.text) <= 0 ):
                                 self.text = '0'
                             else:
-                                self.text = str(int(self.text)-1)
+                                self.text = str(int(self.text))
                             self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
                             self.valid = True
                         except:
                             print("texto não numérico")
                             self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
+                            self.valid = True
                     self.text = ''
                 elif event.key == pg.K_BACKSPACE:
                     self.pressed = True
@@ -634,7 +641,7 @@ class ActionAnimation(pg.sprite.Sprite):
         self.groups =  game.popups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = self.game.animations[0] #ANIM BOX
+        self.image = self.game.animations[UI_BOX_NOT_ALLOWED_IND] #ANIM BOX
         self.rect = self.image.get_rect()
         self.action = action
         self.txt = txt
@@ -652,6 +659,6 @@ class ActionAnimation(pg.sprite.Sprite):
             self.game.update()
             self.game.draw()
             pg.display.flip()
-            pg.time.delay(1000)
+            # pg.time.delay(1000)
 
         self.kill()

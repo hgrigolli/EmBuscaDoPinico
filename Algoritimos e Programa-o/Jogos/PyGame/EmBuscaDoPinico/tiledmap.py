@@ -33,8 +33,8 @@ class TiledMap:
     
 
     def toggle_vaso(self, tampa_aberta):
-        vaso_up = self.tmxdata.layers[3]
         vaso_down = self.tmxdata.layers[2]
+        vaso_up = self.tmxdata.layers[3]
 
         if(tampa_aberta):
             vaso_down.visible = False
@@ -42,6 +42,13 @@ class TiledMap:
         else:
             vaso_down.visible = True
             vaso_up.visible = False
+
+    def reset_map(self):
+        vaso_down = self.tmxdata.layers[2]
+        vaso_up = self.tmxdata.layers[3]
+
+        vaso_down.visible = True
+        vaso_up.visible = False
         
 
     def make_map(self):

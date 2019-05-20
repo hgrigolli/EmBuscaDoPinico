@@ -43,6 +43,7 @@ class Game:
 
         #ANIMATIONS
         self.animations.append(pg.image.load(path.join(self.anim_folder, UI_ANIM_BOX)).convert_alpha())
+        self.animations.append(pg.image.load(path.join(self.anim_folder, UI_BOX_NOT_ALLOWED)).convert_alpha())
 
         #PLAYER ACTIONS
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
@@ -138,6 +139,10 @@ class Game:
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
+        if pg.time.get_ticks() >= self.player.next_move: 
+            self.player.next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+            self.player_sprite.update()
+        
         self.player_actions.update()
         self.popups.update()
 
@@ -171,6 +176,7 @@ class Game:
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
         self.map.render(self.screen)
         self.all_sprites.draw(self.screen)
+        self.player_sprite.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
         self.draw_grid()
