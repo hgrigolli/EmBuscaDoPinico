@@ -45,28 +45,7 @@ class Game:
         #ANIMATIONS
         self.animations.append(pg.image.load(path.join(self.anim_folder, UI_ANIM_BOX)).convert_alpha())
         self.animations.append(pg.image.load(path.join(self.anim_folder, UI_BOX_NOT_ALLOWED)).convert_alpha())
-
-        self.vaso_anim_folder = path.join(self.anim_folder, 'vaso_anim')
-        self.vaso_anim = []
-        for i in range(180):
-            if(i < 10):
-                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out00"+str(i)+".png") )).convert_alpha())
-            elif(i < 100):
-                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out0"+str(i)+".png") )).convert_alpha())
-            else:
-                self.vaso_anim.append(pg.image.load(path.join(self.vaso_anim_folder, ("out"+str(i)+".png") )).convert_alpha())
         
-
-        self.hands_anim_folder = path.join(self.anim_folder, 'hands_anim')
-        self.hands_anim = []
-        for i in range(180):
-            if(i < 10):
-                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out00"+str(i)+".png") )).convert_alpha())
-            elif(i < 100):
-                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out0"+str(i)+".png") )).convert_alpha())
-            else:
-                self.hands_anim.append(pg.image.load(path.join(self.hands_anim_folder, ("out"+str(i)+".png") )).convert_alpha())
-
         #PLAYER ACTIONS
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_CIMA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(self.action_folder, MOVER_BAIXO)).convert_alpha())

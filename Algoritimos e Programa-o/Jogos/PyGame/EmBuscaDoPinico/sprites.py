@@ -264,7 +264,6 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.tampa_aberta = True
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
-                    ActionAnimation(self.game, txt="vaso_anim_open").play()
                     break
                 elif(acao.action == ABRIR_TAMPA_ACTION):
                     print("A tampa já está aberta!")
@@ -279,7 +278,6 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.tampa_aberta = False
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
-                    ActionAnimation(self.game, txt="vaso_anim_close").play()
                     break
                 elif(acao.action == FECHAR_TAMPA_ACTION):
                     print("A tampa já está fechada!")
@@ -690,23 +688,23 @@ class ActionAnimation(pg.sprite.Sprite):
         self.rect.centery = HEIGHT/2 - 100
 
     def play(self):
-        if(self.txt == 'vaso_anim_open'):
-            for i in range(len(self.game.vaso_anim)):
-                self.image = self.game.vaso_anim[i]
-                self.game.update()
-                self.game.draw()
+        # if(self.txt == 'vaso_anim_open'):
+        #     for i in range(len(self.game.vaso_anim)):
+        #         self.image = self.game.vaso_anim[i]
+        #         self.game.update()
+        #         self.game.draw()
 
-        if(self.txt == 'vaso_anim_close'):
-            for i in range(len(self.game.vaso_anim)-1,0,-1):
-                self.image = self.game.vaso_anim[i]
-                self.game.update()
-                self.game.draw()
+        # if(self.txt == 'vaso_anim_close'):
+        #     for i in range(len(self.game.vaso_anim)-1,0,-1):
+        #         self.image = self.game.vaso_anim[i]
+        #         self.game.update()
+        #         self.game.draw()
 
-        if(self.txt == 'hands_anim'):
-            for i in range(len(self.game.hands_anim)):
-                self.image = self.game.hands_anim[i]
-                self.game.update()
-                self.game.draw()
+        # if(self.txt == 'hands_anim'):
+        #     for i in range(len(self.game.hands_anim)):
+        #         self.image = self.game.hands_anim[i]
+        #         self.game.update()
+        #         self.game.draw()
 
         if(self.txt != ''):
             self.game.update()
