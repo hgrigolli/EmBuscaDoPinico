@@ -411,7 +411,7 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.player.move(dy=-1,index=0,loop=True)
                                 self.game.update()
                                 self.game.draw()
-                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
 
@@ -424,7 +424,7 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.player.move(dy=1,index=9,loop=True)
                                 self.game.update()
                                 self.game.draw()
-                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
 
@@ -437,7 +437,7 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.player.move(dx=-1,index=6,loop=True)
                                 self.game.update()
                                 self.game.draw()
-                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
 
@@ -450,14 +450,14 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.player.move(dx=1,index=3,loop=True)
                                 self.game.update()
                                 self.game.draw()
-                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
                     else:
                         break
                     self.game.update()
                     self.game.draw()
-                    self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                    self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                     pg.display.flip()
                     # pg.time.delay(PLAYER_TIME_WAIT)
             else:
@@ -666,6 +666,7 @@ class InputBox(pg.sprite.Sprite):
                         except:
                             self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
                         self.text = ''
+                        self.valid = True
                     elif event.key == pg.K_BACKSPACE:
                         self.pressed = True
                         self.text = self.text[:-1]
