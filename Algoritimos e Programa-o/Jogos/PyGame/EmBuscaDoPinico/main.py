@@ -27,12 +27,13 @@ class Game:
         map_folder = path.join(game_folder, 'mapas')
         font_folder = path.join(image_folder, 'font')
         self.font_name = path.join(font_folder, UI_FONT)
-        self.font = pg.font.Font(self.font_name, 32)
+        self.font = pg.font.Font(self.font_name, 28)
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         self.player_imgs = []
         self.player_actions_imgs = []
+        self.player_actions_done = []
         self.mouse_img = []
         self.ui_popups = []
         self.animations = []
@@ -40,14 +41,19 @@ class Game:
         #UI
         self.rectmov_img = pg.image.load(path.join(ui_folder, UI_RECT_ACTION_IMG)).convert_alpha()
         self.rectchoose_img = pg.image.load(path.join(ui_folder, UI_RECT_CHOOSER_IMG)).convert_alpha()
+
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_N_LOOP_UNSEL_IMG)).convert_alpha())
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_N_LOOP_SEL_IMG)).convert_alpha())
+        self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_MSG_BOX)).convert_alpha())
+        self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_PLAYER_BLOCKED)).convert_alpha())
+
         self.mouse_img.append(pg.image.load(path.join(ui_folder, CURSOR)).convert_alpha())
         self.mouse_img.append(pg.image.load(path.join(ui_folder, CURSOR_GRAB)).convert_alpha())
 
         #ANIMATIONS
         self.animations.append(pg.image.load(path.join(anim_folder, UI_ANIM_BOX)).convert_alpha())
         self.animations.append(pg.image.load(path.join(anim_folder, UI_BOX_NOT_ALLOWED)).convert_alpha())
+        
         
         #PLAYER ACTIONS
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, MOVER_CIMA)).convert_alpha())
@@ -60,7 +66,6 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, ABRIR_TAMPA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, DESCARGA)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, FECHAR_TAMPA)).convert_alpha())
-        # self.player_actions_imgs.append(pg.image.load(path.join(action_folder, DESENTUPIDOR)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, LAVAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, SECAR_MAOS_ACTION)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, PAPEL_ACTION)).convert_alpha())
@@ -69,6 +74,11 @@ class Game:
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, PAUSE)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, PLAY)).convert_alpha())
         self.player_actions_imgs.append(pg.image.load(path.join(action_folder, RESET)).convert_alpha())
+
+        for i in range(5, len(self.player_actions_imgs)-3):
+            img = self.player_actions_imgs[i]
+            new_img = pg.transform.scale(img, (24,24))
+            self.player_actions_done.append(new_img)
 
         #PLAYER CHAR SPRITES
         self.player_imgs.append(pg.image.load(path.join(char_folder, PLAYER_IMG_UP1)).convert_alpha())
@@ -180,7 +190,8 @@ class Game:
         self.player_sprite.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
-        self.draw_grid()
+        # self.draw_grid()
+        self.draw_text("Pontos: {}".format(self.player.score),16,TEXT_DARK_BLUE,10,10)
         self.player_actions.draw(self.screen)
         self.popups.draw(self.screen)
         for action in self.playerActionHolder.actions_list:

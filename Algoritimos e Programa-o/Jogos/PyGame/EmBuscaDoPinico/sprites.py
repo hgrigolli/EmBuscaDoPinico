@@ -31,7 +31,7 @@ class Player(pg.sprite.Sprite):
         self.x = x
         self.y = y
 
-    def move(self, dx=0, dy=0, index=0):
+    def move(self, dx=0, dy=0, index=0, loop=False):
         if not self.collide_with_walls(dx,dy):
             if(dx==0 and dy==0):
                 self.image = self.game.player_imgs[index]
@@ -43,7 +43,12 @@ class Player(pg.sprite.Sprite):
                 self.image =  random.choice([self.game.player_imgs[index+1], self.game.player_imgs[index+2]])
             self.x += dx * TILESIZE//2
             self.y += dy * TILESIZE//2
+            if(loop):
+                self.score += ANDAR_COM_LOOP_SCORE
+            else:
+                self.score += ANDAR_SCORE
         else:
+            ActionAnimation(self.game).blocked()
             self.score -= ANDAR_COM_LOOP_SCORE
             self.image = self.game.player_imgs[index]
 
@@ -63,6 +68,7 @@ class Player(pg.sprite.Sprite):
         self.calcas_abaixadas = False
         self.usou_papel = False
 
+        self.score = 0
         self.image = self.game.player_imgs[self.index]
 
     def collide_with_walls(self, dx=0, dy=0):
@@ -174,7 +180,7 @@ class ChooseAction(pg.sprite.Sprite):
 
 
     def nao_pode_exec_acao(self):
-        ActionAnimation(self.game, txt="naopode").play()
+        ActionAnimation(self.game, txt="Ação Não Permitida").action_not_allowed()
 
     def execute(self):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
@@ -189,7 +195,6 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dy=-1,index=0)
-                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -201,7 +206,6 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dy=1,index=9)
-                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -213,7 +217,6 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dx=-1,index=6)
-                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -225,7 +228,6 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dx=1,index=3)
-                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -401,8 +403,7 @@ class ChooseAction(pg.sprite.Sprite):
                         while(j < PLAYER_STEPS):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                                self.game.player.move(dy=-1,index=0)
-                                self.game.player.score += ANDAR_COM_LOOP_SCORE
+                                self.game.player.move(dy=-1,index=0,loop=True)
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -415,8 +416,7 @@ class ChooseAction(pg.sprite.Sprite):
                         while(j < PLAYER_STEPS):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                                self.game.player.move(dy=1,index=9)
-                                self.game.player.score += ANDAR_COM_LOOP_SCORE
+                                self.game.player.move(dy=1,index=9,loop=True)
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -429,8 +429,7 @@ class ChooseAction(pg.sprite.Sprite):
                         while(j < PLAYER_STEPS):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                                self.game.player.move(dx=-1,index=6)
-                                self.game.player.score += ANDAR_COM_LOOP_SCORE
+                                self.game.player.move(dx=-1,index=6,loop=True)
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -443,8 +442,7 @@ class ChooseAction(pg.sprite.Sprite):
                         while(j < PLAYER_STEPS):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                                self.game.player.move(dx=1,index=3)
-                                self.game.player.score += ANDAR_COM_LOOP_SCORE
+                                self.game.player.move(dx=1,index=3,loop=True)
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -640,6 +638,7 @@ class InputBox(pg.sprite.Sprite):
         self.valid = False
 
     def handle_event(self):
+        validKeys = [pg.K_0, pg.K_1, pg.K_2, pg.K_3, pg.K_4, pg.K_5, pg.K_6, pg.K_7, pg.K_8, pg.K_9, pg.K_RETURN, pg.K_KP0, pg.K_KP1, pg.K_KP2, pg.K_KP3, pg.K_KP4, pg.K_KP5, pg.K_KP6, pg.K_KP7, pg.K_KP8, pg.K_KP9, pg.K_BACKSPACE]
         event = self.game.evento
         if event.type == pg.MOUSEBUTTONDOWN and not self.mouse_clicked:
             self.mouse_clicked = True
@@ -653,28 +652,28 @@ class InputBox(pg.sprite.Sprite):
                 self.active = False
             # Change the current color of the input box.
         if event.type == pg.KEYDOWN:
-            if self.active and not self.pressed:
-                if event.key == pg.K_RETURN:
-                    self.pressed = True
-                    while(not self.valid):
-                        try:
-                            if( int(self.text) <= 0 ):
-                                self.text = '0'
-                            else:
-                                self.text = str(int(self.text))
-                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
-                            self.valid = True
-                        except:
-                            print("texto não numérico")
-                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
-                            self.valid = True
-                    self.text = ''
-                elif event.key == pg.K_BACKSPACE:
-                    self.pressed = True
-                    self.text = self.text[:-1]
-                else:
-                    self.pressed = True
-                    self.text += event.unicode
+            if(event.key in validKeys):
+                if self.active and not self.pressed:
+                    if event.key == pg.K_RETURN:
+                        self.pressed = True
+                        while(not self.valid):
+                            try:
+                                if( int(self.text) <= 0 ):
+                                    self.text = '0'
+                                else:
+                                    self.text = str(int(self.text))
+                                self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
+                                self.valid = True
+                            except:
+                                self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
+                                self.valid = True
+                        self.text = ''
+                    elif event.key == pg.K_BACKSPACE:
+                        self.pressed = True
+                        self.text = self.text[:-1]
+                    else:
+                        self.pressed = True
+                        self.text += event.unicode
                 # Re-render the text.
                 self.txt_surface = self.game.font.render(self.text, True, TEXT_BLUE)
         if event.type == pg.KEYUP:
@@ -702,10 +701,18 @@ class ActionAnimation(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.action = action
         self.txt = txt
-        self.rect.centerx = WIDTH/2
-        self.rect.centery = HEIGHT/2 - 100
+        self.rect.centerx = WIDTH/2 #512
+        self.rect.centery = HEIGHT/2 - 100 #284
 
-    def play(self):
+    def action_not_allowed(self):
+
+        self.game.update()
+        self.game.draw()
+        pg.display.flip()
+        pg.time.delay(NOT_ALLOWED_ANIM_DELAY)
+        
+        self.kill()
+
         # if(self.txt == 'vaso_anim_open'):
         #     for i in range(len(self.game.vaso_anim)):
         #         self.image = self.game.vaso_anim[i]
@@ -724,12 +731,27 @@ class ActionAnimation(pg.sprite.Sprite):
         #         self.game.update()
         #         self.game.draw()
 
-        if(self.txt != ''):
-            self.game.update()
-            self.game.draw()
-            pg.display.flip()
-            pg.time.delay(NOT_ALLOWED_ANIM_DELAY)
+
+    def blocked(self):
+        self.image = self.game.ui_popups[UI_PLAYER_BLOCKED_IND]
+        self.rect.x = self.game.player.rect.x + 12
+        self.rect.y = self.game.player.rect.y - 24
+        self.game.update()
+        self.game.draw()
+        pg.display.flip()
+        pg.time.delay(BLOCKED_DELAY)
 
         self.kill()
 
 
+class PlayerScore(pg.sprite.Sprite):
+    def __init__(self, game, action=0, txt=''):
+        self.groups =  game.popups
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = self.game.ui_popups[UI_MSG_BOX_IND] #MSG BOX
+        self.rect = self.image.get_rect()
+        self.action = action
+        self.txt = txt
+        self.rect.centerx = WIDTH/2
+        self.rect.centery = HEIGHT/2 - 100

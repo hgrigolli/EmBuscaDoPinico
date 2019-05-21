@@ -130,6 +130,9 @@ RESET_IND = 17
 ## UI POP UPS
 UI_N_LOOP_UNSEL = 0
 UI_N_LOOP_SEL = 1
+UI_MSG_BOX_IND = 2
+UI_PLAYER_BLOCKED_IND = 3
+
 
 
 ## UI CURSOR
@@ -140,14 +143,21 @@ CURSOR = 'cursor_pointerFlat.png'
 UI_N_LOOP_UNSEL_IMG = 'UI_repet_loop_unsel.png'
 UI_N_LOOP_SEL_IMG = 'UI_repet_loop_sel.png'
 
+UI_MSG_BOX = 'msg_box.png'
+
+UI_PLAYER_BLOCKED = 'blocked.png'
+
 UI_RECT_ACTION_IMG = 'rect_movement.png'
 UI_RECT_CHOOSER_IMG = 'rect_chooser.png'
+
 
 ## UI ANIMATIONS
 UI_ANIM_BOX = 'anim_box.png'
 UI_BOX_NOT_ALLOWED = 'box_not_allowed.png'
 
 NOT_ALLOWED_ANIM_DELAY = 1500
+
+BLOCKED_DELAY = 80
 
 
 ## UI ANIMATIONS INDEX
@@ -156,6 +166,6 @@ UI_BOX_NOT_ALLOWED_IND = 1
 
 # UI FONT
 
-UI_FONT = 'disko_tt.ttf'
+UI_FONT = 'Vinegar Stroke.ttf'
 
 
