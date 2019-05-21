@@ -177,64 +177,62 @@ class ChooseAction(pg.sprite.Sprite):
     def execute(self):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
         fez_acao = False
-
-        tampa_aberta = self.game.player.tampa_aberta
-        toneira_aberta = self.game.player.toneira_aberta
-        deu_descarga = self.game.player.deu_descarga
-        evacuou = self.game.player.evacuou
-        lavou_maos = self.game.player.lavou_maos
         
         #AÇÕES
-        if(self.action_index == MOVER_CIMA_IND):
-            i = 0
-            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-            while(i < PLAYER_STEPS):
-                if(pg.time.get_ticks() >= next_move):
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    self.game.player.move(dy=-1,index=0)
-                    self.game.update()
-                    self.game.draw()
-                    i += 1
+        if(not self.game.player.calcas_abaixadas):
+            if(self.action_index == MOVER_CIMA_IND):
+                i = 0
+                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                while(i < PLAYER_STEPS):
+                    if(pg.time.get_ticks() >= next_move):
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        self.game.player.move(dy=-1,index=0)
+                        self.game.update()
+                        self.game.draw()
+                        i += 1
 
-        if(self.action_index == MOVER_BAIXO_IND):
-            i = 0
-            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-            while(i < PLAYER_STEPS):
-                if(pg.time.get_ticks() >= next_move):
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    self.game.player.move(dy=1,index=9)
-                    self.game.update()
-                    self.game.draw()
-                    i += 1
+            if(self.action_index == MOVER_BAIXO_IND):
+                i = 0
+                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                while(i < PLAYER_STEPS):
+                    if(pg.time.get_ticks() >= next_move):
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        self.game.player.move(dy=1,index=9)
+                        self.game.update()
+                        self.game.draw()
+                        i += 1
 
-        if(self.action_index == MOVER_ESQUERDA_IND):
-            i = 0
-            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-            while(i < PLAYER_STEPS):
-                if(pg.time.get_ticks() >= next_move):
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    self.game.player.move(dx=-1,index=6)
-                    self.game.update()
-                    self.game.draw()
-                    i += 1
+            if(self.action_index == MOVER_ESQUERDA_IND):
+                i = 0
+                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                while(i < PLAYER_STEPS):
+                    if(pg.time.get_ticks() >= next_move):
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        self.game.player.move(dx=-1,index=6)
+                        self.game.update()
+                        self.game.draw()
+                        i += 1
 
-        if(self.action_index == MOVER_DIREITA_IND):
-            i = 0
-            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-            while(i < PLAYER_STEPS):
-                if(pg.time.get_ticks() >= next_move):
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    self.game.player.move(dx=1,index=3)
-                    self.game.update()
-                    self.game.draw()
-                    i += 1
+            if(self.action_index == MOVER_DIREITA_IND):
+                i = 0
+                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                while(i < PLAYER_STEPS):
+                    if(pg.time.get_ticks() >= next_move):
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        self.game.player.move(dx=1,index=3)
+                        self.game.update()
+                        self.game.draw()
+                        i += 1
+        else:
+            print("levante as calças antes de andar")
 
         if(self.action_index == ABRIR_TORNEIRA_IND):
             for acao in acoes_do_player:
-                if acao.action == ABRIR_TORNEIRA_ACTION and not toneira_aberta:
+                if acao.action == ABRIR_TORNEIRA_ACTION and not self.game.player.toneira_aberta:
                     print("Abrindo torneira...")
                     fez_acao = True
-                    toneira_aberta = True
+                    self.game.player.toneira_aberta = True
+                    self.game.map.toggle_pia(self.game.player.toneira_aberta)
                     break
                 elif(acao.action == ABRIR_TORNEIRA_ACTION):
                     print("A torneira ja está aberta!")
@@ -245,10 +243,11 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == FECHAR_TORNEIRA_IND):
             for acao in acoes_do_player:
-                if acao.action == FECHAR_TORNEIRA_ACTION and toneira_aberta:
+                if acao.action == FECHAR_TORNEIRA_ACTION and self.game.player.toneira_aberta:
                     print("Fechando torneira...")
                     fez_acao = True
-                    toneira_aberta = False
+                    self.game.player.toneira_aberta = False
+                    self.game.map.toggle_pia(self.game.player.toneira_aberta)
                     break
                 elif(acao.action == FECHAR_TORNEIRA_ACTION):
                     print("A torneira ja está fechada!")
@@ -293,33 +292,19 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     deu_descarga = True
                     break
-                elif(acao.action == DAR_DESCARGA):
+                elif(acao.action == DAR_DESCARGA) and self.game.player.deu_descarga:
                     print("Você já deu descarga, economize água!")
                     fez_acao = True
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
 
-
-        # if(self.action_index == DESENTUPIDOR_IND):
-        #     for acao in acoes_do_player:
-        #         if acao.action == DESENTUPIR:
-        #             print("Travou a parada aqui..\nDesentupindo...")
-        #             fez_acao = True
-        #             break
-        #         elif(acao.action == DESENTUPIR):
-        #             print("A tampa já está aberta!")
-        #             fez_acao = True
-        #             break
-        #     if(not fez_acao):
-        #         print("Não pode fazer isso aqui..")
-
         if(self.action_index == LAVAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == LAVAR_MAOS:
+                    self.game.player.lavou_maos = True
                     print("Lava uma mão..\nLava outra, lava uma mão..")
                     fez_acao = True
-                    ActionAnimation(self.game, txt="hands_anim").play()
                     break
                 elif(acao.action == LAVAR_MAOS):
                     print("Suas mãos já estão limpas.\nEconomize água")
@@ -330,11 +315,9 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == SECAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
-                if acao.action == SECAR_MAOS_ACTION:
-                    print("Secando a mão..")
-                    break
-                elif(acao.action == SECAR_MAOS_ACTION):
-                    print("A tampa já está aberta!")
+                if acao.action == SECAR_MAOS and self.game.player.lavou_maos and not self.game.player.secou_maos:
+                    self.game.player.secou_maos = True
+                    self.game.map.toggle_toalha(self.game.player.secou_maos)
                     fez_acao = True
                     break
             if(not fez_acao):
@@ -342,12 +325,13 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == PAPEL_ACTION_IND):
             for acao in acoes_do_player:
-                if acao.action == USAR_PAPEL:
+                if acao.action == USAR_PAPEL and not self.game.player.usou_papel:
                     print("Papel!")
+                    self.game.player.usou_papel = True
                     fez_acao = True
                     break
                 elif(acao.action == USAR_PAPEL):
-                    print("A tampa já está aberta!")
+                    print("Você já se limpou, não disperdice papel!")
                     fez_acao = True
                     break
             if(not fez_acao):
@@ -355,12 +339,13 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == PANTS_DOWN_IND):
             for acao in acoes_do_player:
-                if acao.action == ABAIXAR_CALCAS_ACTION:
+                if acao.action == ABAIXAR_CALCAS_ACTION and not self.game.player.calcas_abaixadas:
+                    self.game.player.calcas_abaixadas = True
                     print("Tirando a calça..")
                     fez_acao = True
                     break
                 elif(acao.action == ABAIXAR_CALCAS_ACTION):
-                    print("A tampa já está aberta!")
+                    print("Você já está sem calças!")
                     fez_acao = True
                     break
             if(not fez_acao):
@@ -368,12 +353,13 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == PANTS_UP_IND):
             for acao in acoes_do_player:
-                if acao.action == LEVANTAR_CALCAS_ACTION:
+                if acao.action == LEVANTAR_CALCAS_ACTION and self.game.player.calcas_abaixadas:
+                    self.game.player.calcas_abaixadas = False
                     print("Colocando a calça...\nZip!")
                     fez_acao = True
                     break
                 elif(acao.action == LEVANTAR_CALCAS_ACTION):
-                    print("A tampa já está aberta!")
+                    print("Você já está de calças!")
                     fez_acao = True
                     break
             if(not fez_acao):
@@ -381,65 +367,68 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
-            for i in range(1,n):
-                if(self.loop_action == MOVER_CIMA_IND):
-                    j = 0
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    while(j < PLAYER_STEPS):
-                        if(pg.time.get_ticks() >= next_move):
-                            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                            self.game.player.move(dy=-1,index=0)
-                            self.game.update()
-                            self.game.draw()
-                            self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
-                            pg.display.flip()
-                            j += 1
+            if(not self.game.player.calcas_abaixadas): #não pode andar de calças abaixadas
+                for i in range(1,n):
+                    if(self.loop_action == MOVER_CIMA_IND):
+                        j = 0
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        while(j < PLAYER_STEPS):
+                            if(pg.time.get_ticks() >= next_move):
+                                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                                self.game.player.move(dy=-1,index=0)
+                                self.game.update()
+                                self.game.draw()
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                pg.display.flip()
+                                j += 1
 
-                elif(self.loop_action == MOVER_BAIXO_IND):
-                    j = 0
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    while(j < PLAYER_STEPS):
-                        if(pg.time.get_ticks() >= next_move):
-                            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                            self.game.player.move(dy=1,index=9)
-                            self.game.update()
-                            self.game.draw()
-                            self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
-                            pg.display.flip()
-                            j += 1
+                    elif(self.loop_action == MOVER_BAIXO_IND):
+                        j = 0
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        while(j < PLAYER_STEPS):
+                            if(pg.time.get_ticks() >= next_move):
+                                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                                self.game.player.move(dy=1,index=9)
+                                self.game.update()
+                                self.game.draw()
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                pg.display.flip()
+                                j += 1
 
-                elif(self.loop_action == MOVER_ESQUERDA_IND):
-                    j = 0
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    while(j < PLAYER_STEPS):
-                        if(pg.time.get_ticks() >= next_move):
-                            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                            self.game.player.move(dx=-1,index=6)
-                            self.game.update()
-                            self.game.draw()
-                            self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
-                            pg.display.flip()
-                            j += 1
+                    elif(self.loop_action == MOVER_ESQUERDA_IND):
+                        j = 0
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        while(j < PLAYER_STEPS):
+                            if(pg.time.get_ticks() >= next_move):
+                                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                                self.game.player.move(dx=-1,index=6)
+                                self.game.update()
+                                self.game.draw()
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                pg.display.flip()
+                                j += 1
 
-                elif(self.loop_action == MOVER_DIREITA_IND):
-                    j = 0
-                    next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                    while(j < PLAYER_STEPS):
-                        if(pg.time.get_ticks() >= next_move):
-                            next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
-                            self.game.player.move(dx=1,index=3)
-                            self.game.update()
-                            self.game.draw()
-                            self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
-                            pg.display.flip()
-                            j += 1
-                else:
-                    break
-                self.game.update()
-                self.game.draw()
-                self.game.draw_text('Repetições restantes: {}'.format(n-i), None, 24, TEXT_DARK_BLUE, 10, 50)
-                pg.display.flip()
-                # pg.time.delay(PLAYER_TIME_WAIT)
+                    elif(self.loop_action == MOVER_DIREITA_IND):
+                        j = 0
+                        next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                        while(j < PLAYER_STEPS):
+                            if(pg.time.get_ticks() >= next_move):
+                                next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
+                                self.game.player.move(dx=1,index=3)
+                                self.game.update()
+                                self.game.draw()
+                                self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                                pg.display.flip()
+                                j += 1
+                    else:
+                        break
+                    self.game.update()
+                    self.game.draw()
+                    self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
+                    pg.display.flip()
+                    # pg.time.delay(PLAYER_TIME_WAIT)
+            else:
+                print("não pode andar de calças abaixadas. Levante as calças")
         
             
 

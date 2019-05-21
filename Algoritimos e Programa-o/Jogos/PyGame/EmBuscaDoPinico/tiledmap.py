@@ -8,6 +8,20 @@ class TiledMap:
         self.width = tm.width * tm.tilewidth
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
+
+        for layer in self.tmxdata.layers:
+            if(layer.name == 'vaso_up'):
+                self.vaso_up = layer
+            elif(layer.name == 'vaso_down'):
+                self.vaso_down = layer
+            elif(layer.name == 'pia_c_agua'):
+                self.pia_c_agua = layer
+            elif(layer.name == 'pia_s_agua'):
+                self.pia_s_agua = layer
+            elif(layer.name == 'toalha_umida'):
+                self.toalha_umida = layer
+            elif(layer.name == 'toalha_seca'):
+                self.toalha_seca = layer
     
     def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid
@@ -33,23 +47,38 @@ class TiledMap:
     
 
     def toggle_vaso(self, tampa_aberta):
-        vaso_down = self.tmxdata.layers[2]
-        vaso_up = self.tmxdata.layers[3]
-
         if(tampa_aberta):
-            vaso_down.visible = False
-            vaso_up.visible = True
+            self.vaso_down.visible = False
+            self.vaso_up.visible = True
         else:
-            vaso_down.visible = True
-            vaso_up.visible = False
+            self.vaso_down.visible = True
+            self.vaso_up.visible = False
+
+    def toggle_pia(self, torneira_aberta):
+        if(torneira_aberta):
+            self.pia_c_agua.visible = True
+            self.pia_s_agua.visible = False
+        else:
+            self.pia_c_agua.visible = False
+            self.pia_s_agua.visible = True   
+
+    def toggle_toalha(self, secou_maos):
+        if(secou_maos):
+            self.toalha_umida.visible = True
+            self.toalha_seca.visible = False
+        else:
+            self.toalha_umida.visible = False
+            self.toalha_seca.visible = True                    
 
     def reset_map(self):
-        vaso_down = self.tmxdata.layers[2]
-        vaso_up = self.tmxdata.layers[3]
+        self.vaso_up.visible = False
+        self.vaso_down.visible = True
 
-        vaso_down.visible = True
-        vaso_up.visible = False
+        self.pia_c_agua.visible = False
+        self.pia_s_agua.visible = True  
         
+        self.toalha_umida.visible = False
+        self.toalha_seca.visible = True 
 
     def make_map(self):
         temp_surface = pg.Surface((self.width, self.height))

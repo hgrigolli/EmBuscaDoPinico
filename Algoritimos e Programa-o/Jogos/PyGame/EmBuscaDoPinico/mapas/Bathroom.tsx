@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="2019.04.25" name="Bathroom" tilewidth="97" tileheight="134" tilecount="37" columns="0">
+<tileset version="1.2" tiledversion="1.2.3" name="Bathroom" tilewidth="97" tileheight="134" tilecount="39" columns="0">
  <grid orientation="orthogonal" width="24" height="24"/>
  <tile id="0">
   <image width="17" height="24" source="../imagens/bath/bath_01.png"/>
@@ -111,5 +111,11 @@
  </tile>
  <tile id="38">
   <image width="24" height="24" source="../imagens/bath/bath_02.png"/>
+ </tile>
+ <tile id="39">
+  <image width="48" height="48" source="../imagens/bath/bath_38.png"/>
+ </tile>
+ <tile id="40">
+  <image width="24" height="24" source="../imagens/bath/bath_39.png"/>
  </tile>
 </tileset>
