@@ -104,6 +104,7 @@ class Game:
         self.player_movement = pg.sprite.Group()
         self.player_sprite = pg.sprite.Group()
         self.popups = pg.sprite.Group()
+        self.scores = pg.sprite.Group()
         self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
         self.evento = 0
@@ -120,6 +121,7 @@ class Game:
         self.playPauseAction = PlayPauseAction(self, 350, 10)
         self.playerActionHolder = PlayerActionHolder(self,0,0)
         self.playerActionChooser = PlayerActionChooser(self, 0,600)
+        PlayerScoreBoard(self)
         k = 0
         const = 10
         posy = 640
@@ -156,6 +158,7 @@ class Game:
         self.player_sprite.update()
         self.player_actions.update()
         self.popups.update()
+        self.scores.update()
 
     # def draw_grid(self):
     #     for x in range(0, self.map_rect.width , TILESIZE//2):
@@ -192,6 +195,7 @@ class Game:
         self.playerActionHolder.show_action(self.screen)
         # self.draw_grid()
         self.draw_text("Pontos: {}".format(self.player.score),16,TEXT_DARK_BLUE,10,10)
+        self.scores.draw(self.screen)
         self.player_actions.draw(self.screen)
         self.popups.draw(self.screen)
         for action in self.playerActionHolder.actions_list:

@@ -742,14 +742,39 @@ class ActionAnimation(pg.sprite.Sprite):
         self.kill()
 
 
-class PlayerScore(pg.sprite.Sprite):
-    def __init__(self, game, action=0, txt=''):
-        self.groups =  game.popups
+class PlayerScoresItem(pg.sprite.Sprite):
+    def __init__(self, game, image, x, y):
+        self.groups =  game.scores
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = self.game.ui_popups[UI_MSG_BOX_IND] #MSG BOX
+        self.image = image
+        self.done = False
         self.rect = self.image.get_rect()
-        self.action = action
-        self.txt = txt
-        self.rect.centerx = WIDTH/2
-        self.rect.centery = HEIGHT/2 - 100
+        self.rect.x = x
+        self.rect.y = y
+        self.action_index = None
+        i = 0
+        for img in self.game.player_actions_done:
+            if(img == self.game.player_actions_done[i]):
+                self.action_index = i+5
+            i += 1
+
+
+
+
+
+class PlayerScoreBoard():
+    def __init__(self, game):
+        # self.groups =  game.scores
+        # pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        x = 10
+        y = 30
+        player_scores = []
+
+        for img in self.game.player_actions_done:
+            player_scores.append(PlayerScoresItem(self.game, img, x, y))
+            x += 65
+            if(x > 300):
+                x = 10
+                y += 30
