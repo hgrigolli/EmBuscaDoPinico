@@ -27,6 +27,7 @@ class Game:
         map_folder = path.join(game_folder, 'mapas')
         font_folder = path.join(image_folder, 'font')
         self.font_name = path.join(font_folder, UI_FONT)
+        self.font = pg.font.Font(self.font_name, 32)
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()

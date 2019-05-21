@@ -22,6 +22,7 @@ class Player(pg.sprite.Sprite):
         self.calcas_abaixadas = False
         self.usou_papel = False
 
+        self.score = 0
         # Rect de Colisão
         # self.rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
         # self.image = pg.Surface((self.rect.width, self.rect.height))
@@ -43,6 +44,7 @@ class Player(pg.sprite.Sprite):
             self.x += dx * TILESIZE//2
             self.y += dy * TILESIZE//2
         else:
+            self.score -= ANDAR_COM_LOOP_SCORE
             self.image = self.game.player_imgs[index]
 
     def rotate(self, index):
@@ -187,6 +189,7 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dy=-1,index=0)
+                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -198,6 +201,7 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dy=1,index=9)
+                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -209,6 +213,7 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dx=-1,index=6)
+                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -220,6 +225,7 @@ class ChooseAction(pg.sprite.Sprite):
                     if(pg.time.get_ticks() >= next_move):
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                         self.game.player.move(dx=1,index=3)
+                        self.game.player.score += ANDAR_SCORE
                         self.game.update()
                         self.game.draw()
                         i += 1
@@ -233,12 +239,14 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     self.game.player.toneira_aberta = True
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
+                    self.game.player.score += ABRIR_TORNEIRA_SCORE
                     break
                 elif(acao.action == ABRIR_TORNEIRA_ACTION):
                     print("A torneira ja está aberta!")
                     fez_acao = True
                     break
             if(not fez_acao):
+                self.game.player.score -= ABRIR_TORNEIRA_SCORE
                 self.nao_pode_exec_acao()
 
         if(self.action_index == FECHAR_TORNEIRA_IND):
@@ -248,12 +256,14 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     self.game.player.toneira_aberta = False
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
+                    self.game.player.score += FECHAR_TORNEIRA_SCORE
                     break
                 elif(acao.action == FECHAR_TORNEIRA_ACTION):
                     print("A torneira ja está fechada!")
                     fez_acao = True
                     break
             if(not fez_acao):
+                self.game.player.score -= FECHAR_TORNEIRA_SCORE
                 self.nao_pode_exec_acao()
 
 
@@ -263,6 +273,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.tampa_aberta = True
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
+                    self.game.player.score += ABRIR_TAMPA_SCORE
                     break
                 elif(acao.action == ABRIR_TAMPA_ACTION):
                     print("A tampa já está aberta!")
@@ -270,6 +281,7 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= ABRIR_TAMPA_SCORE
 
         if(self.action_index == FECHAR_TAMPA_IND):
             for acao in acoes_do_player:
@@ -277,6 +289,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.tampa_aberta = False
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
+                    self.game.player.score += FECHAR_TAMPA_SCORE
                     break
                 elif(acao.action == FECHAR_TAMPA_ACTION):
                     print("A tampa já está fechada!")
@@ -284,6 +297,7 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= FECHAR_TAMPA_SCORE
 
         if(self.action_index == DAR_DESCARGA_IND):
             for acao in acoes_do_player:
@@ -291,6 +305,7 @@ class ChooseAction(pg.sprite.Sprite):
                     print("Dando descarga...\nFlushhhhhh")
                     fez_acao = True
                     deu_descarga = True
+                    self.game.player.score += DAR_DESCARGA_SCORE
                     break
                 elif(acao.action == DAR_DESCARGA) and self.game.player.deu_descarga:
                     print("Você já deu descarga, economize água!")
@@ -298,6 +313,7 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= DAR_DESCARGA_SCORE
 
         if(self.action_index == LAVAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
@@ -305,6 +321,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.lavou_maos = True
                     print("Lava uma mão..\nLava outra, lava uma mão..")
                     fez_acao = True
+                    self.game.player.score += LAVAR_MAOS_SCORE
                     break
                 elif(acao.action == LAVAR_MAOS):
                     print("Suas mãos já estão limpas.\nEconomize água")
@@ -312,22 +329,26 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= LAVAR_MAOS_SCORE
 
         if(self.action_index == SECAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == SECAR_MAOS and self.game.player.lavou_maos and not self.game.player.secou_maos:
                     self.game.player.secou_maos = True
                     self.game.map.toggle_toalha(self.game.player.secou_maos)
+                    self.game.player.score += SECAR_MAOS_SCORE
                     fez_acao = True
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= SECAR_MAOS_SCORE
 
         if(self.action_index == PAPEL_ACTION_IND):
             for acao in acoes_do_player:
                 if acao.action == USAR_PAPEL and not self.game.player.usou_papel:
                     print("Papel!")
                     self.game.player.usou_papel = True
+                    self.game.player.score += USAR_PAPEL_SCORE
                     fez_acao = True
                     break
                 elif(acao.action == USAR_PAPEL):
@@ -336,11 +357,13 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= USAR_PAPEL_SCORE
 
         if(self.action_index == PANTS_DOWN_IND):
             for acao in acoes_do_player:
                 if acao.action == ABAIXAR_CALCAS_ACTION and not self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = True
+                    self.game.player.score += ABAIXAR_CALCAS_SCORE
                     print("Tirando a calça..")
                     fez_acao = True
                     break
@@ -350,11 +373,13 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= ABAIXAR_CALCAS_SCORE
 
         if(self.action_index == PANTS_UP_IND):
             for acao in acoes_do_player:
                 if acao.action == LEVANTAR_CALCAS_ACTION and self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = False
+                    self.game.player.score += LEVANTAR_CALCAS_SCORE
                     print("Colocando a calça...\nZip!")
                     fez_acao = True
                     break
@@ -364,6 +389,7 @@ class ChooseAction(pg.sprite.Sprite):
                     break
             if(not fez_acao):
                 self.nao_pode_exec_acao()
+                self.game.player.score -= LEVANTAR_CALCAS_SCORE
 
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
@@ -376,6 +402,7 @@ class ChooseAction(pg.sprite.Sprite):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                                 self.game.player.move(dy=-1,index=0)
+                                self.game.player.score += ANDAR_COM_LOOP_SCORE
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -389,6 +416,7 @@ class ChooseAction(pg.sprite.Sprite):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                                 self.game.player.move(dy=1,index=9)
+                                self.game.player.score += ANDAR_COM_LOOP_SCORE
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -402,6 +430,7 @@ class ChooseAction(pg.sprite.Sprite):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                                 self.game.player.move(dx=-1,index=6)
+                                self.game.player.score += ANDAR_COM_LOOP_SCORE
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -415,6 +444,7 @@ class ChooseAction(pg.sprite.Sprite):
                             if(pg.time.get_ticks() >= next_move):
                                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
                                 self.game.player.move(dx=1,index=3)
+                                self.game.player.score += ANDAR_COM_LOOP_SCORE
                                 self.game.update()
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 10, 50)
@@ -605,8 +635,7 @@ class InputBox(pg.sprite.Sprite):
         self.pressed = False
         self.mouse_clicked = False
         self.text = text
-        self.FONT = pg.font.Font(None, 32)
-        self.txt_surface = self.FONT.render(self.text, True, TEXT_BLUE)
+        self.txt_surface = self.game.font.render(self.text, True, TEXT_BLUE)
         self.active = False
         self.valid = False
 
@@ -647,7 +676,7 @@ class InputBox(pg.sprite.Sprite):
                     self.pressed = True
                     self.text += event.unicode
                 # Re-render the text.
-                self.txt_surface = self.FONT.render(self.text, True, TEXT_BLUE)
+                self.txt_surface = self.game.font.render(self.text, True, TEXT_BLUE)
         if event.type == pg.KEYUP:
             self.pressed = False
         if event.type == pg.MOUSEBUTTONUP:
