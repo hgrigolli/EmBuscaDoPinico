@@ -319,11 +319,16 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == LAVAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
-                if acao.action == LAVAR_MAOS:
+                if acao.action == LAVAR_MAOS and self.game.player.toneira_aberta:
                     self.game.player.lavou_maos = True
                     print("Lava uma mão..\nLava outra, lava uma mão..")
                     fez_acao = True
                     self.game.player.score += LAVAR_MAOS_SCORE
+                    break
+                elif(acao.action == LAVAR_MAOS and not self.game.player.toneira_aberta):
+                    print("Você precisa abrir a torneira antes de lavar as mãos.")
+                    fez_acao = True
+                    self.game.player.score -= LAVAR_MAOS_SCORE
                     break
                 elif(acao.action == LAVAR_MAOS):
                     print("Suas mãos já estão limpas.\nEconomize água")
