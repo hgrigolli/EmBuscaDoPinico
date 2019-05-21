@@ -656,17 +656,10 @@ class InputBox(pg.sprite.Sprite):
                 if self.active and not self.pressed:
                     if event.key == pg.K_RETURN:
                         self.pressed = True
-                        while(not self.valid):
-                            try:
-                                if( int(self.text) <= 0 ):
-                                    self.text = '0'
-                                else:
-                                    self.text = str(int(self.text))
-                                self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
-                                self.valid = True
-                            except:
-                                self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
-                                self.valid = True
+                        try:
+                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = int(self.text)
+                        except:
+                            self.game.playerActionHolder.actions_list[self.game.playerActionHolder.index].loop_cycles = 0
                         self.text = ''
                     elif event.key == pg.K_BACKSPACE:
                         self.pressed = True
