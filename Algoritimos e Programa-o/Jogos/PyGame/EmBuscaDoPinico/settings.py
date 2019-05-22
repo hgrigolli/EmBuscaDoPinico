@@ -147,6 +147,12 @@ UI_MSG_BOX = 'msg_box.png'
 
 UI_PLAYER_BLOCKED = 'blocked.png'
 
+UI_PENDENTE = 'pendente.png'
+UI_DONE = 'done.png'
+
+UI_WINNER = 'winner.png'
+UI_LOST = 'lost.png'
+
 UI_RECT_ACTION_IMG = 'rect_movement.png'
 UI_RECT_CHOOSER_IMG = 'rect_chooser.png'
 
@@ -155,7 +161,8 @@ UI_RECT_CHOOSER_IMG = 'rect_chooser.png'
 UI_ANIM_BOX = 'anim_box.png'
 UI_BOX_NOT_ALLOWED = 'box_not_allowed.png'
 
-NOT_ALLOWED_ANIM_DELAY = 1500
+NOT_ALLOWED_ANIM_DELAY = 150
+GAME_OVER_DELAY = 500
 
 BLOCKED_DELAY = 80
 

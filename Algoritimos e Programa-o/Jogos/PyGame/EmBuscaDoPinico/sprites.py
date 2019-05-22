@@ -80,6 +80,7 @@ class Player(pg.sprite.Sprite):
                 return True
         return False
         
+
     def update(self):
         self.rect.x = self.x
         self.rect.y = self.y
@@ -242,6 +243,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.toneira_aberta = True
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
                     self.game.player.score += ABRIR_TORNEIRA_SCORE
+                    self.game.scoreBoard.player_scores[1].done = True
                     break
                 elif(acao.action == ABRIR_TORNEIRA_ACTION):
                     print("A torneira ja está aberta!")
@@ -259,6 +261,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.toneira_aberta = False
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
                     self.game.player.score += FECHAR_TORNEIRA_SCORE
+                    self.game.scoreBoard.player_scores[3].done = True
                     break
                 elif(acao.action == FECHAR_TORNEIRA_ACTION):
                     print("A torneira ja está fechada!")
@@ -276,6 +279,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
                     self.game.player.score += ABRIR_TAMPA_SCORE
+                    self.game.scoreBoard.player_scores[5].done = True
                     break
                 elif(acao.action == ABRIR_TAMPA_ACTION):
                     print("A tampa já está aberta!")
@@ -292,6 +296,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
                     self.game.player.score += FECHAR_TAMPA_SCORE
+                    self.game.scoreBoard.player_scores[7].done = True
                     break
                 elif(acao.action == FECHAR_TAMPA_ACTION):
                     print("A tampa já está fechada!")
@@ -303,11 +308,12 @@ class ChooseAction(pg.sprite.Sprite):
 
         if(self.action_index == DAR_DESCARGA_IND):
             for acao in acoes_do_player:
-                if acao.action == DAR_DESCARGA and not deu_descarga and evacuou:
+                if acao.action == DAR_DESCARGA and not self.game.player.deu_descarga:
                     print("Dando descarga...\nFlushhhhhh")
                     fez_acao = True
-                    deu_descarga = True
+                    self.game.player.deu_descarga = True
                     self.game.player.score += DAR_DESCARGA_SCORE
+                    self.game.scoreBoard.player_scores[9].done = True
                     break
                 elif(acao.action == DAR_DESCARGA) and self.game.player.deu_descarga:
                     print("Você já deu descarga, economize água!")
@@ -324,6 +330,7 @@ class ChooseAction(pg.sprite.Sprite):
                     print("Lava uma mão..\nLava outra, lava uma mão..")
                     fez_acao = True
                     self.game.player.score += LAVAR_MAOS_SCORE
+                    self.game.scoreBoard.player_scores[11].done = True
                     break
                 elif(acao.action == LAVAR_MAOS and not self.game.player.toneira_aberta):
                     print("Você precisa abrir a torneira antes de lavar as mãos.")
@@ -344,6 +351,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.secou_maos = True
                     self.game.map.toggle_toalha(self.game.player.secou_maos)
                     self.game.player.score += SECAR_MAOS_SCORE
+                    self.game.scoreBoard.player_scores[13].done = True
                     fez_acao = True
                     break
             if(not fez_acao):
@@ -356,6 +364,7 @@ class ChooseAction(pg.sprite.Sprite):
                     print("Papel!")
                     self.game.player.usou_papel = True
                     self.game.player.score += USAR_PAPEL_SCORE
+                    self.game.scoreBoard.player_scores[15].done = True
                     fez_acao = True
                     break
                 elif(acao.action == USAR_PAPEL):
@@ -371,6 +380,7 @@ class ChooseAction(pg.sprite.Sprite):
                 if acao.action == ABAIXAR_CALCAS_ACTION and not self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = True
                     self.game.player.score += ABAIXAR_CALCAS_SCORE
+                    self.game.scoreBoard.player_scores[17].done = True
                     print("Tirando a calça..")
                     fez_acao = True
                     break
@@ -387,6 +397,7 @@ class ChooseAction(pg.sprite.Sprite):
                 if acao.action == LEVANTAR_CALCAS_ACTION and self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = False
                     self.game.player.score += LEVANTAR_CALCAS_SCORE
+                    self.game.scoreBoard.player_scores[19].done = True
                     print("Colocando a calça...\nZip!")
                     fez_acao = True
                     break
@@ -512,6 +523,7 @@ class PlayPauseAction(pg.sprite.Sprite):
         self.game.playerActionHolder.actions_list = []
         self.game.player.reset_pos()
         self.game.map.reset_map()
+        self.game.scoreBoard.reset()
         self.game.update()
         self.game.draw()
 
@@ -601,6 +613,19 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 # pg.time.delay(PLAYER_TIME_WAIT)
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
+        
+        qtde_acoes = 10
+        count = 0
+        for i in range(len(self.game.scoreBoard.player_scores)):
+            if(i%2 == 1):
+                if(self.game.scoreBoard.player_scores[i].done):
+                    count += 1
+        if(count == qtde_acoes):
+            ActionAnimation(self.game).winner10()
+        else:
+            ActionAnimation(self.game).game_over()
+
+
 
 
 
@@ -704,11 +729,15 @@ class ActionAnimation(pg.sprite.Sprite):
         self.rect.centery = HEIGHT/2 - 100 #284
 
     def action_not_allowed(self):
-
-        self.game.update()
-        self.game.draw()
-        pg.display.flip()
-        pg.time.delay(NOT_ALLOWED_ANIM_DELAY)
+        j = 0
+        next_move = pg.time.get_ticks()
+        while(j < 10):
+            if(pg.time.get_ticks() >= next_move):
+                next_move = pg.time.get_ticks() + NOT_ALLOWED_ANIM_DELAY
+                self.game.update()
+                self.game.draw()
+                pg.display.flip()
+                j += 1
         
         self.kill()
 
@@ -742,9 +771,37 @@ class ActionAnimation(pg.sprite.Sprite):
 
         self.kill()
 
+    def winner10(self):
+        j = 0
+        next_move = pg.time.get_ticks()
+        while(j < 10):
+            if(pg.time.get_ticks() >= next_move):
+                next_move = pg.time.get_ticks() + GAME_OVER_DELAY
+                self.image = self.game.win_img
+                self.game.update()
+                self.game.draw()
+                pg.display.flip()
+                j += 1
+
+        self.kill()
+
+    def game_over(self):
+        j = 0
+        next_move = pg.time.get_ticks()
+        while(j < 10):
+            if(pg.time.get_ticks() >= next_move):
+                next_move = pg.time.get_ticks() + GAME_OVER_DELAY
+                self.image = self.game.lose_img
+                self.game.update()
+                self.game.draw()
+                pg.display.flip()
+                j += 1
+
+        self.kill()
+
 
 class PlayerScoresItem(pg.sprite.Sprite):
-    def __init__(self, game, image, x, y):
+    def __init__(self, game, image, index, x, y):
         self.groups =  game.scores
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
@@ -753,14 +810,20 @@ class PlayerScoresItem(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.action_index = None
-        i = 0
-        for img in self.game.player_actions_done:
-            if(img == self.game.player_actions_done[i]):
-                self.action_index = i+5
-            i += 1
+        self.action_index = index
 
 
+    def update(self):
+        if(self.action_index % 2 == 0):
+            if(self.done):
+                self.image = self.game.done_img
+            else:
+                self.image = self.game.pendente_img
+
+    def reset(self):
+        self.done = False
+        if(self.image == self.game.done_img):
+            self.image = self.game.pendente_img
 
 
 
@@ -771,11 +834,22 @@ class PlayerScoreBoard():
         self.game = game
         x = 10
         y = 30
-        player_scores = []
+        self.player_scores = []
 
+        i = 5
         for img in self.game.player_actions_done:
-            player_scores.append(PlayerScoresItem(self.game, img, x, y))
+            self.player_scores.append(PlayerScoresItem(self.game, img, i, x, y))
+            self.player_scores.append(PlayerScoresItem(self.game, self.game.pendente_img, i+1, x+24, y))
+            i += 2
             x += 65
             if(x > 300):
                 x = 10
                 y += 30
+
+    def reset(self):
+        for scoreItem in self.player_scores:
+            scoreItem.reset()
+
+
+
+

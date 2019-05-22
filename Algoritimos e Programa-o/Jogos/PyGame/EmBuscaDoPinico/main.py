@@ -42,6 +42,12 @@ class Game:
         self.rectmov_img = pg.image.load(path.join(ui_folder, UI_RECT_ACTION_IMG)).convert_alpha()
         self.rectchoose_img = pg.image.load(path.join(ui_folder, UI_RECT_CHOOSER_IMG)).convert_alpha()
 
+        self.pendente_img = pg.image.load(path.join(ui_folder, UI_PENDENTE)).convert_alpha()
+        self.done_img = pg.image.load(path.join(ui_folder, UI_DONE)).convert_alpha()
+
+        self.win_img = pg.image.load(path.join(ui_folder, UI_WINNER)).convert_alpha()
+        self.lose_img = pg.image.load(path.join(ui_folder, UI_LOST)).convert_alpha()
+
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_N_LOOP_UNSEL_IMG)).convert_alpha())
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_N_LOOP_SEL_IMG)).convert_alpha())
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_MSG_BOX)).convert_alpha())
@@ -121,7 +127,7 @@ class Game:
         self.playPauseAction = PlayPauseAction(self, 350, 10)
         self.playerActionHolder = PlayerActionHolder(self,0,0)
         self.playerActionChooser = PlayerActionChooser(self, 0,600)
-        PlayerScoreBoard(self)
+        self.scoreBoard = PlayerScoreBoard(self)
         k = 0
         const = 10
         posy = 640
