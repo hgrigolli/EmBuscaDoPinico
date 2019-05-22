@@ -242,6 +242,7 @@ class ChooseAction(pg.sprite.Sprite):
                     fez_acao = True
                     self.game.player.toneira_aberta = True
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
+                    self.game.sink_sound.play(loops=1)
                     self.game.player.score += ABRIR_TORNEIRA_SCORE
                     self.game.scoreBoard.player_scores[1].done = True
                     break
@@ -278,6 +279,8 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.tampa_aberta = True
                     fez_acao = True
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
+                    self.game.open_lid.play()
+                    self.game.vaso_poop_sound.play(loops=2)
                     self.game.player.score += ABRIR_TAMPA_SCORE
                     self.game.scoreBoard.player_scores[5].done = True
                     break
@@ -294,6 +297,7 @@ class ChooseAction(pg.sprite.Sprite):
                 if acao.action == FECHAR_TAMPA_ACTION and self.game.player.tampa_aberta:
                     self.game.player.tampa_aberta = False
                     fez_acao = True
+                    self.game.open_lid.play()
                     self.game.map.toggle_vaso(self.game.player.tampa_aberta)
                     self.game.player.score += FECHAR_TAMPA_SCORE
                     self.game.scoreBoard.player_scores[7].done = True
@@ -312,6 +316,7 @@ class ChooseAction(pg.sprite.Sprite):
                     print("Dando descarga...\nFlushhhhhh")
                     fez_acao = True
                     self.game.player.deu_descarga = True
+                    self.game.vaso_flush.play()
                     self.game.player.score += DAR_DESCARGA_SCORE
                     self.game.scoreBoard.player_scores[9].done = True
                     break
@@ -329,6 +334,7 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.player.lavou_maos = True
                     print("Lava uma mão..\nLava outra, lava uma mão..")
                     fez_acao = True
+                    self.game.lava_mao_sound.play()
                     self.game.player.score += LAVAR_MAOS_SCORE
                     self.game.scoreBoard.player_scores[11].done = True
                     break
@@ -349,6 +355,7 @@ class ChooseAction(pg.sprite.Sprite):
             for acao in acoes_do_player:
                 if acao.action == SECAR_MAOS and self.game.player.lavou_maos and not self.game.player.secou_maos:
                     self.game.player.secou_maos = True
+                    self.game.towel_sound.play()
                     self.game.map.toggle_toalha(self.game.player.secou_maos)
                     self.game.player.score += SECAR_MAOS_SCORE
                     self.game.scoreBoard.player_scores[13].done = True
@@ -362,6 +369,7 @@ class ChooseAction(pg.sprite.Sprite):
             for acao in acoes_do_player:
                 if acao.action == USAR_PAPEL and not self.game.player.usou_papel:
                     print("Papel!")
+                    self.game.papel_sound.play()
                     self.game.player.usou_papel = True
                     self.game.player.score += USAR_PAPEL_SCORE
                     self.game.scoreBoard.player_scores[15].done = True
@@ -380,6 +388,7 @@ class ChooseAction(pg.sprite.Sprite):
                 if acao.action == ABAIXAR_CALCAS_ACTION and not self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = True
                     self.game.player.score += ABAIXAR_CALCAS_SCORE
+                    self.game.pants_down_sound.play()
                     self.game.scoreBoard.player_scores[17].done = True
                     print("Tirando a calça..")
                     fez_acao = True
@@ -396,6 +405,7 @@ class ChooseAction(pg.sprite.Sprite):
             for acao in acoes_do_player:
                 if acao.action == LEVANTAR_CALCAS_ACTION and self.game.player.calcas_abaixadas:
                     self.game.player.calcas_abaixadas = False
+                    self.game.pants_up_sound.play()
                     self.game.player.score += LEVANTAR_CALCAS_SCORE
                     self.game.scoreBoard.player_scores[19].done = True
                     print("Colocando a calça...\nZip!")
@@ -607,6 +617,9 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def execute_action(self):
         if(self.game.playPauseAction.playing):
             for action in self.actions_list:
+                while(pg.mixer.get_busy()):
+                    self.game.update()
+                    continue
                 action.execute()
                 self.game.update()
                 self.game.draw()
@@ -731,6 +744,7 @@ class ActionAnimation(pg.sprite.Sprite):
     def action_not_allowed(self):
         j = 0
         next_move = pg.time.get_ticks()
+        self.game.alert_sound.play()
         while(j < 10):
             if(pg.time.get_ticks() >= next_move):
                 next_move = pg.time.get_ticks() + NOT_ALLOWED_ANIM_DELAY
@@ -761,6 +775,7 @@ class ActionAnimation(pg.sprite.Sprite):
 
 
     def blocked(self):
+        self.game.wrong_sound.play()
         self.image = self.game.ui_popups[UI_PLAYER_BLOCKED_IND]
         self.rect.x = self.game.player.rect.x + 12
         self.rect.y = self.game.player.rect.y - 24
@@ -774,6 +789,7 @@ class ActionAnimation(pg.sprite.Sprite):
     def winner10(self):
         j = 0
         next_move = pg.time.get_ticks()
+        self.game.win_sound.play()
         while(j < 10):
             if(pg.time.get_ticks() >= next_move):
                 next_move = pg.time.get_ticks() + GAME_OVER_DELAY
@@ -787,6 +803,7 @@ class ActionAnimation(pg.sprite.Sprite):
 
     def game_over(self):
         j = 0
+        self.game.lose_sound.play()
         next_move = pg.time.get_ticks()
         while(j < 10):
             if(pg.time.get_ticks() >= next_move):

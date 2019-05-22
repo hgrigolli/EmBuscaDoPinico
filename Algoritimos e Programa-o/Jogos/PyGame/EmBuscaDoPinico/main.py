@@ -26,6 +26,7 @@ class Game:
         anim_folder = path.join(image_folder, 'animations')
         map_folder = path.join(game_folder, 'mapas')
         font_folder = path.join(image_folder, 'font')
+        self.sound_folder = path.join(game_folder, 'sounds')
         self.font_name = path.join(font_folder, UI_FONT)
         self.font = pg.font.Font(self.font_name, 28)
         self.map = TiledMap(path.join(map_folder, 'mapa.tmx'))
@@ -37,6 +38,21 @@ class Game:
         self.mouse_img = []
         self.ui_popups = []
         self.animations = []
+
+        #SFX SOUNDS
+        self.sink_sound = pg.mixer.Sound(path.join(self.sound_folder, 'sink_on.ogg'))
+        self.open_lid = pg.mixer.Sound(path.join(self.sound_folder, 'open_lid.ogg'))
+        self.papel_sound = pg.mixer.Sound(path.join(self.sound_folder, 'toilet_paper.ogg'))
+        self.vaso_flush = pg.mixer.Sound(path.join(self.sound_folder, 'vaso_flush.ogg'))
+        self.lava_mao_sound = pg.mixer.Sound(path.join(self.sound_folder, 'CasteloRatimbumLavaMao.ogg'))
+        self.wrong_sound = pg.mixer.Sound(path.join(self.sound_folder, 'wrong.ogg'))
+        self.alert_sound = pg.mixer.Sound(path.join(self.sound_folder, 'alert.ogg'))
+        self.vaso_poop_sound = pg.mixer.Sound(path.join(self.sound_folder, 'vaso_poop_sound.ogg'))
+        self.lose_sound = pg.mixer.Sound(path.join(self.sound_folder, 'aww.ogg'))
+        self.win_sound = pg.mixer.Sound(path.join(self.sound_folder, 'applause.ogg'))
+        self.towel_sound = pg.mixer.Sound(path.join(self.sound_folder, 'towel_sound.ogg'))
+        self.pants_up_sound = pg.mixer.Sound(path.join(self.sound_folder, 'pants_up_sound.ogg'))
+        self.pants_down_sound = pg.mixer.Sound(path.join(self.sound_folder, 'pants_down_sound.ogg'))
         
         #UI
         self.rectmov_img = pg.image.load(path.join(ui_folder, UI_RECT_ACTION_IMG)).convert_alpha()
@@ -114,6 +130,7 @@ class Game:
         self.mouse_img_active = self.mouse_img[0]
         self.mouse_pos = pg.mouse.get_pos()
         self.evento = 0
+        pg.mixer.music.load(path.join(self.sound_folder, 'playing_sound.ogg'))
 
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
@@ -148,11 +165,14 @@ class Game:
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
+        pg.mixer.music.set_volume(0.1)
+        pg.mixer.music.play(loops=-1)
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000 # Amount of seconds between each loop.
             self.events()
             self.update()
             self.draw()
+        pg.mixer.music.fadeout(500)
 
     def quit(self):
         pg.quit()
@@ -223,6 +243,8 @@ class Game:
     def show_start_screen(self):
         start = False
         creditos = False
+        #home sound
+        #waitforkey
 
         while(not start):
 
