@@ -21,13 +21,7 @@ class Player(pg.sprite.Sprite):
         self.secou_maos = False
         self.calcas_abaixadas = False
         self.usou_papel = False
-
         self.score = 0
-        # Rect de Colisão
-        # self.rect = pg.Rect(self.rect.x + 12, (self.rect.y + 24) , 24, 24)
-        # self.image = pg.Surface((self.rect.width, self.rect.height))
-        # self.image.fill(YELLOW)
-        # self.image.set_alpha(100)
         self.x = x
         self.y = y
 
@@ -480,7 +474,6 @@ class ChooseAction(pg.sprite.Sprite):
                     self.game.draw()
                     self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                     pg.display.flip()
-                    # pg.time.delay(PLAYER_TIME_WAIT)
             else:
                 print("não pode andar de calças abaixadas. Levante as calças")
         
@@ -772,25 +765,6 @@ class ActionAnimation(pg.sprite.Sprite):
         
         self.kill()
 
-        # if(self.txt == 'vaso_anim_open'):
-        #     for i in range(len(self.game.vaso_anim)):
-        #         self.image = self.game.vaso_anim[i]
-        #         self.game.update()
-        #         self.game.draw()
-
-        # if(self.txt == 'vaso_anim_close'):
-        #     for i in range(len(self.game.vaso_anim)-1,0,-1):
-        #         self.image = self.game.vaso_anim[i]
-        #         self.game.update()
-        #         self.game.draw()
-
-        # if(self.txt == 'hands_anim'):
-        #     for i in range(len(self.game.hands_anim)):
-        #         self.image = self.game.hands_anim[i]
-        #         self.game.update()
-        #         self.game.draw()
-
-
     def blocked(self):
         self.game.wrong_sound.play()
         self.image = self.game.ui_popups[UI_PLAYER_BLOCKED_IND]
@@ -863,8 +837,6 @@ class PlayerScoresItem(pg.sprite.Sprite):
 
 class PlayerScoreBoard():
     def __init__(self, game):
-        # self.groups =  game.scores
-        # pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         x = 10
         y = 30
