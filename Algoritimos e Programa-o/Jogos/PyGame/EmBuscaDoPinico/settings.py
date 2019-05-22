@@ -177,4 +177,5 @@ UI_BOX_NOT_ALLOWED_IND = 1
 
 UI_FONT = 'Vinegar Stroke.ttf'
 
-
+#UI EXECUTION
+RADIUS = 24

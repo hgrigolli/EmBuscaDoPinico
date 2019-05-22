@@ -615,15 +615,32 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 loopImage = False
 
     def execute_action(self):
+        posx = 54
+        posy = 119
         if(self.game.playPauseAction.playing):
             for action in self.actions_list:
                 while(pg.mixer.get_busy()):
                     self.game.update()
                     continue
+                if(action.action_index == LOOP_IND):
+                    posy += 51
+                    if(posy > 552):
+                        posy = 95
+                        posx += 104
+                    if(posx >= 104*4):
+                        posx = 30
+                else:
+                    posy += 36
+                    if(posy > 552):
+                        posy = 95
+                        posx += 104
+                    if(posx >= 104*4):
+                        posx = 30 
                 action.execute()
                 self.game.update()
                 self.game.draw()
-                # pg.time.delay(PLAYER_TIME_WAIT)
+                pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS)
+                
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
         

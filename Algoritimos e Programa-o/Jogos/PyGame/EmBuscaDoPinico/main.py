@@ -4,7 +4,6 @@ from os import path
 from settings import *
 from sprites import *
 from tiledmap import *
-import numpy
 
 class Game:
     def __init__(self):
