@@ -193,7 +193,8 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.update()
                         self.game.draw()
                         i += 1
-
+                        print("Andando cima sem loop ", (posx,posy) )
+                        
                     pg.draw.circle(self.game.screen, WHITE, (posx, posy), RADIUS, 3)
                     pg.display.flip()
 
@@ -208,6 +209,7 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.update()
                         self.game.draw()
                         i += 1
+                        print("Andando Baixo sem loop ", (posx,posy) )
 
                     pg.draw.circle(self.game.screen, LIGHTGREY, (posx, posy), RADIUS, 3)
                     pg.display.flip()
@@ -222,8 +224,8 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.player.move(dx=-1,index=6)
                         self.game.update()
                         self.game.draw()
+                        print("Andando Esquerda sem loop ", (posx,posy) )
                         i += 1
-
                     pg.draw.circle(self.game.screen, YELLOW, (posx, posy), RADIUS, 3)
                     pg.display.flip()
 
@@ -238,7 +240,7 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.update()
                         self.game.draw()
                         i += 1
-
+                        print("Andando Direita sem loop ", (posx,posy) )
 
                     pg.draw.circle(self.game.screen, GREEN, (posx, posy), RADIUS, 3)
                     pg.display.flip()
@@ -475,6 +477,7 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
+                                print("Andando cima com loop ", (posx,posy) )
                                 j += 1
                             pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
                             pg.display.flip()
@@ -490,6 +493,7 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
+                                print("Andando baixo com loop ", (posx,posy) ) 
                                 j += 1
                             pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
                             pg.display.flip()
@@ -505,8 +509,8 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
+                                print("Andando direita esquerda loop ", (posx,posy) )
                                 j += 1
-
                             pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
                             pg.display.flip()
 
@@ -521,8 +525,8 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw()
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
+                                print("Andando direita com loop ", (posx,posy) )
                                 j += 1
-
                             pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
                             pg.display.flip()
                     else:
@@ -709,7 +713,10 @@ class PlayerActionHolder(pg.sprite.Sprite):
                         posy = 95
                         posx += 104
                     if(posx >= 104*4):
-                        posx = 35 
+                        posx = 3
+                elif(after_loop):
+                    posy += 4
+                    posx += 8 
 
                 # if(action.action_index != LOOP_IND and not after_loop):
                 #     posy += 51

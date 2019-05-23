@@ -70,7 +70,7 @@ class Game:
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_PLAYER_BLOCKED)).convert_alpha())
 
         self.start_bg_img = pg.image.load(path.join(ui_folder, 'bg_home.png')).convert_alpha()
-        self.credits_bg_img = pg.image.load(path.join(ui_folder, 'credit_bg.png')).convert_alpha()
+        # self.credits_bg_img = pg.image.load(path.join(ui_folder, 'credit_bg.png')).convert_alpha()
 
         self.start_button_img = pg.image.load(path.join(ui_folder, 'start_button.png')).convert_alpha()
         self.start_button_hover_img  = pg.image.load(path.join(ui_folder, 'start_button_hover.png')).convert_alpha()
