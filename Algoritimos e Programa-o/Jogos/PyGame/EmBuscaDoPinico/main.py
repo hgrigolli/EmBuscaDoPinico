@@ -250,8 +250,11 @@ class Game:
             
 
     def show_start_screen(self):
+        pg.mixer.music.load(path.join(self.sound_folder, 'home_sound.ogg'))
         mouse_hold = False
         waiting = True
+        pg.mixer.music.set_volume(0.1)
+        pg.mixer.music.play(loops=-1)
         self.start_button = Buttons(self, self.start_button_img, 200, HEIGHT * 3 /4)
         self.credits_button = Buttons(self, self.creditos_button_img, WIDTH - 400, HEIGHT * 3 /4)
         if(self.back_button != None):
@@ -264,11 +267,14 @@ class Game:
             self.buttons_sprites.draw(self.screen)
             self.clock.tick(FPS)
             for event in pg.event.get():
+                if(event.type == pg.QUIT):
+                    self.quit()
                 if(event.type == pg.MOUSEBUTTONDOWN and not mouse_hold):
                     if event.button == 1:
                         if self.start_button.rect.collidepoint(event.pos):
                             waiting = False
                             mouse_hold = True
+                            pg.mixer.music.fadeout(500)
                         elif self.credits_button.rect.collidepoint(event.pos):
                             mouse_hold = True
                             self.show_credits_screen()
@@ -290,7 +296,7 @@ class Game:
     def show_credits_screen(self):
         mouse_hold = False
         voltar = False
-        self.back_button = Buttons(self, self.back_button_img, WIDTH-400, HEIGHT * 3 /4)
+        self.back_button = Buttons(self, self.back_button_img, WIDTH-300, HEIGHT * 3 /4)
         self.start_button.kill()
         self.credits_button.kill()
         while not voltar:
@@ -300,12 +306,20 @@ class Game:
             self.buttons_sprites.draw(self.screen)
             self.clock.tick(FPS)
             for event in pg.event.get():
+                if(event.type == pg.QUIT):
+                    self.quit()
+
                 if(event.type == pg.MOUSEBUTTONDOWN and not mouse_hold):
                     if event.button == 1:
                         if self.back_button.rect.collidepoint(event.pos):
                             voltar = True
                             mouse_hold = True
                             self.show_start_screen()
+                elif(event.type == pg.MOUSEMOTION):
+                        if self.back_button.rect.collidepoint(event.pos):
+                            self.back_button.image = self.back_button_hover_img
+                        else:
+                            self.back_button.image = self.back_button_img
                 elif(event.type == pg.MOUSEBUTTONUP):
                     mouse_hold = False
             pg.display.flip()
