@@ -494,6 +494,7 @@ class PlayPauseAction(pg.sprite.Sprite):
         self.rect.y = y
 
     def get_action(self):
+        pg.event.pump()
         event = self.game.evento
         if (event.type == pg.MOUSEBUTTONDOWN and not self.mouse_hold and not self.played):
             if event.button == 1:
@@ -859,3 +860,14 @@ class PlayerScoreBoard():
 
 
 
+
+class Buttons(pg.sprite.Sprite):
+
+    def __init__(self, game, image, x, y):
+        self.groups =  game.buttons_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
