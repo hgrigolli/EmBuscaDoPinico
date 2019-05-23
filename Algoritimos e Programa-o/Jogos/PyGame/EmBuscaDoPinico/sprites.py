@@ -177,7 +177,7 @@ class ChooseAction(pg.sprite.Sprite):
     def nao_pode_exec_acao(self):
         ActionAnimation(self.game, txt="Ação Não Permitida").action_not_allowed()
 
-    def execute(self):
+    def execute(self, posx, posy):
         acoes_do_player = pg.sprite.groupcollide(self.game.actions, self.game.player_sprite, False, False)
         fez_acao = False
         
@@ -194,6 +194,10 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.draw()
                         i += 1
 
+                    pg.draw.circle(self.game.screen, WHITE, (posx, posy), RADIUS, 3)
+                    pg.display.flip()
+
+
             if(self.action_index == MOVER_BAIXO_IND):
                 i = 0
                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
@@ -204,6 +208,10 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.update()
                         self.game.draw()
                         i += 1
+
+                    pg.draw.circle(self.game.screen, LIGHTGREY, (posx, posy), RADIUS, 3)
+                    pg.display.flip()
+
 
             if(self.action_index == MOVER_ESQUERDA_IND):
                 i = 0
@@ -216,6 +224,10 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.draw()
                         i += 1
 
+                    pg.draw.circle(self.game.screen, YELLOW, (posx, posy), RADIUS, 3)
+                    pg.display.flip()
+
+
             if(self.action_index == MOVER_DIREITA_IND):
                 i = 0
                 next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
@@ -226,6 +238,10 @@ class ChooseAction(pg.sprite.Sprite):
                         self.game.update()
                         self.game.draw()
                         i += 1
+
+
+                    pg.draw.circle(self.game.screen, GREEN, (posx, posy), RADIUS, 3)
+                    pg.display.flip()
         else:
             print("levante as calças antes de andar")
 
@@ -234,6 +250,9 @@ class ChooseAction(pg.sprite.Sprite):
                 if acao.action == ABRIR_TORNEIRA_ACTION and not self.game.player.toneira_aberta:
                     print("Abrindo torneira...")
                     fez_acao = True
+
+                    pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+                    
                     self.game.player.toneira_aberta = True
                     self.game.map.toggle_pia(self.game.player.toneira_aberta)
                     self.game.sink_sound.play(loops=1)
@@ -265,7 +284,9 @@ class ChooseAction(pg.sprite.Sprite):
             if(not fez_acao):
                 self.game.player.score -= FECHAR_TORNEIRA_SCORE
                 self.nao_pode_exec_acao()
-
+            
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
 
         if(self.action_index == ABRIR_TAMPA_IND):
             for acao in acoes_do_player:
@@ -286,6 +307,9 @@ class ChooseAction(pg.sprite.Sprite):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= ABRIR_TAMPA_SCORE
 
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
+
         if(self.action_index == FECHAR_TAMPA_IND):
             for acao in acoes_do_player:
                 if acao.action == FECHAR_TAMPA_ACTION and self.game.player.tampa_aberta:
@@ -304,6 +328,10 @@ class ChooseAction(pg.sprite.Sprite):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= FECHAR_TAMPA_SCORE
 
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
+
+
         if(self.action_index == DAR_DESCARGA_IND):
             for acao in acoes_do_player:
                 if acao.action == DAR_DESCARGA and not self.game.player.deu_descarga:
@@ -321,6 +349,10 @@ class ChooseAction(pg.sprite.Sprite):
             if(not fez_acao):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= DAR_DESCARGA_SCORE
+            
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
+
 
         if(self.action_index == LAVAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
@@ -344,6 +376,9 @@ class ChooseAction(pg.sprite.Sprite):
             if(not fez_acao):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= LAVAR_MAOS_SCORE
+            
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
 
         if(self.action_index == SECAR_MAOS_ACTION_IND):
             for acao in acoes_do_player:
@@ -358,6 +393,9 @@ class ChooseAction(pg.sprite.Sprite):
             if(not fez_acao):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= SECAR_MAOS_SCORE
+
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
 
         if(self.action_index == PAPEL_ACTION_IND):
             for acao in acoes_do_player:
@@ -377,6 +415,9 @@ class ChooseAction(pg.sprite.Sprite):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= USAR_PAPEL_SCORE
 
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
+
         if(self.action_index == PANTS_DOWN_IND):
             for acao in acoes_do_player:
                 if acao.action == ABAIXAR_CALCAS_ACTION and not self.game.player.calcas_abaixadas:
@@ -394,6 +435,9 @@ class ChooseAction(pg.sprite.Sprite):
             if(not fez_acao):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= ABAIXAR_CALCAS_SCORE
+
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
 
         if(self.action_index == PANTS_UP_IND):
             for acao in acoes_do_player:
@@ -413,6 +457,9 @@ class ChooseAction(pg.sprite.Sprite):
                 self.nao_pode_exec_acao()
                 self.game.player.score -= LEVANTAR_CALCAS_SCORE
 
+            pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+            pg.display.flip()
+
         if(self.action_index == LOOP_IND):
             n = self.loop_cycles
             if(not self.game.player.calcas_abaixadas): #não pode andar de calças abaixadas
@@ -429,6 +476,8 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
+                            pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
+                            pg.display.flip()
 
                     elif(self.loop_action == MOVER_BAIXO_IND):
                         j = 0
@@ -442,7 +491,9 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
-
+                            pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
+                            pg.display.flip()
+                    
                     elif(self.loop_action == MOVER_ESQUERDA_IND):
                         j = 0
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
@@ -456,6 +507,9 @@ class ChooseAction(pg.sprite.Sprite):
                                 pg.display.flip()
                                 j += 1
 
+                            pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
+                            pg.display.flip()
+
                     elif(self.loop_action == MOVER_DIREITA_IND):
                         j = 0
                         next_move = pg.time.get_ticks() + PLAYER_TIME_WAIT
@@ -468,8 +522,12 @@ class ChooseAction(pg.sprite.Sprite):
                                 self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
                                 pg.display.flip()
                                 j += 1
+
+                            pg.draw.circle(self.game.screen, RED, (posx+8, posy+4), RADIUS, 3)
+                            pg.display.flip()
                     else:
                         break
+
                     self.game.update()
                     self.game.draw()
                     self.game.draw_text('Repetições restantes: {}'.format(n-i), 16, TEXT_DARK_BLUE, 120, 10)
@@ -568,6 +626,7 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def show_action(self, surface):
         posx = 30
         posy = 95
+        
         loopImage = False
         is_loop = False
         for action in self.actions_list:
@@ -586,23 +645,23 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 self.loop_pos = (posx , posy)
                 self.loop_rect = self.imagem_rect
 
-            
             if(not is_loop and not loopImage):
                 posy += 51
                 if(posy > 552):
                     posy = 95
                     posx += 104
                 if(posx >= 104*4):
-                    posx = 30
+                    posx = 35
             else:
                 posy += 36
                 if(posy > 552):
                     posy = 95
                     posx += 104
                 if(posx >= 104*4):
-                    posx = 30   
+                    posx = 35   
 
             surface.blit(self.imagem, self.imagem_rect)
+
             # Blit para loop aparecer por cima da imagem de ação.
             if(loopImage):
                 surface.blit(self.game.player_actions_imgs[LOOP_IND], self.loop_rect)
@@ -611,29 +670,64 @@ class PlayerActionHolder(pg.sprite.Sprite):
     def execute_action(self):
         posx = 54
         posy = 119
+
+        loopImage = False
+        is_loop = False
+        after_loop = False
         if(self.game.playPauseAction.playing):
             for action in self.actions_list:
+                # pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
+                # pg.display.flip()
                 while(pg.mixer.get_busy()):
                     self.game.update()
                     continue
-                if(action.action_index == LOOP_IND):
+                action.execute(posx,posy)
+                self.game.update()
+                self.game.draw()
+
+                imagem = action.image
+                if(is_loop):
+                    is_loop = False
+                    loopImage = True
+                    after_loop = False
+
+                if(imagem == self.game.player_actions_imgs[LOOP_IND]):
+                    is_loop = True
+                    after_loop = True
+                
+
+                if(not is_loop and not loopImage):
                     posy += 51
                     if(posy > 552):
                         posy = 95
                         posx += 104
                     if(posx >= 104*4):
-                        posx = 30
-                else:
+                        posx = 35
+                elif(not after_loop):
                     posy += 36
                     if(posy > 552):
                         posy = 95
                         posx += 104
                     if(posx >= 104*4):
-                        posx = 30 
-                action.execute()
-                self.game.update()
-                self.game.draw()
-                pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS)
+                        posx = 35 
+
+                # if(action.action_index != LOOP_IND and not after_loop):
+                #     posy += 51
+                #     if(posy > 552):
+                #         posy = 95
+                #         posx += 104
+                #     if(posx >= 104*4):
+                #         posx = 35
+                # elif(after_loop):
+                #     after_loop = False
+                # elif(action.action_index == LOOP_IND and not after_loop):
+                #     posy += 36
+                #     after_loop = True
+                #     if(posy > 552):
+                #         posy = 95
+                #         posx += 104
+                #     if(posx >= 104*4):
+                #         posx = 35
                 
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
