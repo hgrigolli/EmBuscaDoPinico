@@ -675,24 +675,29 @@ class PlayerActionHolder(pg.sprite.Sprite):
         posx = 54
         posy = 119
 
-        loopImage = False
+        proximo = False
         is_loop = False
         after_loop = False
         if(self.game.playPauseAction.playing):
             for action in self.actions_list:
                 # pg.draw.circle(self.game.screen, RED, (posx, posy), RADIUS, 3)
                 # pg.display.flip()
+                imagem = action.image
+
                 while(pg.mixer.get_busy()):
                     self.game.update()
-                    continue
+                    self.game.draw()
+                    
                 action.execute(posx,posy)
                 self.game.update()
                 self.game.draw()
 
-                imagem = action.image
+                if(after_loop):
+                    posx -= 8
+                    posy -= 4
+
                 if(is_loop):
                     is_loop = False
-                    loopImage = True
                     after_loop = False
 
                 if(imagem == self.game.player_actions_imgs[LOOP_IND]):
@@ -700,21 +705,33 @@ class PlayerActionHolder(pg.sprite.Sprite):
                     after_loop = True
                 
 
-                if(not is_loop and not loopImage):
+                if(not is_loop and not proximo):
                     posy += 51
                     if(posy > 552):
-                        posy = 95
+                        posy = 119
+                        posx += 104
+                    if(posx >= 104*4):
+                        posx = 35
+                elif(proximo):
+                    posy += 68
+                    posx -= 8
+                    proximo = False
+                    if(posy > 552):
+                        posy = 119
                         posx += 104
                     if(posx >= 104*4):
                         posx = 35
                 elif(not after_loop):
                     posy += 36
                     if(posy > 552):
-                        posy = 95
+                        posy = 119
                         posx += 104
                     if(posx >= 104*4):
-                        posx = 3
+                        posx = 35
+                
                 elif(after_loop):
+                    after_loop = False
+                    proximo = True
                     posy += 4
                     posx += 8 
 
@@ -735,7 +752,11 @@ class PlayerActionHolder(pg.sprite.Sprite):
                 #         posx += 104
                 #     if(posx >= 104*4):
                 #         posx = 35
-                
+
+            while(pg.mixer.get_busy()):
+                self.game.update()
+                self.game.draw()
+                # continue   
             self.game.playPauseAction.playing = False
             self.game.playPauseAction.image =  self.game.player_actions_imgs[RESET_IND]
         
@@ -869,13 +890,21 @@ class ActionAnimation(pg.sprite.Sprite):
 
     def blocked(self):
         self.game.wrong_sound.play()
-        self.image = self.game.ui_popups[UI_PLAYER_BLOCKED_IND]
-        self.rect.x = self.game.player.rect.x + 12
-        self.rect.y = self.game.player.rect.y - 24
+        next_move = pg.time.get_ticks()
+        j = 0
+        while(j < 10):
+            if(pg.time.get_ticks() >= next_move):
+                next_move = pg.time.get_ticks() + BLOCKED_DELAY
+                self.image = self.game.ui_popups[UI_PLAYER_BLOCKED_IND]
+                self.rect.x = self.game.player.rect.x + 12
+                self.rect.y = self.game.player.rect.y - 24
+                self.game.update()
+                self.game.draw()
+                pg.display.flip()
+                j += 1
         self.game.update()
         self.game.draw()
         pg.display.flip()
-        pg.time.delay(BLOCKED_DELAY)
 
         self.kill()
 
@@ -887,10 +916,10 @@ class ActionAnimation(pg.sprite.Sprite):
             if(pg.time.get_ticks() >= next_move):
                 next_move = pg.time.get_ticks() + GAME_OVER_DELAY
                 self.image = self.game.win_img
-                self.game.update()
-                self.game.draw()
-                pg.display.flip()
                 j += 1
+            self.game.update()
+            self.game.draw()
+            pg.display.flip()
 
         self.kill()
 
@@ -902,10 +931,10 @@ class ActionAnimation(pg.sprite.Sprite):
             if(pg.time.get_ticks() >= next_move):
                 next_move = pg.time.get_ticks() + GAME_OVER_DELAY
                 self.image = self.game.lose_img
-                self.game.update()
-                self.game.draw()
-                pg.display.flip()
                 j += 1
+            self.game.update()
+            self.game.draw()
+            pg.display.flip()
 
         self.kill()
 
