@@ -44,7 +44,7 @@ class Game:
         self.open_lid = pg.mixer.Sound(path.join(self.sound_folder, 'open_lid.ogg'))
         self.papel_sound = pg.mixer.Sound(path.join(self.sound_folder, 'toilet_paper.ogg'))
         self.vaso_flush = pg.mixer.Sound(path.join(self.sound_folder, 'vaso_flush.ogg'))
-        self.lava_mao_sound = pg.mixer.Sound(path.join(self.sound_folder, 'CasteloRatimbumLavaMao.ogg'))
+        self.lava_mao_sound = pg.mixer.Sound(path.join(self.sound_folder, 'hands-with-soap.ogg'))
         self.wrong_sound = pg.mixer.Sound(path.join(self.sound_folder, 'wrong.ogg'))
         self.alert_sound = pg.mixer.Sound(path.join(self.sound_folder, 'alert.ogg'))
         self.vaso_poop_sound = pg.mixer.Sound(path.join(self.sound_folder, 'vaso_poop_sound.ogg'))
@@ -254,7 +254,7 @@ class Game:
             
 
     def show_start_screen(self):
-        pg.mixer.music.load(path.join(self.sound_folder, 'som.ogg'))
+        pg.mixer.music.load(path.join(self.sound_folder, 'home_sound.ogg'))
         mouse_hold = False
         waiting = True
         pg.mixer.music.set_volume(0.1)
