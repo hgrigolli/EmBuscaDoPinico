@@ -70,10 +70,14 @@ class Game:
         self.ui_popups.append(pg.image.load(path.join(ui_folder, UI_PLAYER_BLOCKED)).convert_alpha())
 
         self.start_bg_img = pg.image.load(path.join(ui_folder, 'bg_home.png')).convert_alpha()
-        # self.credits_bg_img = pg.image.load(path.join(ui_folder, 'credit_bg.png')).convert_alpha()
+        self.credits_bg_img = pg.image.load(path.join(ui_folder, 'credit_bg.png')).convert_alpha()
 
         self.start_button_img = pg.image.load(path.join(ui_folder, 'start_button.png')).convert_alpha()
         self.start_button_hover_img  = pg.image.load(path.join(ui_folder, 'start_button_hover.png')).convert_alpha()
+        
+        self.how_to_play_button_img = pg.image.load(path.join(ui_folder, 'how_to_play_button.png')).convert_alpha()
+        self.how_to_play_button_hover_img  = pg.image.load(path.join(ui_folder, 'how_to_play_button_hover.png')).convert_alpha()
+        self.how_to_play_img = pg.image.load(path.join(ui_folder, 'comojogar.png')).convert_alpha()
 
         self.back_button_img  = pg.image.load(path.join(ui_folder, 'back_button.png')).convert_alpha()
         self.back_button_hover_img  = pg.image.load(path.join(ui_folder, 'back_button_hover.png')).convert_alpha()
@@ -250,13 +254,14 @@ class Game:
             
 
     def show_start_screen(self):
-        pg.mixer.music.load(path.join(self.sound_folder, 'home_sound.ogg'))
+        pg.mixer.music.load(path.join(self.sound_folder, 'som.ogg'))
         mouse_hold = False
         waiting = True
         pg.mixer.music.set_volume(0.1)
         pg.mixer.music.play(loops=-1)
-        self.start_button = Buttons(self, self.start_button_img, 200, HEIGHT * 3 /4)
-        self.credits_button = Buttons(self, self.creditos_button_img, WIDTH - 400, HEIGHT * 3 /4)
+        self.start_button = Buttons(self, self.start_button_img, WIDTH/2, HEIGHT * 2 /4)
+        self.how_to_play_button = Buttons(self, self.how_to_play_button_img, 200, HEIGHT * 3 /4)
+        self.credits_button = Buttons(self, self.creditos_button_img, WIDTH - 200, HEIGHT * 3 /4)
         if(self.back_button != None):
             self.back_button.kill()
             self.back_button = None
@@ -278,6 +283,9 @@ class Game:
                         elif self.credits_button.rect.collidepoint(event.pos):
                             mouse_hold = True
                             self.show_credits_screen()
+                        elif self.how_to_play_button.rect.collidepoint(event.pos):
+                            mouse_hold = True
+                            self.show_how_to_play_screen()
                 elif(event.type == pg.MOUSEMOTION):
                     if self.start_button.rect.collidepoint(event.pos):
                         self.start_button.image = self.start_button_hover_img
@@ -286,7 +294,11 @@ class Game:
                     if self.credits_button.rect.collidepoint(event.pos):
                         self.credits_button.image = self.creditos_button_hover_img
                     else:
-                         self.credits_button.image = self.creditos_button_img             
+                         self.credits_button.image = self.creditos_button_img
+                    if self.how_to_play_button.rect.collidepoint(event.pos):
+                        self.how_to_play_button.image = self.how_to_play_button_hover_img
+                    else:
+                         self.how_to_play_button.image = self.how_to_play_button_img        
                 elif(event.type == pg.MOUSEBUTTONUP):
                     mouse_hold = False
             pg.display.flip()
@@ -296,9 +308,10 @@ class Game:
     def show_credits_screen(self):
         mouse_hold = False
         voltar = False
-        self.back_button = Buttons(self, self.back_button_img, WIDTH-300, HEIGHT * 3 /4)
+        self.back_button = Buttons(self, self.back_button_img, WIDTH-150, HEIGHT * 3 /4)
         self.start_button.kill()
         self.credits_button.kill()
+        self.how_to_play_button.kill()
         while not voltar:
             self.screen.blit(self.credits_bg_img, (0, 0))
             self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
@@ -323,10 +336,41 @@ class Game:
                 elif(event.type == pg.MOUSEBUTTONUP):
                     mouse_hold = False
             pg.display.flip()
+    
+    def show_how_to_play_screen(self):
+        mouse_hold = False
+        voltar = False
+        self.back_button = Buttons(self, self.back_button_img, WIDTH-100, HEIGHT * 2 /4)
+        self.start_button.kill()
+        self.credits_button.kill()
+        self.how_to_play_button.kill()
+        while not voltar:
+            self.screen.blit(self.how_to_play_img, (0, 0))
+            self.screen.blit(self.mouse_img_active, ( pg.mouse.get_pos() ))
+            self.buttons_sprites.update()
+            self.buttons_sprites.draw(self.screen)
+            self.clock.tick(FPS)
+            for event in pg.event.get():
+                if(event.type == pg.QUIT):
+                    self.quit()
+                if(event.type == pg.MOUSEBUTTONDOWN and not mouse_hold):
+                    if event.button == 1:
+                        if self.back_button.rect.collidepoint(event.pos):
+                            voltar = True
+                            mouse_hold = True
+                            self.show_start_screen()
+                elif(event.type == pg.MOUSEMOTION):
+                        if self.back_button.rect.collidepoint(event.pos):
+                            self.back_button.image = self.back_button_hover_img
+                        else:
+                            self.back_button.image = self.back_button_img
+                elif(event.type == pg.MOUSEBUTTONUP):
+                    mouse_hold = False
+            pg.display.flip()      
 
 # create the game object
 g = Game()
-# g.show_start_screen()
+g.show_start_screen()
 while True:
     g.new()
     g.run()

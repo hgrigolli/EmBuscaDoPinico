@@ -28,19 +28,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="594.78519"
-     inkscape:cy="709.6158"
+     inkscape:zoom="1.4"
+     inkscape:cx="732.32187"
+     inkscape:cy="76.894219"
      inkscape:document-units="px"
-     inkscape:current-layer="g8345"
+     inkscape:current-layer="layer1"
      showgrid="true"
      showguides="true"
      inkscape:snap-global="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:window-width="883"
+     inkscape:window-height="405"
+     inkscape:window-x="130"
+     inkscape:window-y="130"
+     inkscape:window-maximized="0"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      inkscape:object-nodes="false"
@@ -3303,34 +3303,109 @@
         </g>
       </g>
     </g>
-    <path
-       sodipodi:nodetypes="csccsscccssccccsscccccssssccssssssccsc"
-       d="m 240.83345,262.1506 v 19.05 c 0,0.29104 -0.10142,0.54239 -0.30427,0.75406 l -2.64583,2.64583 c -0.21167,0.20285 -0.46302,0.30427 -0.75406,0.30427 h -45.48927 c -0.29104,0 -0.53798,-0.10142 -0.74083,-0.30427 h -0.0132 l -2.64584,-2.64583 c -0.20284,-0.21167 -0.30427,-0.46302 -0.30427,-0.75406 v -19.05 c 0,-0.29104 0.10143,-0.53799 0.30427,-0.74083 v -0.0132 l 2.64584,-2.64584 h 0.0132 c 0.20285,-0.20285 0.44979,-0.30427 0.74083,-0.30427 h 45.48927 c 0.29104,0 0.54239,0.10142 0.75406,0.30427 l 2.64583,2.64584 v 0.0132 c 0.20285,0.20284 0.30427,0.44979 0.30427,0.74083 m -0.52916,0 c 0,-0.14993 -0.0485,-0.2734 -0.14552,-0.37042 l -2.64584,-2.64583 c -0.10583,-0.10583 -0.23371,-0.15875 -0.38364,-0.15875 h -45.48927 c -0.14993,0 -0.2734,0.0529 -0.37042,0.15875 l -2.64583,2.64583 c -0.10583,0.097 -0.15875,0.22049 -0.15875,0.37042 v 19.05 c 0,0.14993 0.0529,0.27781 0.15875,0.38364 l 2.64583,2.64584 c 0.097,0.097 0.22049,0.14552 0.37042,0.14552 h 45.48927 c 0.14993,0 0.27781,-0.0485 0.38364,-0.14552 l 2.64584,-2.64584 c 0.097,-0.10583 0.14552,-0.23371 0.14552,-0.38364 v -19.05"
-       id="path8311"
-       inkscape:connector-curvature="0"
-       style="fill:#1a2b63;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
-    <path
-       sodipodi:nodetypes="csccssssssccsssscccccccccc"
-       d="m 240.30429,262.1506 v 19.05 c 0,0.14993 -0.0485,0.27781 -0.14552,0.38364 l -2.64584,2.64584 c -0.10583,0.097 -0.23371,0.14552 -0.38364,0.14552 h -45.48927 c -0.14993,0 -0.2734,-0.0485 -0.37042,-0.14552 l -2.64583,-2.64584 c -0.10583,-0.10583 -0.15875,-0.23371 -0.15875,-0.38364 v -19.05 c 0,-0.14993 0.0529,-0.2734 0.15875,-0.37042 l 2.64583,-2.64583 c 0.097,-0.10583 0.22049,-0.15875 0.37042,-0.15875 h 45.48927 c 0.14993,0 0.27781,0.0529 0.38364,0.15875 l 2.64584,2.64583 c 0.097,0.097 0.14552,0.22049 0.14552,0.37042 m -3.175,-2.64583 h -45.48927 l -2.64583,2.64583 v 19.05 l 2.64583,2.64583 h 45.48927 l 2.64583,-2.64583 v -19.05 l -2.64583,-2.64583"
-       id="path8313"
-       inkscape:connector-curvature="0"
-       style="fill:#90b0ba;fill-opacity:0.90196078;stroke:none;stroke-width:0.26458332" />
-    <path
-       sodipodi:nodetypes="ccccccccc"
-       d="m 237.12929,259.50477 2.64583,2.64583 v 19.05 l -2.64583,2.64583 h -45.48927 l -2.64583,-2.64583 v -19.05 l 2.64583,-2.64583 h 45.48927"
-       id="path8315"
-       inkscape:connector-curvature="0"
-       style="fill:#aaf2ff;fill-opacity:0.70196078;stroke:none;stroke-width:0.26458332" />
     <text
-       id="text8319"
-       y="274.33023"
-       x="200.33659"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;line-height:1.25;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi';letter-spacing:0px;word-spacing:0px;fill:#4671c6;fill-opacity:1;stroke:none;stroke-width:0.26458332;"
-       xml:space="preserve"><tspan
-         style="font-size:7.76111126px;fill:#4671c6;fill-opacity:1;stroke-width:0.26458332;"
-         y="274.33023"
-         x="200.33659"
-         id="tspan8317"
-         sodipodi:role="line">INICIAR</tspan></text>
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:1.25;font-family:Chicle;-inkscape-font-specification:Chicle;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="193.63678"
+       y="251.96507"
+       id="text7671"><tspan
+         sodipodi:role="line"
+         id="tspan7669"
+         x="193.63678"
+         y="261.91989"
+         style="stroke-width:0.26458332" /></text>
+    <g
+       id="g7684"
+       inkscape:export-filename="C:\Users\Henrii\Desktop\pygame\python_mack\Algoritimos e Programa-o\Jogos\PyGame\EmBuscaDoPinico\imagens\UI\how_to_play_button.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         style="fill:#1a2b63;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         inkscape:connector-curvature="0"
+         id="path8311"
+         d="m 240.83345,262.1506 v 19.05 c 0,0.29104 -0.10142,0.54239 -0.30427,0.75406 l -2.64583,2.64583 c -0.21167,0.20285 -0.46302,0.30427 -0.75406,0.30427 h -45.48927 c -0.29104,0 -0.53798,-0.10142 -0.74083,-0.30427 h -0.0132 l -2.64584,-2.64583 c -0.20284,-0.21167 -0.30427,-0.46302 -0.30427,-0.75406 v -19.05 c 0,-0.29104 0.10143,-0.53799 0.30427,-0.74083 v -0.0132 l 2.64584,-2.64584 h 0.0132 c 0.20285,-0.20285 0.44979,-0.30427 0.74083,-0.30427 h 45.48927 c 0.29104,0 0.54239,0.10142 0.75406,0.30427 l 2.64583,2.64584 v 0.0132 c 0.20285,0.20284 0.30427,0.44979 0.30427,0.74083 m -0.52916,0 c 0,-0.14993 -0.0485,-0.2734 -0.14552,-0.37042 l -2.64584,-2.64583 c -0.10583,-0.10583 -0.23371,-0.15875 -0.38364,-0.15875 h -45.48927 c -0.14993,0 -0.2734,0.0529 -0.37042,0.15875 l -2.64583,2.64583 c -0.10583,0.097 -0.15875,0.22049 -0.15875,0.37042 v 19.05 c 0,0.14993 0.0529,0.27781 0.15875,0.38364 l 2.64583,2.64584 c 0.097,0.097 0.22049,0.14552 0.37042,0.14552 h 45.48927 c 0.14993,0 0.27781,-0.0485 0.38364,-0.14552 l 2.64584,-2.64584 c 0.097,-0.10583 0.14552,-0.23371 0.14552,-0.38364 v -19.05"
+         sodipodi:nodetypes="csccsscccssccccsscccccssssccssssssccsc" />
+      <path
+         style="fill:#90b0ba;fill-opacity:0.90196078;stroke:none;stroke-width:0.26458332"
+         inkscape:connector-curvature="0"
+         id="path8313"
+         d="m 240.30429,262.1506 v 19.05 c 0,0.14993 -0.0485,0.27781 -0.14552,0.38364 l -2.64584,2.64584 c -0.10583,0.097 -0.23371,0.14552 -0.38364,0.14552 h -45.48927 c -0.14993,0 -0.2734,-0.0485 -0.37042,-0.14552 l -2.64583,-2.64584 c -0.10583,-0.10583 -0.15875,-0.23371 -0.15875,-0.38364 v -19.05 c 0,-0.14993 0.0529,-0.2734 0.15875,-0.37042 l 2.64583,-2.64583 c 0.097,-0.10583 0.22049,-0.15875 0.37042,-0.15875 h 45.48927 c 0.14993,0 0.27781,0.0529 0.38364,0.15875 l 2.64584,2.64583 c 0.097,0.097 0.14552,0.22049 0.14552,0.37042 m -3.175,-2.64583 h -45.48927 l -2.64583,2.64583 v 19.05 l 2.64583,2.64583 h 45.48927 l 2.64583,-2.64583 v -19.05 l -2.64583,-2.64583"
+         sodipodi:nodetypes="csccssssssccsssscccccccccc" />
+      <path
+         style="fill:#aaf2ff;fill-opacity:0.70196078;stroke:none;stroke-width:0.26458332"
+         inkscape:connector-curvature="0"
+         id="path8315"
+         d="m 237.12929,259.50477 2.64583,2.64583 v 19.05 l -2.64583,2.64583 h -45.48927 l -2.64583,-2.64583 v -19.05 l 2.64583,-2.64583 h 45.48927"
+         sodipodi:nodetypes="ccccccccc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;line-height:1.25;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi';letter-spacing:0px;word-spacing:0px;fill:#4671c6;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         x="202.96278"
+         y="269.79044"
+         id="text8319"><tspan
+           sodipodi:role="line"
+           id="tspan8317"
+           x="202.96278"
+           y="269.79044"
+           style="font-size:7.76111126px;fill:#4671c6;fill-opacity:1;stroke-width:0.26458332">COMO</tspan></text>
+      <text
+         id="text7675"
+         y="279.22656"
+         x="202.2674"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;line-height:1.25;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi';letter-spacing:0px;word-spacing:0px;fill:#4671c6;fill-opacity:1;stroke:none;stroke-width:0.26458332;"
+         xml:space="preserve"><tspan
+           style="font-size:7.76111126px;stroke-width:0.26458332;fill:#4671c6;fill-opacity:1;"
+           y="279.22656"
+           x="202.2674"
+           id="tspan7673"
+           sodipodi:role="line">JOGAR</tspan></text>
+    </g>
+    <g
+       id="g7716"
+       transform="translate(0,7.1815477)"
+       inkscape:export-filename="C:\Users\Henrii\Desktop\pygame\python_mack\Algoritimos e Programa-o\Jogos\PyGame\EmBuscaDoPinico\imagens\UI\how_to_play_button_hover.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         sodipodi:nodetypes="csccsscccssccccsscccccssssccssssssccsc"
+         d="m 240.83345,290.6148 v 19.05 c 0,0.29104 -0.10142,0.5424 -0.30427,0.75406 l -2.64583,2.64583 c -0.21167,0.20285 -0.46302,0.30427 -0.75406,0.30427 h -45.48927 c -0.29104,0 -0.53798,-0.10142 -0.74083,-0.30427 h -0.0132 l -2.64584,-2.64583 c -0.20284,-0.21167 -0.30427,-0.46302 -0.30427,-0.75406 v -19.05 c 0,-0.29104 0.10143,-0.53799 0.30427,-0.74083 v -0.0132 l 2.64584,-2.64584 h 0.0132 c 0.20285,-0.20285 0.44979,-0.30427 0.74083,-0.30427 h 45.48927 c 0.29104,0 0.54239,0.10143 0.75406,0.30427 l 2.64583,2.64584 v 0.0132 c 0.20285,0.20284 0.30427,0.44979 0.30427,0.74083 m -0.52916,0 c 0,-0.14993 -0.0485,-0.2734 -0.14552,-0.37042 l -2.64584,-2.64583 c -0.10583,-0.10583 -0.23371,-0.15875 -0.38364,-0.15875 h -45.48927 c -0.14993,0 -0.2734,0.0529 -0.37042,0.15875 l -2.64583,2.64583 c -0.10583,0.097 -0.15875,0.22049 -0.15875,0.37042 v 19.05 c 0,0.14993 0.0529,0.27781 0.15875,0.38365 l 2.64583,2.64584 c 0.097,0.097 0.22049,0.14551 0.37042,0.14551 h 45.48927 c 0.14993,0 0.27781,-0.0485 0.38364,-0.14551 l 2.64584,-2.64584 c 0.097,-0.10584 0.14552,-0.23371 0.14552,-0.38365 v -19.05"
+         id="path7686"
+         inkscape:connector-curvature="0"
+         style="fill:#1a2b63;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
+      <path
+         sodipodi:nodetypes="csccssssssccsssscccccccccc"
+         d="m 240.30429,290.6148 v 19.05 c 0,0.14993 -0.0485,0.27781 -0.14552,0.38365 l -2.64584,2.64584 c -0.10583,0.097 -0.23371,0.14551 -0.38364,0.14551 h -45.48927 c -0.14993,0 -0.2734,-0.0485 -0.37042,-0.14551 l -2.64583,-2.64584 c -0.10583,-0.10584 -0.15875,-0.23371 -0.15875,-0.38365 v -19.05 c 0,-0.14993 0.0529,-0.2734 0.15875,-0.37042 l 2.64583,-2.64583 c 0.097,-0.10583 0.22049,-0.15875 0.37042,-0.15875 h 45.48927 c 0.14993,0 0.27781,0.0529 0.38364,0.15875 l 2.64584,2.64583 c 0.097,0.097 0.14552,0.22049 0.14552,0.37042 m -3.175,-2.64583 h -45.48927 l -2.64583,2.64583 v 19.05 l 2.64583,2.64583 h 45.48927 l 2.64583,-2.64583 v -19.05 l -2.64583,-2.64583"
+         id="path7688"
+         inkscape:connector-curvature="0"
+         style="fill:#90b0ba;fill-opacity:0.90196078;stroke:none;stroke-width:0.26458332" />
+      <path
+         sodipodi:nodetypes="ccccccccc"
+         d="m 237.12929,287.96897 2.64583,2.64583 v 19.05 l -2.64583,2.64583 h -45.48927 l -2.64583,-2.64583 v -19.05 l 2.64583,-2.64583 h 45.48927"
+         id="path7690"
+         inkscape:connector-curvature="0"
+         style="fill:#aaf2ff;fill-opacity:0.70196078;stroke:none;stroke-width:0.26458332" />
+      <text
+         id="text7694"
+         y="298.25464"
+         x="202.96278"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;line-height:1.25;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi';letter-spacing:0px;word-spacing:0px;fill:#1a2b63;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-size:7.76111126px;fill:#1a2b63;fill-opacity:1;stroke-width:0.26458332"
+           y="298.25464"
+           x="202.96278"
+           id="tspan7692"
+           sodipodi:role="line">COMO</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;line-height:1.25;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi';letter-spacing:0px;word-spacing:0px;fill:#1a2b63;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         x="202.2674"
+         y="307.69077"
+         id="text7698"><tspan
+           sodipodi:role="line"
+           id="tspan7696"
+           x="202.2674"
+           y="307.69077"
+           style="font-size:7.76111126px;fill:#1a2b63;fill-opacity:1;stroke-width:0.26458332">JOGAR</tspan></text>
+    </g>
   </g>
 </svg>

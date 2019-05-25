@@ -999,5 +999,5 @@ class Buttons(pg.sprite.Sprite):
         self.game = game
         self.image = image
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.centerx = x
+        self.rect.centery = y
