@@ -208,14 +208,14 @@ class Game:
         self.scores.update()
     
     def draw_grid(self):
-        for x in range(0, self.map_rect.width , TILESIZE//2):
-            vertical_line = pg.Surface((self.map_rect.height, 1), pg.SRCALPHA)
-            vertical_line.fill(LIGHTGREY2_ALPHA)
-            self.screen.blit(vertical_line, (MAP_SHIFT_X+6, x))
-        for y in range(0, self.map_rect.height, TILESIZE//2):
-            horizontal_line = pg.Surface((1, self.map_rect.width), pg.SRCALPHA)
+        for x in range(24, self.map_rect.width , 3*TILESIZE//2):
+            horizontal_line = pg.Surface((self.map_rect.height, 3), pg.SRCALPHA)
             horizontal_line.fill(LIGHTGREY2_ALPHA)
-            self.screen.blit(horizontal_line, (MAP_SHIFT_X+y+6, 0))
+            self.screen.blit(horizontal_line, (MAP_SHIFT_X, x))
+        for y in range(0, self.map_rect.height, 3*TILESIZE//2):
+            vertical_line = pg.Surface((3, self.map_rect.width), pg.SRCALPHA)
+            vertical_line.fill(LIGHTGREY2_ALPHA)
+            self.screen.blit(vertical_line, (MAP_SHIFT_X+y+12, 0))
 
     def draw_text(self, text, size, color, x, y, align="topleft"):
         font = pg.font.Font(self.font_name, size)
@@ -229,11 +229,13 @@ class Game:
         self.screen.blit(self.map_img, (MAP_SHIFT_X, 0))
         self.map.render(self.screen)
         self.all_sprites.draw(self.screen)
+        self.draw_grid()
         self.player_sprite.draw(self.screen)
         self.map.render_acima(self.screen)
         self.playerActionHolder.show_action(self.screen)
-        # self.draw_grid()
-        self.draw_text("Pontos: {}".format(self.player.score),16,TEXT_DARK_BLUE,10,10)
+        self.draw_text("Pontos: {}".format(self.player.score),16,WHITE,940,10)
+        self.draw_text("TAREFAS",20,TEXT_DARK_BLUE,10,10)
+        self.draw_text("AÇÕES",20,BROWN,10,607)
         self.scores.draw(self.screen)
         self.player_actions.draw(self.screen)
         self.popups.draw(self.screen)
