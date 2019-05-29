@@ -23,18 +23,18 @@ BGCOLOR = DARKGREY
 
 
 #PLAYER SETTINGS
-PLAYER_IMG_UP1 = 'char_01 (12).png'
-PLAYER_IMG_UP2 = 'char_01 (1).png'
-PLAYER_IMG_UP3 = 'char_01 (11).png'
-PLAYER_IMG_RIGHT1 = 'char_01 (9).png'
-PLAYER_IMG_RIGHT2 = 'char_01 (8).png'
-PLAYER_IMG_RIGHT3 = 'char_01 (10).png'
-PLAYER_IMG_LEFT1 = 'char_01 (6).png'
-PLAYER_IMG_LEFT2 = 'char_01 (5).png'
-PLAYER_IMG_LEFT3 = 'char_01 (7).png'
-PLAYER_IMG_DOWN1 = 'char_01 (3).png'
-PLAYER_IMG_DOWN2 = 'char_01 (2).png'
-PLAYER_IMG_DOWN3 = 'char_01 (4).png'
+PLAYER_IMG_UP1 = 'char_02 (12).png' # STOP
+PLAYER_IMG_UP2 = 'char_02 (1).png'
+PLAYER_IMG_UP3 = 'char_02 (11).png'
+PLAYER_IMG_RIGHT1 = 'char_02 (9).png' # STOP
+PLAYER_IMG_RIGHT2 = 'char_02 (8).png'
+PLAYER_IMG_RIGHT3 = 'char_02 (10).png'
+PLAYER_IMG_LEFT1 = 'char_02 (6).png' # STOP
+PLAYER_IMG_LEFT2 = 'char_02 (5).png'
+PLAYER_IMG_LEFT3 = 'char_02 (7).png'
+PLAYER_IMG_DOWN1 = 'char_02 (3).png' # STOP
+PLAYER_IMG_DOWN2 = 'char_02 (2).png'
+PLAYER_IMG_DOWN3 = 'char_02 (4).png'
 PLAYER_STEPS = 3
 
 #PLAYER MOVEMENT
