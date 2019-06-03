@@ -12,11 +12,14 @@
 
 # Game Assets:
 
-### PandaMaru
+### PandaMaru - https://rpgmaker-mv.de/forum/thread/17-maru-s-mv-ressourcen/
+
+### Kenney - https://www.kenney.nl/assets
 
 ### Freepik from www.flaticon.com
 
 ### Sounds from https://freesound.org/
+
 
 
 
