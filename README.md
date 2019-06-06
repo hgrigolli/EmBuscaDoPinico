@@ -3,7 +3,7 @@
 
 ### Goal: Educative game to teach kids learn programming logic. 
 
-### Feito por: Henrique Nóbrega Grigolli
+### Developed by: Henrique Nóbrega Grigolli
 
 # Credits:
 
