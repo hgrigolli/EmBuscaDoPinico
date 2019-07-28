@@ -24,7 +24,12 @@ _______________________________________
 
 ### Game ScreenShots
 
-![startScreen](photos/start_screen.png =400x300)
+![startScreen](photos/start_screen.png)
+![main](photos/main1.png)
+![playing](photos/main2.png)
+![noaction](photos/noaction.png)
+![lose](photos/lose.png)
+![win](photos/win1.png)
 
 
 
